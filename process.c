@@ -1,0 +1,115 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
+/*   Updated: 2023/03/11 22:11:14 by arafeeq          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "execution.h"
+
+void	process(t_cmd *cmd, int **p_fd, int i, t_exec *exec) //pfd in exec
+{
+	int		pid;
+	char	**env_array;
+	char	*c_path;
+
+	i = 0;
+	env_array = list_to_array(exec->env_list);
+	if (ft_strrchr(cmd->main_cmd, '/'))
+		cmd->c_path = cmd->main_cmd;
+	else
+		c_path = check_path(exec->path_array, ft_strjoin("/", cmd->main_cmd));
+	pid = fork();
+	if (pid_error(pid) == 0)
+	{
+		ft_dup2(cmd->in_rds, 0);
+		//if output redirection exist the below else dup2 to pipe??
+		ft_dup2(cmd->out_rds, 1);
+		//close fds - for pipes because file fds will be closed in ft_dup2
+		//empty arg error
+		if (c_path == NULL || execve(c_path, cmd, env_array) == -1)
+			execve_error(exec, cmd);
+	}
+	//free stuff
+	//close the file descriptor
+}
+
+void	ft_dup2(t_rdrct **redirect, int flag)
+{
+	int	i;
+	int	fd;
+
+	while (redirect[i])
+	{
+		fd = open_file(redirect[i]->file, redirect[i]->sign);
+		if (fd_error(fd, redirect[i]->file) == -1)
+			ft_exit(1);
+		if (flag == 0)
+			dup2(fd, STDIN_FILENO);
+		else if (flag == 1)
+			dup2(fd, STDIN_FILENO);
+		close(fd);
+		i++;
+	}
+}
+
+void	ft_herdoc(char *delimeter)
+{
+	int		fd;
+	char	*line;
+
+	fd = open_file("temp", "<<");
+	line = get_next_line(0);
+	while (line)
+	{
+		if (ft_strcmp(delimeter, line) == 0)
+			break ;
+		ft_putstr_fd(line, fd);
+		free(line);
+		line = get_next_line(0);
+	}
+	free(line);
+	close(fd);
+	//have to unlink somewhere after use
+}
+
+int	open_file(char *file, char *redirection)
+{
+	int	fd;
+
+	if (ft_strcmp(redirection, "<") == 0)
+		fd = open(file, O_RDONLY, 0777);
+	else if (ft_strcmp(redirection, ">") == 0)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (ft_strcmp(redirection, ">>") == 0)
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else if (ft_strcmp(redirection, "<<") == 0)
+		fd = open("temp", O_RDWR | O_CREAT, 0777);
+	return (fd);
+}
+
+char	**list_to_array(t_env **envlist)
+{
+	int		list_len;
+	char	**array;
+	int		i;
+	t_env	*t;
+
+	list_len = envlst_len(envlist);
+	array = malloc(sizeof(char *) * (list_len + 1));
+	i = 0;
+	t = *envlist;
+	while (t)
+	{
+		array[i] = malloc(sizeof(char) * (ft_strlen(t->whole)));
+		ft_strcpy(array[i], t->whole);
+		i++;
+		t = t->next;
+	}
+	return (array);
+}
