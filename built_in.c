@@ -6,18 +6,23 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 15:54:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 16:14:18 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_cd(/* parameter */)
+void	ft_cd(char *str)
 {
-	//go to the directory
+	DIR				*dir;
+	struct dirent	*entity;
+
 	//opendir
+	dir = opendir(str);
 	//readdir
+	entity = readdir(dir);
 	//closedir
+	closedir(dir);
 }
 
 void	ft_env(t_env **env_list)
@@ -29,7 +34,7 @@ void	ft_env(t_env **env_list)
 	{
 		printf("%s", temp->var);
 		if (temp->value)
-			printf("%s", temp->value);
+			printf("=%s", temp->value);
 		printf("\n");
 		temp = temp->next;
 	}
@@ -72,25 +77,28 @@ void	ft_export(t_env **env_list, char *str)
 	}
 }
 
-/* void	ft_unset(t_env *env, char *str)
+void	ft_unset(t_env **env, char *str)
 {
-	//remove variable from env list
+	t_env	*temp;
 	t_env	*prev;
 
-	prev = env;
-	while (env)
+	temp = *env;
+	prev = *env;
+	while (temp)
 	{
-		if (ft_strcmp(str, env->var) == 0)
+		if (ft_strcmp(str, temp->var) == 0)
 		{
-			//what if we want to delete the first node?? 
-			//will work but how to return first node
-			//put seperate condition?
-			prev->next = env->next;
-			//free env
+			if (temp == *env)
+				(*env) = (*env)->next;
+			else if (temp->next == NULL)
+				prev->next = NULL;
+			else
+				prev->next = temp->next;
+			free(temp);
+			temp = NULL;
 			return ;
-			//or pointer to the first node??
 		}
-		prev = env;
-		env = env->next;
+		prev = temp;
+		temp = temp->next;
 	}
-} */
+}

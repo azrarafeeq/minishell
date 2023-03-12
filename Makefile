@@ -6,13 +6,13 @@
 #    By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/10 20:13:52 by arafeeq          ###   ########.fr        #
+#    Updated: 2023/03/12 14:14:52 by arafeeq          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = execution env alloc_free built_in #built_in2 
+SRCS = execution env init_alloc built_in  free path #built_in2
 
 GNLSRCS = ./get_next_line/get_next_line.c\
 			./get_next_line/get_next_line_utils.c

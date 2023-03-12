@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 22:16:31 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 14:33:37 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ int	main(int argc, char **argv, char **envp)
 	ft_envp(envp, &(exec->env_list));
 	path = get_path(&(exec->env_list));
 	exec->path_array = path_array(path);
+	// ft_env(&exec->env_list);
+	// printf("<------------------------------------------------------------>\n");
+	// ft_unset(&(exec->env_list), "PATH");
+	// ft_env(&exec->env_list);
 	//ft_pwd();
-	//ft_env(&exec->env_list);
 	//ft_export(&exec->env_list, NULL);
 	//waitpid()
 }
 
-void	pipex(t_exec *exec)
+/* void	pipex(t_exec *exec)
 {
 	int	i;
 
@@ -42,5 +45,5 @@ void	pipex(t_exec *exec)
 			pipe(exec->pfd[i]);
 		process(exec->cmds[i], exec, i);
 		i++;
-	} 
-}
+	}
+} */

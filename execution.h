@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:46 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 21:58:13 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 14:38:53 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
-# define MAX_PATH 1024
+# define MAX_PATH 4095
 
 # include <stdio.h>
 # include <unistd.h>
@@ -57,14 +57,23 @@ typedef struct s_exec{
 	int		**pfd;
 }				t_exec;
 
+int		**alloc_pipe_fds(int pipe_amt);
+
 void	ft_envp(char **envp, t_env **env_list);
 t_env	*init_env_node(char *str);
 void	ft_env_pos(t_env **env_list);
 void	envlst_addback(t_env **lst, t_env *new);
 int		envlst_len(t_env **env_list);
 
+int		paths_count(char *path);
+char	*get_path(t_env **env_list);
+char	*append_path_to_array(char *path, int *i);
+char	**path_array(char *path);
+char	*check_path(char **path_array, char *command);
+
 void	ft_env(t_env **env_list);
 void	ft_export(t_env **env_list, char *str);
+void	ft_unset(t_env **env, char *str);
 void	ft_pwd(void);
 
 void	free_char_array(char **array);

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:52:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 20:53:41 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 14:12:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	paths_count(char *path)
 	return (path_count);
 }
 
-char	*append_path_to_array(char *path, int	*i)
+char	*append_path_to_array(char *path, int *i)
 {
 	int		x;
 	int		count;
