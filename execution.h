@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:46 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 14:38:53 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 20:47:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
-# define MAX_PATH 4095
+# define MAX_PATH 1024
 
 # include <stdio.h>
 # include <unistd.h>
@@ -71,11 +71,25 @@ char	*append_path_to_array(char *path, int *i);
 char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
+int		cmd_is_built_in(char *str);
+
+void	ft_cd(char *str);
+void	ft_built_in(char *cmd, char **args, t_env **env);
 void	ft_env(t_env **env_list);
 void	ft_export(t_env **env_list, char *str);
 void	ft_unset(t_env **env, char *str);
 void	ft_pwd(void);
+void	ft_echo(char **str, int flag, t_env **env);
+void	ft_echo_expand(char *str, t_env **env);
+void	ft_exit(int err_num);
+
+void	mt_arg_error(t_cmd *cmd, char **env_array, t_exec *exec);
+void	execve_error(t_exec *exec, t_cmd *cmd);
+int		fd_error(int fd, char *file);
 
 void	free_char_array(char **array);
+void	free_int_array(int **int_array, int len);
+void	free_cmd(t_cmd **cmd);
+void	free_exec(t_exec *exec);
 
 #endif

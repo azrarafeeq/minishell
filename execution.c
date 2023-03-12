@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 14:33:37 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 20:34:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	char	*path;
-	t_exec	*exec; //will later be inside a struct
+	t_exec	*exec; //will later be inside a struct or this will be main struct
 
 	exec = malloc(sizeof(t_exec));
 	exec->pfd = alloc_pipe_fds(exec->cmd_amt - 1);
@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_envp(envp, &(exec->env_list));
 	path = get_path(&(exec->env_list));
 	exec->path_array = path_array(path);
+	//ft_cd("/Users/arafeeq/Documents");
 	// ft_env(&exec->env_list);
 	// printf("<------------------------------------------------------------>\n");
 	// ft_unset(&(exec->env_list), "PATH");

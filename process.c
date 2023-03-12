@@ -6,19 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 22:11:14 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 20:46:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	process(t_cmd *cmd, int **p_fd, int i, t_exec *exec) //pfd in exec
+void	process(t_cmd *cmd,int i, t_exec *exec) //pfd in exec
 {
 	int		pid;
 	char	**env_array;
 	char	*c_path;
 
-	i = 0;
+//what if I initialize env_array and c_path inside child....
+//so no need to free in the parent
 	env_array = list_to_array(exec->env_list);
 	if (ft_strrchr(cmd->main_cmd, '/'))
 		cmd->c_path = cmd->main_cmd;
@@ -31,12 +32,14 @@ void	process(t_cmd *cmd, int **p_fd, int i, t_exec *exec) //pfd in exec
 		//if output redirection exist the below else dup2 to pipe??
 		ft_dup2(cmd->out_rds, 1);
 		//close fds - for pipes because file fds will be closed in ft_dup2
-		//empty arg error
-		if (c_path == NULL || execve(c_path, cmd, env_array) == -1)
+		mt_arg_error(cmd, env_array, exec);
+		if (cmd_is_built_in(cmd->main_cmd))
+			ft_built_in(cmd->main_cmd, cmd->cmd_and_args, exec->env_list);
+		else if (c_path == NULL || execve(c_path, cmd, env_array) == -1)
 			execve_error(exec, cmd);
 	}
 	//free stuff
-	//close the file descriptor
+	//close the file descriptor (pipes...no need for the file if opening in child)
 }
 
 void	ft_dup2(t_rdrct **redirect, int flag)

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 21:07:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 19:52:18 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_char_array(char **array)
 	free(array);
 }
 
-void	free_intarray(int **int_array, int len)
+void	free_int_array(int **int_array, int len)
 {
 	int	i;
 
@@ -38,25 +38,36 @@ void	free_intarray(int **int_array, int len)
 	free(int_array);
 }
 
-void	free_redirection(t_rdrct **rdrct)
+void	free_cmd(t_cmd **cmd)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	while (rdrct[i])
+	i = -1;
+	j = 0;
+	while (cmd[j])
 	{
-		free(rdrct[i]);
-		i++;
+		free_char_array(cmd[j]->cmd_and_args);
+		free(cmd[j]->main_cmd);
+		free(cmd[j]->c_path);
+		while (cmd[j]->in_rds[++i])
+			free(cmd[j]->in_rds[i]);
+		free(cmd[j]->in_rds);
+		i = -1;
+		while (cmd[j]->out_rds[++i])
+			free(cmd[j]->out_rds[i]);
+		free(cmd[j]->out_rds);
+		free(cmd[j]);
+		j++;
 	}
-	free(rdrct);
+	free(cmd);
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_exec(t_exec *exec)
 {
-	free_char_array(cmd->cmd_and_args);
-	free(cmd->main_cmd);
-	free(cmd->c_path);
-	free_redirection(cmd->in_rds);
-	free_redirection(cmd->out_rds);
-	free(cmd);
+	free_cmd(exec->cmds);
+	free(exec->env_list);
+	free_char_array(exec->path_array);
+	free_int_array(exec->pfd, exec->cmd_amt - 1);
+	free(exec);
 }

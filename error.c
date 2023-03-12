@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/11 21:14:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 18:23:03 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	mt_args_error(t_cmd *cmd, char *c_path, char **env_array)
+void	mt_arg_error(t_cmd *cmd, char **env_array, t_exec *exec)
 {
 	int	i;
 	int	len;
@@ -25,7 +25,7 @@ void	mt_args_error(t_cmd *cmd, char *c_path, char **env_array)
 	{
 		printf("%s: command not found\n", cmd->main_cmd);
 		free_char_array(env_array);
-		free_cmd(cmd); //create function
+		free_exec(exec);
 		//free other stuff if you missed any
 		ft_exit(127);
 	}
@@ -35,6 +35,7 @@ void	execve_error(t_exec *exec, t_cmd *cmd)
 {
 	char	*path;
 
+	//unset PATH
 	if (get_path(exec->env_list) == NULL)
 	{
 		printf("%s: no such file or directory\n", cmd->main_cmd);

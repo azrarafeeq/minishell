@@ -6,23 +6,33 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 16:14:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 20:40:45 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_cd(char *str)
+void	ft_cd(char **str)
 {
+	//char			buffer[1024];
 	DIR				*dir;
-	struct dirent	*entity;
 
-	//opendir
-	dir = opendir(str);
-	//readdir
-	entity = readdir(dir);
-	//closedir
-	closedir(dir);
+	dir = opendir(str[1]);
+	if (dir == NULL)
+	{
+		printf("cd: %s: No such file or directory\n", str[1]);
+		ft_exit(1);
+	}
+	//printf("The current working dir is : %s\n", getcwd(buffer, MAX_PATH));
+	chdir(str[1]);
+	//printf("Current dir after changing is : %s\n", getcwd(buffer, MAX_PATH))
+}
+
+void	ft_pwd(void)
+{
+	char	buffer[1024];
+
+	printf("%s\n", getcwd(buffer, MAX_PATH));
 }
 
 void	ft_env(t_env **env_list)
@@ -41,14 +51,7 @@ void	ft_env(t_env **env_list)
 	printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
 }
 
-void	ft_pwd(void)
-{
-	char	buffer[1024];
-
-	printf("%s\n", getcwd(buffer, MAX_PATH));
-}
-
-void	ft_export(t_env **env_list, char *str)
+void	ft_export(t_env **env_list, char **str)
 {
 	int		i;
 	int		len;
@@ -59,16 +62,16 @@ void	ft_export(t_env **env_list, char *str)
 	len = envlst_len(env_list);
 	ft_env_pos(env_list);
 	temp = *env_list;
-	if (str)
+	if (str[1])
 	{
-		env_node = init_env_node(str);
+		env_node = init_env_node(str[1]);
 		return (envlst_addback(env_list, env_node));
 	}
 	while (i <= len && temp)
 	{
 		if (i == temp->pos)
 		{
-			printf("declare -x %s=%s\n", temp->var, temp->value);
+			printf("declare -x %s=\"%s\"\n", temp->var, temp->value);
 			i++;
 			temp = *env_list;
 		}
@@ -77,7 +80,7 @@ void	ft_export(t_env **env_list, char *str)
 	}
 }
 
-void	ft_unset(t_env **env, char *str)
+void	ft_unset(t_env **env, char **str)
 {
 	t_env	*temp;
 	t_env	*prev;
@@ -86,7 +89,7 @@ void	ft_unset(t_env **env, char *str)
 	prev = *env;
 	while (temp)
 	{
-		if (ft_strcmp(str, temp->var) == 0)
+		if (ft_strcmp(str[1], temp->var) == 0)
 		{
 			if (temp == *env)
 				(*env) = (*env)->next;
