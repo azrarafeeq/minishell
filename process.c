@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 20:46:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 14:09:18 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	process(t_cmd *cmd,int i, t_exec *exec) //pfd in exec
+void	process(t_cmd *cmd, int i, t_exec *exec) //pfd in exec
 {
 	int		pid;
 	char	**env_array;
@@ -50,8 +50,8 @@ void	ft_dup2(t_rdrct **redirect, int flag)
 	while (redirect[i])
 	{
 		fd = open_file(redirect[i]->file, redirect[i]->sign);
-		if (fd_error(fd, redirect[i]->file) == -1)
-			ft_exit(1);
+		if (ft_strcmp(redirect[i]->sign, "<<"))
+			fd_error(fd, redirect[i]->file);
 		if (flag == 0)
 			dup2(fd, STDIN_FILENO);
 		else if (flag == 1)
@@ -61,12 +61,12 @@ void	ft_dup2(t_rdrct **redirect, int flag)
 	}
 }
 
-void	ft_herdoc(char *delimeter)
+int	ft_heredoc(char *delimeter)
 {
 	int		fd;
 	char	*line;
 
-	fd = open_file("temp", "<<");
+	fd = open("temp", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(0);
 	while (line)
 	{
@@ -77,8 +77,8 @@ void	ft_herdoc(char *delimeter)
 		line = get_next_line(0);
 	}
 	free(line);
-	close(fd);
-	//have to unlink somewhere after use
+	return (fd);
+	//unlink temp in the end main
 }
 
 int	open_file(char *file, char *redirection)
@@ -92,7 +92,7 @@ int	open_file(char *file, char *redirection)
 	else if (ft_strcmp(redirection, ">>") == 0)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (ft_strcmp(redirection, "<<") == 0)
-		fd = open("temp", O_RDWR | O_CREAT, 0777);
+		fd = ft_herdoc(file);
 	return (fd);
 }
 

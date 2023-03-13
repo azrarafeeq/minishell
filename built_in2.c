@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 20:45:44 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 14:14:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_echo(char **str, t_env **env)
 {
 	int		i;
 
-	if (ft_strcmp(str[1], "-n" == 0))
+	if (ft_strcmp(str[1], "-n") == 0)
 		i = 1;
 	else
 		i = 0;
@@ -34,7 +34,7 @@ void	ft_echo(char **str, t_env **env)
 		if (str[i + 1])
 			printf(" ");
 	}
-	if (ft_strcmp(str[1], "-n" == 0))
+	if (ft_strcmp(str[1], "-n") == 0)
 		printf("\n");
 }
 
@@ -87,5 +87,8 @@ void	ft_built_in(char *cmd, char **args, t_env **env)
 	else if (ft_strcmp(cmd, "env") == 0)
 		ft_env(env);
 	else if (ft_strcmp(cmd, "exit") == 0)
-		ft_exit(0);
+	{
+		err_num = 0;
+		ft_exit(err_num);
+	}
 }

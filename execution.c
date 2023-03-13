@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 20:34:49 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 18:43:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	main(int argc, char **argv, char **envp)
 	path = get_path(&(exec->env_list));
 	exec->path_array = path_array(path);
 	//ft_cd("/Users/arafeeq/Documents");
-	// ft_env(&exec->env_list);
+	//ft_env(&exec->env_list);
 	// printf("<------------------------------------------------------------>\n");
 	// ft_unset(&(exec->env_list), "PATH");
 	// ft_env(&exec->env_list);
 	//ft_pwd();
 	//ft_export(&exec->env_list, NULL);
+	pipex(exec);
 	//waitpid()
 }
 
@@ -47,4 +48,6 @@ int	main(int argc, char **argv, char **envp)
 		process(exec->cmds[i], exec, i);
 		i++;
 	}
+	//if redirect_in contains sign = "<<"
+		//unlink temp
 } */

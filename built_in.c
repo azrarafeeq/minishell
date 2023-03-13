@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 20:40:45 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/12 21:33:54 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	ft_cd(char **str)
 	if (dir == NULL)
 	{
 		printf("cd: %s: No such file or directory\n", str[1]);
-		ft_exit(1);
+		err_num = 1;
+		ft_exit(err_num);
 	}
 	//printf("The current working dir is : %s\n", getcwd(buffer, MAX_PATH));
 	chdir(str[1]);

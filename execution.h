@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:46 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/12 20:47:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 14:13:25 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <curses.h>
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
+
+int	err_num;
 
 typedef struct s_env{
 	char			*var;
@@ -73,13 +75,13 @@ char	*check_path(char **path_array, char *command);
 
 int		cmd_is_built_in(char *str);
 
-void	ft_cd(char *str);
+void	ft_cd(char **str);
 void	ft_built_in(char *cmd, char **args, t_env **env);
 void	ft_env(t_env **env_list);
-void	ft_export(t_env **env_list, char *str);
-void	ft_unset(t_env **env, char *str);
+void	ft_export(t_env **env_list, char **str);
+void	ft_unset(t_env **env, char **str);
 void	ft_pwd(void);
-void	ft_echo(char **str, int flag, t_env **env);
+void	ft_echo(char **str, t_env **env);
 void	ft_echo_expand(char *str, t_env **env);
 void	ft_exit(int err_num);
 
