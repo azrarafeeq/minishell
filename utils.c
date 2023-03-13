@@ -1,29 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_alloc.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/10 20:05:10 by arafeeq           #+#    #+#             */
+/*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
 /*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	**alloc_pipe_fds(int pipe_amt)
+char	**list_to_array(t_env **envlist)
 {
-	int	i;
-	int	**p_fd;
+	int		list_len;
+	char	**array;
+	int		i;
+	t_env	*t;
 
+	list_len = envlst_len(envlist);
+	array = malloc(sizeof(char *) * (list_len + 1));
 	i = 0;
-	//error message when reached the limit....but what is the limit??
-	p_fd = malloc(sizeof(int *) * pipe_amt);
-	while (i < pipe_amt)
+	t = *envlist;
+	while (t)
 	{
-		p_fd[i] = malloc(sizeof(int) * 2);
+		array[i] = malloc(sizeof(char) * (ft_strlen(t->whole)));
+		ft_strcpy(array[i], t->whole);
 		i++;
+		t = t->next;
 	}
-	return (p_fd);
+	return (array);
+}
+
+char	*ft_getenv(t_env **env, char *str)
+{
+	t_env	*temp;
+
+	temp = *env;
+	while (temp)
+	{
+		if (ft_strcmp(temp->var, str) == 0)
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (NULL);
 }

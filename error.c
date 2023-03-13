@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 14:04:50 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "exec.h"
 
 void	mt_arg_error(t_cmd *cmd, char **env_array, t_exec *exec)
 {

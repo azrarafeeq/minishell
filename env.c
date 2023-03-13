@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:30:38 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/10 22:38:03 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "exec.h"
 
 void	ft_env_pos(t_env **env_list)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 18:43:08 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/13 20:15:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "exec.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -43,11 +43,11 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	while (i < exec->cmd_amt)
 	{
-		if (exec->cmd_amt > 1 && i < (exec->cmd_amt - 1))
+		if (exec->cmd_amt > 1 && i < exec->cmd_amt) // or (exec->cmd_amt - 1)
 			pipe(exec->pfd[i]);
 		process(exec->cmds[i], exec, i);
 		i++;
 	}
-	//if redirect_in contains sign = "<<"
-		//unlink temp
+	if (heredoc_exist(exec->cmd))
+		unlink(temp);
 } */
