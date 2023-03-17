@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:59:29 by arafeeq           #+#    #+#             */
-/*   Updated: 2022/10/24 16:14:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 06:28:38 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ws_and_sign_check(const char *str, int *i, int *ve)
 	return ;
 }
 
-int	ft_atoi(const char *str)
+long long int	ft_atoi(const char *str)
 {
 	int				i;
 	int				ve;
@@ -42,10 +42,10 @@ int	ft_atoi(const char *str)
 	{
 		num = num * 10 + (str[i] - '0');
 		i++;
-		if (num > 2147483647 && ve == 1)
+		if (num > __LONG_LONG_MAX__ && ve == 1)
 			return (-1);
-		if (num > 2147483648 && ve == -1)
-			return (0);
+		if (num > __LONG_LONG_MAX__ && ve == -1)
+			return (-1);
 	}
 	return (num * ve);
 }

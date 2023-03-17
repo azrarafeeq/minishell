@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 06:17:33 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ void	free_cmd(t_cmd **cmd)
 	j = 0;
 	while (cmd[j])
 	{
-		free_char_array(cmd[j]->cmd_and_args);
-		free(cmd[j]->main_cmd);
-		free(cmd[j]->c_path);
-		while (cmd[j]->in_rds[++i])
-			free(cmd[j]->in_rds[i]);
-		free(cmd[j]->in_rds);
-		i = -1;
-		while (cmd[j]->out_rds[++i])
-			free(cmd[j]->out_rds[i]);
-		free(cmd[j]->out_rds);
+		free_char_array(cmd[j]->cmd_args);
+		free(cmd[j]->main);
+		free(cmd[j]->path);
+		while (cmd[j]->rds[++i])
+			free(cmd[j]->rds[i]);
+		free(cmd[j]->rds);
 		free(cmd[j]);
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 18:22:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_cd(char **str)
 	//char			buffer[1024];
 	DIR				*dir;
 
+	if (str[1] == NULL || str[1][0] == '\0')
+		ft_exit(1);
 	dir = opendir(str[1]);
 	if (dir == NULL)
 	{
@@ -24,9 +26,8 @@ void	ft_cd(char **str)
 		err_num = 1;
 		ft_exit(err_num);
 	}
-	//printf("The current working dir is : %s\n", getcwd(buffer, MAX_PATH));
 	chdir(str[1]);
-	//printf("Current dir after changing is : %s\n", getcwd(buffer, MAX_PATH))
+	//add function or conditions to update the env list
 }
 
 void	ft_pwd(void)
@@ -44,7 +45,7 @@ void	ft_env(t_env **env_list)
 	while (temp)
 	{
 		printf("%s", temp->var);
-		if (temp->value)
+		if (temp->value != NULL)
 			printf("=%s", temp->value);
 		printf("\n");
 		temp = temp->next;
@@ -59,10 +60,15 @@ void	ft_export(t_env **env_list, char **str)
 	t_env	*temp;
 	t_env	*env_node;
 
+	//export error = if args start with anything other than 
 	i = 1;
 	len = envlst_len(env_list);
 	ft_env_pos(env_list);
 	temp = *env_list;
+	//have to check if the variable exists all of them
+	//if exists have to check if value should be updated, i.e if ther is a '=' sign
+		//if there is = sign update value accordingly, or keep it as it is
+	//if variable does not exist
 	if (str[1])
 	{
 		env_node = init_env_node(str[1]);

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:15:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 06:45:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,36 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	int		i;
+	int		pid;
+	t_exec	*exec;
 	(void)argv;
 	(void)argc;
-	char	*path;
-	t_exec	*exec; //will later be inside a struct or this will be main struct
 
+	i = -1;
 	exec = malloc(sizeof(t_exec));
-	exec->pfd = alloc_pipe_fds(exec->cmd_amt - 1);
-	exec->env_list = NULL;
-	ft_envp(envp, &(exec->env_list));
-	path = get_path(&(exec->env_list));
-	exec->path_array = path_array(path);
-	//ft_cd("/Users/arafeeq/Documents");
-	//ft_env(&exec->env_list);
-	// printf("<------------------------------------------------------------>\n");
-	// ft_unset(&(exec->env_list), "PATH");
-	// ft_env(&exec->env_list);
-	//ft_pwd();
-	//ft_export(&exec->env_list, NULL);
-	pipex(exec);
-	//waitpid()
+	pid = pipex(exec);
+	while (++i < exec->cmd_amt)
+		waitpid(-1, 0, 0);
+	//waitpid with th epid got from pipex and something with the second argument
 }
 
-/* void	pipex(t_exec *exec)
+int	pipex(t_exec *exec)
 {
 	int	i;
+	int	pid;
 
 	i = 0;
+	if (exec->cmd_amt > 1)
+		pipe(exec->pfd[0]);
 	while (i < exec->cmd_amt)
 	{
-		if (exec->cmd_amt > 1 && i < exec->cmd_amt) // or (exec->cmd_amt - 1)
-			pipe(exec->pfd[i]);
-		process(exec->cmds[i], exec, i);
+		if (i < exec->cmd_amt - 1)
+			pipe(exec->pfd[i + 1]);
+		pid = process(exec->cmds[i], i, exec);
 		i++;
 	}
-	if (heredoc_exist(exec->cmd))
-		unlink(temp);
-} */
+	if (heredoc_exist(exec->cmds))
+		unlink("temp");
+	return (pid);
+}

@@ -6,11 +6,30 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 06:37:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	ft_exit_cmd(char **str)
+{
+	int	i;
+	int	num;
+
+	i = 1;
+	while (str[i])
+	{
+		num = ft_atoi(str[1]);
+		if (ft_strlen(str) > 2)
+			//error but don't exit
+		else if (num > __LONG_LONG_MAX__)
+			//error and exit
+		i++;
+	}
+	else
+		exit(ft_atoi(str[1]));
+}
 
 void	ft_exit(int err_num)
 {
@@ -60,15 +79,14 @@ void	ft_echo_expand(char *str, t_env **env)
 int	cmd_is_built_in(char *str)
 {
 	int	i;
-	char array[8][10] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
 	i = 0;
-	while (i < 7)
-	{
-		if (ft_strcmp(str, array[i]) == 0)
-			return (1);
-		i++;
-	}
+	if (ft_strcmp(str, "echo") == 0)
+		return (1);
+	if (ft_strcmp(str, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(str, "env") == 0)
+		return (1);
 	return (0);
 }
 
@@ -87,8 +105,5 @@ void	ft_built_in(char *cmd, char **args, t_env **env)
 	else if (ft_strcmp(cmd, "env") == 0)
 		ft_env(env);
 	else if (ft_strcmp(cmd, "exit") == 0)
-	{
-		err_num = 0;
-		ft_exit(err_num);
-	}
+		ft_exit_cmd(args);
 }

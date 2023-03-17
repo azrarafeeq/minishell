@@ -6,43 +6,46 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:02:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 06:38:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	process(t_cmd *cmd, int i, t_exec *exec) //pfd in exec
+int	process(t_cmd *cmd, int i, t_exec *exec)
 {
 	int		pid;
-	char	**env_array;
-	char	*c_path;
+	char	**env_arr;
 
-//what if I initialize env_array and c_path inside child....
-//so no need to free in the parent
-	env_array = list_to_array(exec->env_list);
-	if (ft_strrchr(cmd->main_cmd, '/'))
-		cmd->c_path = cmd->main_cmd;
+	if (ft_strcmp(cmd->main, "exit") == 0 || ft_strcmp(cmd->main, "cd") == 0
+		|| ft_strcmp(cmd->main, "export") || ft_strcmp(cmd->main, "unset") == 0)
+		ft_built_in(cmd->main, cmd->cmd_args, &(exec->env_list));
 	else
-		c_path = check_path(exec->path_array, ft_strjoin("/", cmd->main_cmd));
-	pid = fork();
-	if (pid_error(pid) == 0)
 	{
-		ft_dup2(cmd->in_rds, 0);
-		ft_dup2(cmd->out_rds, 1);
-		if (file_rd_exist(cmd->in_rds) == 0)
-			dup2(/* ...[0]*/, STDIN_FILENO);
-		if (file_rd_exist(cmd->out_rds) == 0)
-			dup2(/* ...[1]*/, STDOUT_FILENO);
-		//close fds
-		mt_arg_error(cmd, env_array, exec);
-		if (cmd_is_built_in(cmd->main_cmd))
-			ft_built_in(cmd->main_cmd, cmd->cmd_and_args, exec->env_list);
-		else if (c_path == NULL || execve(c_path, cmd, env_array) == -1)
-			execve_error(exec, cmd);
+		pid = fork();
+		if (pid_error(pid) == 0)
+		{
+			env_arr = list_to_array(&(exec->env_list));
+			if (ft_strrchr(cmd->main, '/'))
+				cmd->path = cmd->main;
+			else
+				cmd->path = check_path(exec->path_array, ft_strjoin("/", cmd->main));
+			ft_dup2(cmd->rds);
+			if (file_rd_exist(cmd->rds, 0, 1) == 0)
+				dup2(exec->pfd[i][0], STDIN_FILENO);
+			if (file_rd_exist(cmd->rds, 2, 3) == 0)
+				dup2(exec->pfd[i + 1][1], STDOUT_FILENO);
+			close_fds(exec->pfd[i][0], exec->pfd[i][0],
+				exec->pfd[i + 1][0], exec->pfd[i + 1][1]);
+			mt_arg_error(cmd, env_arr, exec);
+			if (cmd_is_built_in(cmd->main))
+				ft_built_in(cmd->main, cmd->cmd_args, &(exec->env_list));
+			else if (cmd->path == NULL || execve(cmd->path, cmd->cmd_args, env_arr) == -1)
+				execve_error(exec, cmd);
+		}
 	}
-	//free stuff
-	//close the file descriptor (pipes...no need for the file if opening in child)
+	close_fds(exec->pfd[i][0], exec->pfd[i][0], -1, -1);
+	return (pid);
 }
 
 int	ft_heredoc(char *delimeter)

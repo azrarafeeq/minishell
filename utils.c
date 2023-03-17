@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/13 20:00:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/14 16:46:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,35 @@ char	*ft_getenv(t_env **env, char *str)
 		temp = temp->next;
 	}
 	return (NULL);
+}
+
+int	rds_count(char **split)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	while (split[i])
+	{
+		if (split[i][0] == '<' || split[i][0] == '>')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	cmds_count(char **split)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 1;
+	while (split[i])
+	{
+		if (split[i][0] == '|')
+			count++;
+		i++;
+	}
+	return (count);
 }
