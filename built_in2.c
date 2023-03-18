@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 06:37:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:34:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,28 @@
 void	ft_exit_cmd(char **str)
 {
 	int	i;
+	//int	j;
 	int	num;
 
-	i = 1;
+	i = 0;
+	printf("exit\n");
+	/* while (str[1][++j])
+		if (ft_isdigit(str[1][j]) == 0)
+			exit_error(str[1]); */
+	num = ft_atoi(str[i]);
+	if (num == /* error return from atoi */)
+		exit_error(str[1], 1);
 	while (str[i])
-	{
-		num = ft_atoi(str[1]);
-		if (ft_strlen(str) > 2)
-			//error but don't exit
-		else if (num > __LONG_LONG_MAX__)
-			//error and exit
 		i++;
-	}
+	if (i > 2)
+		exit_error(str[1], 2);
 	else
 		exit(ft_atoi(str[1]));
 }
 
-void	ft_exit(int err_num)
+void	ft_exit(int exit_stat)
 {
-	exit(err_num);
+	exit(exit_stat);
 }
 
 void	ft_echo(char **str, t_env **env)
@@ -95,7 +98,7 @@ void	ft_built_in(char *cmd, char **args, t_env **env)
 	if (ft_strcmp(cmd, "echo") == 0)
 		ft_echo(args, env);
 	else if (ft_strcmp(cmd, "cd") == 0)
-		ft_cd(args);
+		ft_cd(args, env);
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd, "export") == 0)

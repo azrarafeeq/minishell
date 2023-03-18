@@ -6,15 +6,14 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 18:22:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:34:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_cd(char **str)
+void	ft_cd(char **str, t_env **env_list)
 {
-	//char			buffer[1024];
 	DIR				*dir;
 
 	if (str[1] == NULL || str[1][0] == '\0')
@@ -23,11 +22,11 @@ void	ft_cd(char **str)
 	if (dir == NULL)
 	{
 		printf("cd: %s: No such file or directory\n", str[1]);
-		err_num = 1;
-		ft_exit(err_num);
+		exit_stat = 1;
+		ft_exit(exit_stat);
 	}
 	chdir(str[1]);
-	//add function or conditions to update the env list
+	update_pwd(env_list);
 }
 
 void	ft_pwd(void)
@@ -44,10 +43,8 @@ void	ft_env(t_env **env_list)
 	temp = *env_list;
 	while (temp)
 	{
-		printf("%s", temp->var);
 		if (temp->value != NULL)
-			printf("=%s", temp->value);
-		printf("\n");
+			printf("%s=%s\n", temp->var, temp->value);
 		temp = temp->next;
 	}
 	printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
@@ -60,19 +57,21 @@ void	ft_export(t_env **env_list, char **str)
 	t_env	*temp;
 	t_env	*env_node;
 
-	//export error = if args start with anything other than 
+	export_error(str);
 	i = 1;
 	len = envlst_len(env_list);
 	ft_env_pos(env_list);
 	temp = *env_list;
-	//have to check if the variable exists all of them
-	//if exists have to check if value should be updated, i.e if ther is a '=' sign
-		//if there is = sign update value accordingly, or keep it as it is
-	//if variable does not exist
-	if (str[1])
+	if (str[i])
 	{
-		env_node = init_env_node(str[1]);
-		return (envlst_addback(env_list, env_node));
+		if (var_exists(env_list, str[i])
+			if (ft_strchr(str[i], '='))
+				return (update_var(env_list, str[i]));
+		else
+		{
+			env_node = init_env_node(str[1]);
+			return (envlst_addback(env_list, env_node));
+		}
 	}
 	while (i <= len && temp)
 	{

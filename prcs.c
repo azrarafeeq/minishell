@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 06:38:56 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/17 23:01:50 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	process(t_cmd *cmd, int i, t_exec *exec)
 			else
 				cmd->path = check_path(exec->path_array, ft_strjoin("/", cmd->main));
 			ft_dup2(cmd->rds);
-			if (file_rd_exist(cmd->rds, 0, 1) == 0)
+			if (file_rd_exist(cmd, 0, 1) == 0)
 				dup2(exec->pfd[i][0], STDIN_FILENO);
-			if (file_rd_exist(cmd->rds, 2, 3) == 0)
+			if (file_rd_exist(cmd, 2, 3) == 0)
 				dup2(exec->pfd[i + 1][1], STDOUT_FILENO);
 			close_fds(exec->pfd[i][0], exec->pfd[i][0],
 				exec->pfd[i + 1][0], exec->pfd[i + 1][1]);
@@ -65,4 +65,41 @@ int	ft_heredoc(char *delimeter)
 	}
 	free(line);
 	return (fd);
+}
+
+int	open_file(char *file, int flag)
+{
+	int	fd;
+
+	fd = -1;
+	if (flag == IN_FILE)
+		fd = open(file, O_RDONLY, 0777);
+	else if (flag == TRUNCATE)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (flag == APPEND)
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else if (flag == HERE_DOC)
+		fd = ft_heredoc(file);
+	return (fd);
+}
+
+void	ft_dup2(t_red **redirect)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	while (redirect[i])
+	{
+		fd = open_file(redirect[i]->file, redirect[i]->flag);
+		if (redirect[i]->flag != HERE_DOC)
+			fd_error(fd, redirect[i]->file);
+		if (redirect[i]->flag == IN_FILE || redirect[i]->flag == HERE_DOC)
+			dup2(fd, STDIN_FILENO);
+		else if (redirect[i]->flag == TRUNCATE || redirect[i]->flag == APPEND)
+			dup2(fd, STDOUT_FILENO);
+		if (fd != -1)
+			close(fd);
+		i++;
+	}
 }

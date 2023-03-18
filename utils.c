@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/14 16:46:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/18 18:16:38 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 char	**list_to_array(t_env **envlist)
 {
-	int		list_len;
+	char	*join;
 	char	**array;
 	int		i;
 	t_env	*t;
 
-	list_len = envlst_len(envlist);
-	array = malloc(sizeof(char *) * (list_len + 1));
 	i = 0;
 	t = *envlist;
 	while (t)
 	{
-		array[i] = malloc(sizeof(char) * (ft_strlen(t->whole)));
-		ft_strcpy(array[i], t->whole);
+		join = ft_strjoin(t->var, "=");
+		array[i] = ft_strjoin(join, t->value);
 		i++;
 		t = t->next;
 	}
@@ -47,33 +45,29 @@ char	*ft_getenv(t_env **env, char *str)
 	return (NULL);
 }
 
-int	rds_count(char **split)
+int	var_exists(t_env **env_list, char *str)
 {
-	int	i;
-	int	count;
+	char	**split;
+	t_env	*temp;
 
-	i = 0;
-	while (split[i])
+	temp = *env_list;
+	if (ft_strchr(str, '='))
 	{
-		if (split[i][0] == '<' || split[i][0] == '>')
-			count++;
-		i++;
+		split = ft_split(str, '=');
+		while (temp)
+		{
+			if (ft_strcmp(split[0], temp->value) == 0)
+				return (1);
+			temp = temp->next;
+		}
 	}
-	return (count);
-}
-
-int	cmds_count(char **split)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 1;
-	while (split[i])
+	else
 	{
-		if (split[i][0] == '|')
-			count++;
-		i++;
+		while (temp)
+		{
+			if (ft_strcmp(split[0], temp->value) == 0)
+				return (1);
+			temp = temp->next;
+		}
 	}
-	return (count);
 }
