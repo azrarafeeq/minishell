@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/18 21:35:25 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:54:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,31 @@ void	mt_arg_error(t_cmd *cmd, char **env_arr, t_exec *exec)
 
 void	execve_error(t_exec *exec, t_cmd *cmd)
 {
-	if (get_path(&(exec->env_list)) == NULL)
+	if (get_path(&(exec->env_list)) == NULL) //unset path
 	{
 		printf("%s: no such file or directory\n", cmd->main);
 		free_exec(exec);
 		exit_stat = 127;
-		ft_exit(exit_stat);
 	}
-	else if (access(cmd->path, F_OK) == -1)
+	else if (cmd->path == NULL) //wrong command
 	{
 		printf("%s: command not found\n", cmd->main);
 		free_exec(exec);
 		exit_stat = 127;
-		ft_exit(exit_stat);
 	}
-	//else if it doesnt have permission
-	else if (access(cmd->path, R_OK) == -1 || access(cmd->path, W_OK) == -1
-		|| access(cmd->path, X_OK) == -1)
+	else if (access(cmd->path, X_OK) == -1) //doesn't have excution permissions
 	{
 		printf("%s: Permission denied\n", cmd->main);
 		free_exec(exec);
 		exit_stat = 126;
-		ft_exit(exit_stat);
 	}
-	//else if it is a directory
-	//which flag in access?
+	else if (access(cmd->path, F_OK) == -1) //is a directory
+	{
+		printf("%s: is a Directory\n", cmd->main);
+		free_exec(exec);
+		exit_stat = 126;
+	}
+	ft_exit(exit_stat);
 }
 
 int	fd_error(int fd, char *file)
