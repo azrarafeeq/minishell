@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 21:27:55 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 22:58:40 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	char	**env_arr;
 
 	pid = 0;
+	printf("i = %d\n", i);
 	printf("cmd[i]->main = %s\n", cmd[i].main);
 	if (ft_strcmp(cmd[i].main, "exit") == 0 || ft_strcmp(cmd[i].main, "cd") == 0
 		|| ft_strcmp(cmd[i].main, "export") == 0 || ft_strcmp(cmd[i].main, "unset") == 0)
@@ -38,18 +39,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			printf("cmd[i].path = %s\n", cmd[i].path);
 			ft_dup2(cmd[i].red, cmd[i].red_len, shell, cmd);
 			ft_pipe_dup2(shell, cmd, i);
-			/* if (file_rd_exist(cmd[i], 0, 1) == 0 && cmd[i].cmd_id != 1)
-				dup2(shell->pfd[i][0], STDIN_FILENO);
-			if (file_rd_exist(cmd[i], 2, 3) == 0 && (cmd[i].cmd_id != shell->pipe_len && cmd[i].cmd_id != 1))
-				dup2(shell->pfd[i + 1][1], STDOUT_FILENO);
-			if (file_rd_exist(cmd[i], 2, 3) == 0 && cmd[i].cmd_id == 1)
-				dup2(shell->pfd[i][0], STDOUT_FILENO); */
-			/* if (shell->pipe_len > 0)
-			{
-				close_fds(shell->pfd[i][0], shell->pfd[i][0], -1, -1);
-			if (cmd[i].cmd_id != 1 && cmd[i].cmd_id != shell->pipe_len)
-				close_fds(shell->pfd[i + 1][0], shell->pfd[i + 1][1], -1, -1);
-			} */
+			ft_close_pipes(shell, i, cmd[i]);
 			mt_arg_error(cmd[i], env_arr, shell);
 			if (cmd_is_built_in(cmd[i].main))
 				ft_built_in(cmd[i].main, cmd[i].cmd, &(shell->env_list));
@@ -57,8 +47,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 				execve_error(shell, cmd, i);
 		}
 	}
-	//if(shell->pipe_len > 0)
-		//close_fds(shell->pfd[i][0], shell->pfd[i][1], -1, -1);
+	ft_close_pipes(shell, i, cmd[i]);
 	return (pid);
 }
 
@@ -122,15 +111,31 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
 	if (shell->pipe_len > 0)
 	{
-		//printf("cmds[i]->cmd_id = %d\n", cmds[i]->cmd_id);
-		if (file_rd_exist(cmds[i], 0, 1) == 0 && (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
+		if (file_rd_exist(cmds[i], 0, 1) == 0
+			&& (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
 			dup2(shell->pfd[i][0], STDIN_FILENO);
 		if (file_rd_exist(cmds[i], 2, 3) == 0 && cmds[i].cmd_id == 1)
 			dup2(shell->pfd[0][1], STDOUT_FILENO);
-		if (file_rd_exist(cmds[i], 0, 1) == 0 && cmds[i].cmd_id == (shell->pipe_len + 1))
+		if (file_rd_exist(cmds[i], 0, 1) == 0
+			&& cmds[i].cmd_id == (shell->pipe_len + 1))
 			dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
-		printf("---DOES IT PRINT HERE----");
-		if (file_rd_exist(cmds[i], 2, 3) == 0 && (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
+		if (file_rd_exist(cmds[i], 2, 3) == 0
+			&& (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
 			dup2(shell->pfd[i + 1][1], STDOUT_FILENO);
+	}
+}
+
+void ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
+{
+	if (shell->pipe_len > 0)
+	{
+		if (cmd.cmd_id == 1)
+			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
+		else if (cmd.cmd_id == (shell->pipe_len + 1))
+			close_fds(shell->pfd[shell->pipe_len - 1][0],
+				shell->pfd[shell->pipe_len - 1][1], -1, -1);
+		else
+			close_fds(shell->pfd[i][0], shell->pfd[i][1],
+				shell->pfd[i + 1][0], shell->pfd[i + 1][1]);
 	}
 }

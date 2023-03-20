@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 21:50:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 23:05:41 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,25 +150,24 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 		while (cmds[var.j].cmd[var.h])
 			clean_quotes(cmds[var.j].cmd[var.h++]);
 		var.h = 0;
-		cmds[var.j].main = NULL;
+		cmds[var.j].main = ft_strdup("");
+		cmds[var.j].cmd_id = 0;
 		while (cmds[var.j].cmd[var.h])
 		{
 			if (var.h == 0)
 			{
+				free(cmds[var.j].main);
 				cmds[var.j].main = cmds[var.j].cmd[var.h];
-				printf("\e[0;31mmain[%d]-> %s\n\e[0m",var.j, cmds[var.j].main);
 			}
-			printf("cmd %s\n", cmds[var.j].cmd[var.h++]);
+			var.h++;
 			cmds[var.j].cmd_id = var.j + 1;
 		}
-		printf("cmd_id = %d\n", cmds->cmd_id);
-		printf("num of CMD %d\n", cmds->cmd_id);
-		printf("--------------\n");
+		cmds[var.j].cmd_len = var.h;
 	}
 	shell->pipe_len = len - 1;
 	printf("pipe_len = %d\n", shell->pipe_len);
 	shell->pfd = alloc_pipe_fds(shell->pipe_len);
-	t_env *env_list = NULL;
+	t_env	*env_list = NULL;
 	ft_envp(envp, &env_list);
 	char *path = get_path(&env_list);
 	shell->path_array = path_array(path);

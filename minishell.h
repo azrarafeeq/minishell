@@ -132,6 +132,7 @@ int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
 int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
+void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
 int		cmd_is_built_in(char *str);
 
 void	ft_cd(char **str, t_env **env_list);
