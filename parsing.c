@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 18:01:34 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 19:35:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int ac, char **av, char **envp)
 	get_line(&shell, envp);
 	// free(shell.rd);
 	// free(shell.trim_rd);
-	while (++i < shell.pipe_len)
-		waitpid(-1, 0, 0);
+	/* while (++i < shell.pipe_len)
+		waitpid(-1, 0, 0); */
 	//waitpid with the pid got from pipex and something with the second argument
 }

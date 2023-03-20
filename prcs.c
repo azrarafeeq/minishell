@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 18:06:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 19:41:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	process(t_cmd **cmd, int i, t_infra *shell, t_env **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			env_arr = list_to_array(&(shell->env_list));
+			env_arr = list_to_array(env_list);
 			if (ft_strrchr(cmd[i]->main, '/'))
 				cmd[i]->path = cmd[i]->main;
 			else
@@ -101,12 +101,9 @@ void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd **cmds)
 	int	fd;
 
 	i = 0;
-	printf("red_len = %d\n", red_len);
 	while (i < red_len)
 	{
 		fd = open_file(redirect[i].file, redirect[i].flag);
-		printf("redirect[i].flag = %i\n", redirect[i].flag);
-		printf("fd = %d\n", fd);
 		if (redirect[i].flag != HERE_DOC)
 			fd_error(fd, redirect[i].file, shell, cmds);
 		if (redirect[i].flag == IN_FILE || redirect[i].flag == HERE_DOC)

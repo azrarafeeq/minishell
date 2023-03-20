@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 18:02:43 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 19:32:53 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**ft_split_with_quotes(char const *s, char c, int *cnt)
 	i = 0;
 	h = 0;
 	split = ft_split_quote(s, c);
-	//free(tmp);
+	free(tmp);
 	while(split[i])
 			printf("%s\n", split[i++]);
 	// printf("i == %d\n", i);	

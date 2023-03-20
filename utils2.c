@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 15:01:49 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 19:29:46 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 char	**list_to_array(t_env **envlist)
 {
 	char	*join;
+	int		len;
 	char	**array;
 	int		i;
 	t_env	*t;
 
 	i = 0;
 	t = *envlist;
-	array = NULL;
+	len = envlst_len(envlist);
+	array = malloc(sizeof(char *) * (len + 1));
 	while (t)
 	{
 		join = ft_strjoin(t->var, "=");
@@ -29,6 +31,7 @@ char	**list_to_array(t_env **envlist)
 		i++;
 		t = t->next;
 	}
+	array[i] = NULL;
 	return (array);
 }
 
