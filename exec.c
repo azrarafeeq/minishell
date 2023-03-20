@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 19:13:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:10:51 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int	**alloc_pipe_fds(int pipe_amt)
 	return (p_fd);
 }
 
-int	pipex(t_infra *shell, t_cmd **cmds, t_env **env_list)
+int	pipex(t_infra *shell, t_cmd *cmds, t_env **env_list)
 {
 	int	i;
 	int	pid;
 
 	i = 0;
+	// printf("id of command in the beginning = %d\n", (*cmds)->cmd_id);
 	//printf("pipe_len = %d\n", shell->pipe_len);
 	if (shell->pipe_len > 0) //make sure what pipe_len is
 		pipe(shell->pfd[0]);

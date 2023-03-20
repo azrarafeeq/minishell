@@ -123,13 +123,13 @@ char	*append_path_to_array(char *path, int *i);
 char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
-int		pipex(t_infra *shell, t_cmd **c_mds, t_env **env_list);
-int		process(t_cmd **cmd, int i, t_infra *shell, t_env **env_list);
-void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd **cmds);
-void	ft_pipe_dup2(t_infra *shell, t_cmd **cmds, int i);
+int		pipex(t_infra *shell, t_cmd *cmds, t_env **env_list);
+int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
+void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds);
+void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 int		ft_heredoc(char *delimeter);
-int		file_rd_exist(t_cmd *cmd, int flag1, int flag2);
-int		heredoc_exist(t_infra *shell, t_cmd **cmd);
+int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
+int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 int		cmd_is_built_in(char *str);
@@ -148,9 +148,9 @@ void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);
 
-void	mt_arg_error(t_cmd *cmd, char **env_arr, t_infra *exec);
-void	execve_error(t_infra *exec, t_cmd **cmd, int i);
-int		fd_error(int fd, char *file, t_infra *shell, t_cmd **cmds);
+void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *exec);
+void	execve_error(t_infra *shell, t_cmd *cmd, int i);
+int		fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds);
 void	export_error(char **str);
 void	exit_error(char *str, int flag);
 

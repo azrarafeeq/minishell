@@ -6,57 +6,59 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 19:41:21 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:27:55 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process(t_cmd **cmd, int i, t_infra *shell, t_env **env_list)
+int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 {
 	int		pid;
 	char	**env_arr;
 
 	pid = 0;
-	if (ft_strcmp(cmd[i]->main, "exit") == 0 || ft_strcmp(cmd[i]->main, "cd") == 0
-		|| ft_strcmp(cmd[i]->main, "export") == 0 || ft_strcmp(cmd[i]->main, "unset") == 0)
+	printf("cmd[i]->main = %s\n", cmd[i].main);
+	if (ft_strcmp(cmd[i].main, "exit") == 0 || ft_strcmp(cmd[i].main, "cd") == 0
+		|| ft_strcmp(cmd[i].main, "export") == 0 || ft_strcmp(cmd[i].main, "unset") == 0)
 		{
-			ft_built_in(cmd[i]->main, cmd[i]->cmd, env_list);
+			ft_built_in(cmd[i].main, cmd[i].cmd, env_list);
 		}
 	else
 	{
 		pid = fork();
 		if (pid == 0)
 		{
+			printf("The id of command = %d\n", cmd[i].cmd_id);
 			env_arr = list_to_array(env_list);
-			if (ft_strrchr(cmd[i]->main, '/'))
-				cmd[i]->path = cmd[i]->main;
+			if (ft_strrchr(cmd[i].main, '/'))
+				cmd[i].path = cmd[i].main;
 			else
-				cmd[i]->path = check_path(shell->path_array, ft_strjoin("/", cmd[i]->main));
-			printf("cmd[i]->path = %s\n", cmd[i]->path);
-			ft_dup2(cmd[i]->red, cmd[i]->red_len, shell, cmd);
+				cmd[i].path = check_path(shell->path_array, ft_strjoin("/", cmd[i].main));
+			printf("cmd[i].path = %s\n", cmd[i].path);
+			ft_dup2(cmd[i].red, cmd[i].red_len, shell, cmd);
 			ft_pipe_dup2(shell, cmd, i);
-			/* if (file_rd_exist(cmd[i], 0, 1) == 0 && cmd[i]->cmd_id != 1)
+			/* if (file_rd_exist(cmd[i], 0, 1) == 0 && cmd[i].cmd_id != 1)
 				dup2(shell->pfd[i][0], STDIN_FILENO);
-			if (file_rd_exist(cmd[i], 2, 3) == 0 && (cmd[i]->cmd_id != shell->pipe_len && cmd[i]->cmd_id != 1))
+			if (file_rd_exist(cmd[i], 2, 3) == 0 && (cmd[i].cmd_id != shell->pipe_len && cmd[i].cmd_id != 1))
 				dup2(shell->pfd[i + 1][1], STDOUT_FILENO);
-			if (file_rd_exist(cmd[i], 2, 3) == 0 && cmd[i]->cmd_id == 1)
+			if (file_rd_exist(cmd[i], 2, 3) == 0 && cmd[i].cmd_id == 1)
 				dup2(shell->pfd[i][0], STDOUT_FILENO); */
-			if (shell->pipe_len > 0)
+			/* if (shell->pipe_len > 0)
 			{
 				close_fds(shell->pfd[i][0], shell->pfd[i][0], -1, -1);
-			if (cmd[i]->cmd_id != 1 && cmd[i]->cmd_id != shell->pipe_len)
+			if (cmd[i].cmd_id != 1 && cmd[i].cmd_id != shell->pipe_len)
 				close_fds(shell->pfd[i + 1][0], shell->pfd[i + 1][1], -1, -1);
-			}
+			} */
 			mt_arg_error(cmd[i], env_arr, shell);
-			if (cmd_is_built_in(cmd[i]->main))
-				ft_built_in(cmd[i]->main, cmd[i]->cmd, &(shell->env_list));
-			else if (cmd[i]->path == NULL || execve(cmd[i]->path, cmd[i]->cmd, env_arr) == -1)
+			if (cmd_is_built_in(cmd[i].main))
+				ft_built_in(cmd[i].main, cmd[i].cmd, &(shell->env_list));
+			else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
 				execve_error(shell, cmd, i);
 		}
 	}
-	if(shell->pipe_len > 0)
-		close_fds(shell->pfd[i][0], shell->pfd[i][0], -1, -1);
+	//if(shell->pipe_len > 0)
+		//close_fds(shell->pfd[i][0], shell->pfd[i][1], -1, -1);
 	return (pid);
 }
 
@@ -95,7 +97,7 @@ int	open_file(char *file, int flag)
 	return (fd);
 }
 
-void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd **cmds)
+void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds)
 {
 	int	i;
 	int	fd;
@@ -116,17 +118,19 @@ void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd **cmds)
 	}
 }
 
-void	ft_pipe_dup2(t_infra *shell, t_cmd **cmds, int i)
+void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
 	if (shell->pipe_len > 0)
 	{
-		if (file_rd_exist(cmds[i], 0, 1) == 0 && (cmds[i]->cmd_id != shell->pipe_len && cmds[i]->cmd_id != 1))
+		//printf("cmds[i]->cmd_id = %d\n", cmds[i]->cmd_id);
+		if (file_rd_exist(cmds[i], 0, 1) == 0 && (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
 			dup2(shell->pfd[i][0], STDIN_FILENO);
-		if (file_rd_exist(cmds[i], 2, 3) == 0 && cmds[i]->cmd_id == 1)
+		if (file_rd_exist(cmds[i], 2, 3) == 0 && cmds[i].cmd_id == 1)
 			dup2(shell->pfd[0][1], STDOUT_FILENO);
-		if (file_rd_exist(cmds[i], 0, 1) == 0 && cmds[i]->cmd_id == shell->pipe_len)
+		if (file_rd_exist(cmds[i], 0, 1) == 0 && cmds[i].cmd_id == (shell->pipe_len + 1))
 			dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
-		if (file_rd_exist(cmds[i], 2, 3) == 0 && (cmds[i]->cmd_id != shell->pipe_len && cmds[i]->cmd_id != 1))
+		printf("---DOES IT PRINT HERE----");
+		if (file_rd_exist(cmds[i], 2, 3) == 0 && (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
 			dup2(shell->pfd[i + 1][1], STDOUT_FILENO);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 14:49:38 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:15:52 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_int_array(int **int_array, int len)
 	free(int_array);
 }
 
-void	free_cmd(t_cmd **cmd)
+/* void	free_cmd(t_cmd **cmd)
 {
 	int	j;
 
@@ -53,7 +53,7 @@ void	free_cmd(t_cmd **cmd)
 		j++;
 	}
 	free(cmd);
-}
+} */
 
 void	free_shell(t_infra *shell)
 {

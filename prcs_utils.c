@@ -6,20 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 19:10:36 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:18:59 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	file_rd_exist(t_cmd *cmd, int flag1, int flag2)
+int	file_rd_exist(t_cmd cmd, int flag1, int flag2)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd->red_len)
+	while (i < cmd.red_len)
 	{
-		if (cmd->red[i].flag == flag1 || cmd->red[i].flag == flag2)
+		if (cmd.red[i].flag == flag1 || cmd.red[i].flag == flag2)
 			return (1);
 		i++;
 	}
@@ -39,18 +39,18 @@ void	close_fds(int fd1, int fd2, int fd3, int fd4)
 	return ;
 }
 
-int	heredoc_exist(t_infra *shell, t_cmd **cmd)
+int	heredoc_exist(t_infra *shell, t_cmd *cmd)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < (shell->pipe_len + 1))
+	while (i < (shell->pipe_len))
 	{
 		j = 0;
-		while (j < cmd[i]->red_len)
+		while (j < cmd[i].red_len)
 		{
-			if (cmd[i]->red[j].flag == HERE_DOC)
+			if (cmd[i].red[j].flag == HERE_DOC)
 				return (1);
 			j++;
 		}

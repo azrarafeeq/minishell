@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 19:36:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:50:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,17 +159,20 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 				printf("\e[0;31mmain[%d]-> %s\n\e[0m",var.j, cmds[var.j].main);
 			}
 			printf("cmd %s\n", cmds[var.j].cmd[var.h++]);
+			cmds[var.j].cmd_id = var.j + 1;
 		}
-		cmds->cmd_id = var.j + 1;
+		printf("cmd_id = %d\n", cmds->cmd_id);
 		printf("num of CMD %d\n", cmds->cmd_id);
 		printf("--------------\n");
 	}
 	shell->pipe_len = len - 1;
 	printf("pipe_len = %d\n", shell->pipe_len);
+	shell->pfd = alloc_pipe_fds(shell->pipe_len);
 	t_env *env_list = NULL;
 	ft_envp(envp, &env_list);
 	char *path = get_path(&env_list);
 	shell->path_array = path_array(path);
-	pid = pipex(shell, tmp, &env_list);
+	shell->env_list = env_list;
+	pid = pipex(shell, cmds, &env_list);
 	waitpid(pid, 0, 0);
 }
