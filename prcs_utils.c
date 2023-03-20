@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 13:48:57 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 17:18:01 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	close_fds(int fd1, int fd2, int fd3, int fd4)
 	return ;
 }
 
-int	heredoc_exist(t_cmd **cmd)
+int	heredoc_exist(t_infra *shell, t_cmd **cmd)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (cmd[i])
+	while (i <= shell->pipe_len)
 	{
 		j = 0;
 		while (i < cmd[i]->red_len)

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:30:38 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 13:28:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 16:42:35 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	envlst_addback(t_env **lst, t_env *new)
 {
 	t_env	*temp;
 
-	temp = *lst;
-	if (!*lst || !new)
+	if (*lst == NULL)
 	{
 		*lst = new;
 		return ;
 	}
+	temp = *lst;
 	while (temp->next != NULL)
 	{
 		temp = temp->next;
@@ -102,7 +102,7 @@ void	ft_envp(char **envp, t_env **env_list)
 	t_env	*env_node;
 
 	i = 0;
-	while (envp[i + 1])
+	while (envp[i])
 	{
 		env_node = init_env_node(envp[i]);
 		envlst_addback(env_list, env_node);

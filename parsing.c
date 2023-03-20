@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 14:17:03 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 18:01:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ void	handler(int sig)
 	}
 }
 
-/* int excecute(char **cmds)
-{
-	int	fd = fork();
-	if	(fd == 0)
-	{
-		if	(execvp(cmds[0], cmds) == -1)
-			printf("command not found: %s\n", cmds[0]);
-	}
-	else 
-		wait(NULL);
-	close(fd);
-	return 1;
-} */
-
 int	get_line(t_infra *shell, char **envp)
 {
 	int		len;
@@ -52,10 +38,10 @@ int	get_line(t_infra *shell, char **envp)
 		if (ft_strcmp(shell->rd, ""))
 			add_history(shell->rd);
 		shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
-		free(shell->rd);
 		if (!*shell->trim_rd || !syntax_err(shell))
 			continue ;
 		shell->cmds = ft_split_with_quotes(shell->trim_rd, '|', &len);
+		//free(shell->trim_rd);
 		infra_shell(shell, &cmds, len, envp);
 		// free_cmds(shell->scmds);
 		// free_structs(shell);

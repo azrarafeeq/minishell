@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 14:17:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 18:08:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,10 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 		printf("num of CMD %d\n", cmds->cmd_id);
 		printf("--------------\n");
 	}
-	t_env **env_list = NULL;
-	ft_envp(envp, env_list);
-	pipex(shell, tmp, env_list);
+	printf("pipe_len = %d\n", shell->pipe_len);
+	t_env *env_list = NULL;
+	ft_envp(envp, &env_list);
+	char *path = get_path(&env_list);
+	shell->path_array = path_array(path);
+	pipex(shell, tmp, &env_list);
 }
