@@ -6,20 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 23:04:55 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 13:48:57 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 int	file_rd_exist(t_cmd *cmd, int flag1, int flag2)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd->rlen)
+	while (i < cmd->red_len)
 	{
-		if (cmd->rds[i].flag == flag1 || cmd->rds[i].flag == flag2)
+		if (cmd->red[i].flag == flag1 || cmd->red[i].flag == flag2)
 			return (1);
 		i++;
 	}
@@ -48,9 +48,9 @@ int	heredoc_exist(t_cmd **cmd)
 	while (cmd[i])
 	{
 		j = 0;
-		while (i < cmd[i]->rlen)
+		while (i < cmd[i]->red_len)
 		{
-			if (cmd[i]->rds[j].flag == HERE_DOC)
+			if (cmd[i]->red[j].flag == HERE_DOC)
 				return (1);
 			j++;
 		}

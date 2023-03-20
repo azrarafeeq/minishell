@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 06:17:33 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:49:38 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 void	free_char_array(char **array)
 {
@@ -40,30 +40,27 @@ void	free_int_array(int **int_array, int len)
 
 void	free_cmd(t_cmd **cmd)
 {
-	int	i;
 	int	j;
 
-	i = -1;
 	j = 0;
 	while (cmd[j])
 	{
-		free_char_array(cmd[j]->cmd_args);
+		free_char_array(cmd[j]->cmd);
 		free(cmd[j]->main);
 		free(cmd[j]->path);
-		while (cmd[j]->rds[++i])
-			free(cmd[j]->rds[i]);
-		free(cmd[j]->rds);
+		free(cmd[j]->red);
 		free(cmd[j]);
 		j++;
 	}
 	free(cmd);
 }
 
-void	free_exec(t_exec *exec)
+void	free_shell(t_infra *shell)
 {
-	free_cmd(exec->cmds);
-	free(exec->env_list);
-	free_char_array(exec->path_array);
-	free_int_array(exec->pfd, exec->cmd_amt - 1);
-	free(exec);
+	//free_cmd(shell->cmds);
+	free_char_array(shell->cmds);
+	free(shell->env_list);
+	free_char_array(shell->path_array);
+	free_int_array(shell->pfd, shell->pipe_len);
+	free(shell);
 }

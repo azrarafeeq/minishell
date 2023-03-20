@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_alloc.c                                       :+:      :+:    :+:   */
+/*   err_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/10 20:05:10 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/17 06:10:26 by arafeeq          ###   ########.fr       */
+/*   Created: 2023/03/11 15:52:00 by ahassan           #+#    #+#             */
+/*   Updated: 2023/03/20 13:54:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
-int	**alloc_pipe_fds(int pipe_amt)
+int	syntax_err(t_infra *shell)
 {
-	int	i;
-	int	**p_fd;
-
-	i = 0;
-	//error message when reached the limit....but what is the limit??
-	p_fd = malloc(sizeof(int *) * pipe_amt);
-	while (i < pipe_amt)
-	{
-		p_fd[i] = malloc(sizeof(int) * 2);
-		i++;
-	}
-	return (p_fd);
+	if (!right_quotes(shell->trim_rd))
+		return (printf("error quoets\n"), 0);
+	if (!check_redirect(shell->trim_rd))
+		return (printf("error redirect\n"), 0);
+	if (!check_pipes(shell->trim_rd))
+		return (printf("error pipe\n"), 0);
+	return (1);
 }

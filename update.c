@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/18 18:19:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:54:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 void	update_pwd(t_env **env_list)
 {
@@ -18,6 +18,7 @@ void	update_pwd(t_env **env_list)
 	char	*cur_pwd;
 	t_env	*temp;
 
+	cur_pwd = NULL;
 	temp = *env_list;
 	while (temp)
 	{
@@ -67,7 +68,7 @@ void	update_var(t_env **env_list, char *str)
 		if (ft_strcmp(temp->var, split[0]) == 0)
 		{
 			free(temp->value);
-			temp->value = maloc(sizeof(char) * (ft_strlen(str[1]) + 1));
+			temp->value = malloc(sizeof(char) * (ft_strlen(str) + 1));
 			ft_strcpy(temp->value, split[1]);
 			break ;
 		}

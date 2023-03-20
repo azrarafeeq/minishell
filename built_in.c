@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/18 21:34:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:47:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 void	ft_cd(char **str, t_env **env_list)
 {
@@ -64,9 +64,11 @@ void	ft_export(t_env **env_list, char **str)
 	temp = *env_list;
 	if (str[i])
 	{
-		if (var_exists(env_list, str[i])
+		if (var_exists(env_list, str[i]))
+		{
 			if (ft_strchr(str[i], '='))
 				return (update_var(env_list, str[i]));
+		}
 		else
 		{
 			env_node = init_env_node(str[1]);

@@ -6,11 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/18 21:34:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:59:00 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 void	ft_exit_cmd(char **str)
 {
@@ -24,7 +24,7 @@ void	ft_exit_cmd(char **str)
 		if (ft_isdigit(str[1][j]) == 0)
 			exit_error(str[1]); */
 	num = ft_atoi(str[i]);
-	if (num == /* error return from atoi */)
+	if (num == -1) //error return from atoi
 		exit_error(str[1], 1);
 	while (str[i])
 		i++;
@@ -39,7 +39,7 @@ void	ft_exit(int exit_stat)
 	exit(exit_stat);
 }
 
-void	ft_echo(char **str, t_env **env)
+void	ft_echo(char **str)
 {
 	int		i;
 
@@ -49,10 +49,10 @@ void	ft_echo(char **str, t_env **env)
 		i = 0;
 	while (str[++i])
 	{
-		if (str[i][0] == '$')
+		/* if (str[i][0] == '$')
 			ft_echo_expand(str[i], env);
-		else
-			printf("%s", str[i]);
+		else */
+		printf("%s", str[i]);
 		if (str[i + 1])
 			printf(" ");
 	}
@@ -60,7 +60,7 @@ void	ft_echo(char **str, t_env **env)
 		printf("\n");
 }
 
-void	ft_echo_expand(char *str, t_env **env)
+/* void	ft_echo_expand(char *str, t_env **env)
 {
 	char	**split;
 	t_env	*temp;
@@ -77,7 +77,7 @@ void	ft_echo_expand(char *str, t_env **env)
 		temp = temp->next;
 	}
 	free_char_array(split);
-}
+} */
 
 int	cmd_is_built_in(char *str)
 {
@@ -96,7 +96,7 @@ int	cmd_is_built_in(char *str)
 void	ft_built_in(char *cmd, char **args, t_env **env)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
-		ft_echo(args, env);
+		ft_echo(args);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		ft_cd(args, env);
 	else if (ft_strcmp(cmd, "pwd") == 0)
