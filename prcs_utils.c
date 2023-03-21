@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 21:18:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:40:58 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int	heredoc_exist(t_infra *shell, t_cmd *cmd)
 	int	j;
 
 	i = 0;
-	while (i < (shell->pipe_len))
+	while (i < (shell->pipe_len + 1))
 	{
 		j = 0;
 		while (j < cmd[i].red_len)
 		{
+			printf("redirection flag = %d\n", cmd[i].red[j].flag);
 			if (cmd[i].red[j].flag == HERE_DOC)
 				return (1);
 			j++;

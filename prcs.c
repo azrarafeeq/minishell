@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 18:58:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:51:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			ft_dup2(cmd[i].red, cmd[i].red_len, shell, cmd);
 			ft_pipe_dup2(shell, cmd, i);
 			ft_close_pipes(shell, i, cmd[i]);
-			mt_arg_error(cmd[i], env_arr, shell);
-			if (cmd_is_built_in(cmd[i].main))
-				ft_built_in(cmd[i].main, cmd[i].cmd, &(shell->env_list));
-			else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
-				execve_error(shell, cmd, i);
+			if (cmd[i].cmd_len > 0)
+			{
+				mt_arg_error(cmd[i], env_arr, shell);
+				if (cmd_is_built_in(cmd[i].main))
+					ft_built_in(cmd[i].main, cmd[i].cmd, &(shell->env_list));
+				else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
+					execve_error(shell, cmd, i);
+			}
 		}
 	}
 	if (cmd[i].cmd_id != 1 && shell->pipe_len > 0)
@@ -48,7 +51,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	return (pid);
 }
 
-int	ft_heredoc(char *delimeter)
+void	ft_heredoc(char *delimeter)
 {
 	int		fd;
 	char	*line;
@@ -64,7 +67,7 @@ int	ft_heredoc(char *delimeter)
 		line = get_next_line(0);
 	}
 	free(line);
-	return (fd);
+	close(fd);
 }
 
 int	open_file(char *file, int flag)
@@ -79,7 +82,10 @@ int	open_file(char *file, int flag)
 	else if (flag == APPEND)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (flag == HERE_DOC)
-		fd = ft_heredoc(file);
+	{
+		ft_heredoc(file);
+		fd = open("temp", O_RDONLY, 0777);
+	}
 	return (fd);
 }
 

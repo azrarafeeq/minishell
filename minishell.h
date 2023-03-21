@@ -59,7 +59,7 @@ typedef struct s_red{
 
 typedef struct s_cmd{
 	int		cmd_id;
-	int 	start;
+	int		start;
 	char	*main;
 	char	**tmp_cmd;
 	char	**cmd;
@@ -115,7 +115,7 @@ int		pipex(t_infra *shell, t_cmd *cmds, t_env **env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
 void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
-int		ft_heredoc(char *delimeter);
+void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
 int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);

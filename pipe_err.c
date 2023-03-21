@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_err.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:38:09 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/13 18:48:02 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:02:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	pipe_inbetween(char *line)
 {
-	int i = 0;
-	int j = 0;
-	int quote = 0;
-	
+	int	i;
+	int	j;
+	int	quote;
+
+	i = 0;
+	j = 0;
+	quote = 0;
 	while (line[i])
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -35,7 +38,7 @@ int	pipe_inbetween(char *line)
 			while (line[j] == ' ' || line[j] == '\t')
 				j++;
 			if (line[j] == '|')
-				return (0);	
+				return (0);
 		}
 		i++;
 	}
@@ -44,10 +47,12 @@ int	pipe_inbetween(char *line)
 
 int	check_pipes(char *line)
 {
-	int len = ft_strlen(line) - 1;
+	int	len;
+
+	len = ft_strlen(line) - 1;
 	if (line[len] == '|' || line[0] == '|')
 		return (0);
 	if (!pipe_inbetween(line))
 		return (0);
-	return 1;	
+	return (1);
 }

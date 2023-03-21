@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:25:36 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 23:00:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 20:59:45 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	if(!s)
+	if (!s)
 		return (0);
 	while (s[i] != '\0')
 		i++;

@@ -6,20 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/20 19:32:53 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:03:40 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void is_quote(char c, char *quote)
+void	is_quote(char c, char *quote)
 {
 	if (c == '\'' || c == '\"')
-		{
-			if (!*quote)
-				*quote = c;
-			else if (*quote == c)
-				*quote = 0;
+	{
+		if (!*quote)
+			*quote = c;
+		else if (*quote == c)
+			*quote = 0;
 	}
 }
 
@@ -102,23 +102,24 @@ char	**ft_split_with_quotes(char const *s, char c, int *cnt)
 {
 	int		i;
 	int		h;
-	char	*tmp = (char *)s; //why use temp;
+	char	*tmp;
 	char	**split;
 	char	**spaces;
 
 	i = 0;
 	h = 0;
 	split = ft_split_quote(s, c);
+	tmp = (char *)s;
 	free(tmp);
-	while(split[i])
-			printf("%s\n", split[i++]);
+	while (split[i])
+		printf("%s\n", split[i++]);
 	// printf("i == %d\n", i);	
 	*cnt = i;
 	spaces = malloc(sizeof(*split) * (*cnt + 1));
 	h = 0;
 	h = -1;
 	//bool error = false;
-	while(split[++h])
+	while (split[++h])
 	{
 		// if (ft_strchr(split[h], '$'))
 			// expansion(&split[h]);

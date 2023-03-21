@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 17:56:34 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:51:31 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env **env_list)
 	int	pid;
 
 	i = 0;
-	// printf("id of command in the beginning = %d\n", (*cmds)->cmd_id);
-	//printf("pipe_len = %d\n", shell->pipe_len);
-	if (shell->pipe_len > 0) //make sure what pipe_len is
+	if (shell->pipe_len > 0)
 		pipe(shell->pfd[0]);
 	while (i < (shell->pipe_len + 1))
 	{
@@ -45,7 +43,7 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env **env_list)
 		pid = process(cmds, i, shell, env_list);
 		i++;
 	}
-	if (heredoc_exist(shell, cmds))
-		unlink("temp");
+	// if (heredoc_exist(shell, cmds))
+	// 	unlink("temp");
 	return (pid);
 }

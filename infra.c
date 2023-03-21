@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 20:49:19 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:01:11 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 
 void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 {
-	int h = 0;
-	int j = -1;
-	t_cmd *cmds;
+	t_cmd	*cmds;
+	int		h = 0;
+	int		j = -1;
 	int		pid;
 
 	*tmp = malloc(sizeof(t_cmd) * (len));
