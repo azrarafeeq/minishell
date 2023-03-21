@@ -111,7 +111,7 @@ char	*append_path_to_array(char *path, int *i);
 char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
-int		pipex(t_infra *shell, t_cmd *cmds, t_env **env_list);
+int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
 void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);

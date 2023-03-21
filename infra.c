@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 21:01:11 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 22:45:47 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,11 +164,6 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 	}
 	shell->pipe_len = len - 1;
 	shell->pfd = alloc_pipe_fds(shell->pipe_len);
-	t_env	*env_list = NULL;
-	ft_envp(envp, &env_list);
-	char *path = get_path(&env_list);
-	shell->path_array = path_array(path);
-	shell->env_list = env_list;
-	pid = pipex(shell, cmds, &env_list);
+	pid = pipex(shell, cmds, shell->env_list);
 	waitpid(pid, 0, 0);
 }

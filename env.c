@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:30:38 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 16:42:35 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 22:42:32 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	envlst_addback(t_env **lst, t_env *new)
 	}
 	temp = *lst;
 	while (temp->next != NULL)
-	{
 		temp = temp->next;
-	}
 	temp->next = new;
 }
 

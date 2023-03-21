@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 21:52:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 22:45:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	get_line(t_infra *shell, char **envp)
 	t_cmd	*cmds;
 
 	len = 0;
+	t_env	*env_list = NULL;
+	ft_envp(envp, &env_list);
+	char *path = get_path(&env_list);
+	shell->path_array = path_array(path);
+	shell->env_list = env_list;
 	while (1)
 	{
 		shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");

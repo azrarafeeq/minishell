@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 14:47:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 22:47:06 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_env(t_env **env_list)
 	t_env	*temp;
 
 	temp = *env_list;
-	while (temp)
+	while (temp->next)
 	{
 		if (temp->value != NULL)
 			printf("%s=%s\n", temp->var, temp->value);
@@ -72,7 +72,8 @@ void	ft_export(t_env **env_list, char **str)
 		else
 		{
 			env_node = init_env_node(str[1]);
-			return (envlst_addback(env_list, env_node));
+			envlst_addback(env_list, env_node);
+			return ;
 		}
 	}
 	while (i <= len && temp)
