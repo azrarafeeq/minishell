@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 21:45:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:16:20 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 {
 	if (get_path(&(shell->env_list)) == NULL)
 	{
-		printf("does it enter here\n");
 		printf("%s: no such file or directory\n", cmd[i].main);
 		//free_shell(shell);
 		//free cmd

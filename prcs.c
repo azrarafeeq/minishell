@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 22:58:40 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:29:01 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	char	**env_arr;
 
 	pid = 0;
-	printf("i = %d\n", i);
+	//printf("i = %d\n", i);
 	printf("cmd[i]->main = %s\n", cmd[i].main);
 	if (ft_strcmp(cmd[i].main, "exit") == 0 || ft_strcmp(cmd[i].main, "cd") == 0
 		|| ft_strcmp(cmd[i].main, "export") == 0 || ft_strcmp(cmd[i].main, "unset") == 0)
@@ -111,17 +111,24 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
 	if (shell->pipe_len > 0)
 	{
-		if (file_rd_exist(cmds[i], 0, 1) == 0
-			&& (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
-			dup2(shell->pfd[i][0], STDIN_FILENO);
-		if (file_rd_exist(cmds[i], 2, 3) == 0 && cmds[i].cmd_id == 1)
-			dup2(shell->pfd[0][1], STDOUT_FILENO);
-		if (file_rd_exist(cmds[i], 0, 1) == 0
-			&& cmds[i].cmd_id == (shell->pipe_len + 1))
-			dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
-		if (file_rd_exist(cmds[i], 2, 3) == 0
-			&& (cmds[i].cmd_id != (shell->pipe_len + 1) && cmds[i].cmd_id != 1))
-			dup2(shell->pfd[i + 1][1], STDOUT_FILENO);
+		printf("i in ft_pipe_dup2 is : %d\n", i);
+		if (cmds[i].cmd_id == 1 || cmds[i].cmd_id == (shell->pipe_len + 1))
+		{
+			if (file_rd_exist(cmds[i], 2, 3) == 0 && cmds[i].cmd_id == 1)
+				dup2(shell->pfd[0][1], STDOUT_FILENO);
+			if (file_rd_exist(cmds[i], 0, 1) == 0
+				&& cmds[i].cmd_id == (shell->pipe_len + 1))
+				dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
+		}
+		else
+		{
+			printf("---------------does it enter here-------------\n");
+			printf("i == %i\n", i);
+			if (file_rd_exist(cmds[i], 0, 1) == 0)
+				dup2(shell->pfd[i - 1][0], STDIN_FILENO);
+			if (file_rd_exist(cmds[i], 2, 3) == 0)
+				dup2(shell->pfd[i][1], STDOUT_FILENO);
+		}
 	}
 }
 
@@ -132,10 +139,14 @@ void ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 		if (cmd.cmd_id == 1)
 			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
 		else if (cmd.cmd_id == (shell->pipe_len + 1))
+		{
 			close_fds(shell->pfd[shell->pipe_len - 1][0],
 				shell->pfd[shell->pipe_len - 1][1], -1, -1);
+		}
 		else
-			close_fds(shell->pfd[i][0], shell->pfd[i][1],
-				shell->pfd[i + 1][0], shell->pfd[i + 1][1]);
+		{
+			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1],
+				shell->pfd[i][0], shell->pfd[i][1]);
+		}
 	}
 }
