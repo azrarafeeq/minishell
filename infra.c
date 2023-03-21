@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 18:59:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 20:49:19 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	j;
-
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -31,28 +30,10 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 	s[j] = '\0';
 }
 
-void	get_file(char *str, char **file_name, int i, t_vars *var)
-{
-	int		start;
-	char	quote;
-
-	start = i;
-	quote = 0;
-	while (str[i])
-	{
-		is_quote(str[i], &quote);
-		if ((str[i] == ' ' || str[i] == '\t') && !quote)
-			break ;
-		i++;
-	}
-	var->i = i;
-	(*file_name) = ft_substr(str, start, i - start);
-}
-
 int	red_count(char *str)
 {
-	int		i;
-	int		num;
+	int	i;
+	int	num;
 	char	quote;
 
 	i = 0;
@@ -72,97 +53,114 @@ int	red_count(char *str)
 	return (num);
 }
 
-void	get_flags(t_infra *shell, t_cmd *cmds, t_vars *var)
+int	get_file(char *str, char **file_name, int i)
 {
-	var->start = var->x - 1;
-	if (shell->cmds[var->j][var->x + 1] == '>' \
-		|| shell->cmds[var->j][var->x + 1] == '<')
+	int	start;
+	char	quote;
+
+	start = i;
+	quote = 0;
+	while (str[i])
 	{
-		if (shell->cmds[var->j][var->x + 1] == '>')
-			cmds[var->j].red[var->y].flag = APPEND;
-		else if (shell->cmds[var->j][var->x + 1] == '<')
-			cmds[var->j].red[var->y].flag = HERE_DOC;
-		var->x = var->x + 2;
+		is_quote(str[i], &quote);
+		if ((str[i] == ' ' || str[i] == '\t') && !quote)
+			break ;
+		i++;
 	}
-	else if (shell->cmds[var->j][var->x] == '>')
+	(*file_name) = ft_substr(str, start, i - start);
+	return i;
+}
+
+void	get_flags(t_cmd *cmds,  int *j, int *x, int *y)
+{
+	cmds->start = *x - 1;
+	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
+		|| cmds->tmp_cmd[*j][*x + 1] == '<')
 	{
-		cmds[var->j].red[var->y].flag = TRUNCATE;
-		var->x++;
+		if (cmds->tmp_cmd[*j][*x + 1] == '>')
+			cmds[*j].red[*y].flag = APPEND;
+		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
+			cmds[*j].red[*y].flag = HERE_DOC;
+		*x += 2;
 	}
-	else if (shell->cmds[var->j][var->x] == '<')
+	else if (cmds->tmp_cmd[*j][*x] == '>')
 	{
-		cmds[var->j].red[var->y].flag = IN_FILE;
-		var->x++;
+		cmds[*j].red[*y].flag = TRUNCATE;
+		(*x)++;
+	}
+	else if (cmds->tmp_cmd[*j][*x] == '<')
+	{
+		cmds[*j].red[*y].flag = IN_FILE;
+		(*x)++;
 	}
 }
 
-void	init_infra(t_infra *shell, t_cmd *cmds, t_vars *v)
+void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 {
-	v->y = 0;
-	v->x = -1;
-	while (shell->cmds[v->j][++v->x])
+	int y = 0;
+	int x = -1;
+	int len;
+	char quote = 0;
+	while (shell->cmds[j][++x])
 	{
-		if (shell->cmds[v->j][v->x] == '"' || shell->cmds[v->j][v->x] == '\'')
+		if (shell->cmds[j][x] == '"' || shell->cmds[j][x] == '\'')
 		{
-			if (v->quote == 0)
-				v->quote = shell->cmds[v->j][v->x];
-			else if (v->quote == shell->cmds[v->j][v->x])
-				v->quote = 0;
+			if (quote == 0)
+				quote = shell->cmds[j][x];
+			else if (quote == shell->cmds[j][x])
+				quote = 0;
 		}
-		if ((shell->cmds[v->j][v->x] == '>' || \
-			shell->cmds[v->j][v->x] == '<') && !v->quote)
+		if ((shell->cmds[j][x] == '>' || shell->cmds[j][x] == '<') && !quote)
 		{
-			get_flags(shell, cmds, v);
-			get_file(shell->cmds[v->j], \
-				&cmds[v->j].red[v->y].file, v->x + 1, v);
-			clean_quotes(cmds[v->j].red[v->y].file);
-			get_cmd(shell->cmds[v->j], v->start, v->i);
-			v->x = v->start - 1;
-			printf("\e[1;34mfile name : %s\n\e[0m", cmds[v->j].red[v->y].file);
-			printf("\e[1;34mflag	  : %d\n\e[0m", cmds[v->j].red[v->y].flag);
-			v->y++;
+			get_flags(cmds, &j, &x, &y);
+			len = get_file(shell->cmds[j], &cmds[j].red[y].file, x + 1);
+			clean_quotes(cmds[j].red[y].file);
+			get_cmd(shell->cmds[j], cmds->start, len);
+			x = cmds->start - 1;
+			printf("file name : %s\n", cmds[j].red[y].file);
+			printf("flag	  : %d\n", cmds[j].red[y].flag);
+			y++;
 		}
 	}
 }
 
 void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 {
-	t_cmd	*cmds;
-	t_vars	var;
+	int h = 0;
+	int j = -1;
+	t_cmd *cmds;
 	int		pid;
 
-	var.start = 0;
-	var.quote = 0;
-	var.h = 0;
-	var.j = -1;
-	var.x = 0;
-	*tmp = malloc(sizeof(t_cmd) * len);
+	*tmp = malloc(sizeof(t_cmd) * (len));
 	cmds = *tmp;
-	cmds->cmd_len = len;
-	while (++var.j < len)
-	{
-		cmds[var.j].red_len = red_count(shell->cmds[var.j]);
-		if (cmds[var.j].red_len)
-			cmds[var.j].red = malloc(sizeof(t_red) * cmds[var.j].red_len);
-		init_infra(shell, cmds, &var);
-		cmds[var.j].cmd = ft_split_quote(shell->cmds[var.j], ' ');
-		var.h = 0;
-		while (cmds[var.j].cmd[var.h])
-			clean_quotes(cmds[var.j].cmd[var.h++]);
-		var.h = 0;
-		cmds[var.j].main = ft_strdup("");
-		cmds[var.j].cmd_id = 0;
-		while (cmds[var.j].cmd[var.h])
+	cmds->start = 0;
+	cmds->tmp_cmd = shell->cmds;
+	while (++j < len)
+	{		
+		cmds[j].red_len = red_count(shell->cmds[j]);
+		if (cmds[j].red_len)
+			cmds[j].red = malloc(sizeof(t_red) * cmds[j].red_len);
+		init_infra(shell, cmds, j);
+		cmds[j].cmd = ft_split_quote(shell->cmds[j], ' ');
+		h = 0;
+		while (cmds[j].cmd[h])
+			clean_quotes(cmds[j].cmd[h++]);
+		cmds[j].main = ft_strdup("");
+		cmds[j].cmd_id = 0;
+		h = 0;
+		while (cmds[j].cmd[h])
 		{
-			if (var.h == 0)
+			if (h == 0)
 			{
-				free(cmds[var.j].main);
-				cmds[var.j].main = cmds[var.j].cmd[var.h];
+				free(cmds[j].main);
+				cmds[j].main = cmds[j].cmd[h];
 			}
-			var.h++;
-			cmds[var.j].cmd_id = var.j + 1;
+			printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
+			printf("in loop CMD [%d]-> %s\n",j ,cmds[j].cmd[h]);
+			h++;
+			cmds[j].cmd_id = j + 1;
 		}
-		cmds[var.j].cmd_len = var.h;
+		cmds[j].cmd_len = h;
 	}
 	shell->pipe_len = len - 1;
 	shell->pfd = alloc_pipe_fds(shell->pipe_len);

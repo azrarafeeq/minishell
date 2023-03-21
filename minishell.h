@@ -59,7 +59,9 @@ typedef struct s_red{
 
 typedef struct s_cmd{
 	int		cmd_id;
+	int 	start;
 	char	*main;
+	char	**tmp_cmd;
 	char	**cmd;
 	char	*path;
 	int		red_len;
@@ -76,20 +78,6 @@ typedef struct s_infra{
 	char	**path_array;
 	int		**pfd;
 }				t_infra;
-
-typedef struct s_vars
-{
-	int		i;
-	int		j;
-	int		h;
-	int		len;
-	char	quote;
-	char	single;
-	char	paired;
-	int		x;
-	int		start;
-	int		y;
-}	t_vars;
 
 int		get_line(t_infra *shell, char **envp);
 char	*replace(char *str, char *old, char *newstr);
