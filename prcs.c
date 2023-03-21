@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 17:56:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:58:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	pid = 0;
 	if (ft_strcmp(cmd[i].main, "exit") == 0 || ft_strcmp(cmd[i].main, "cd") == 0
 		|| ft_strcmp(cmd[i].main, "export") == 0 || ft_strcmp(cmd[i].main, "unset") == 0)
-		{
-			ft_built_in(cmd[i].main, cmd[i].cmd, env_list);
-		}
+		ft_built_in(cmd[i].main, cmd[i].cmd, env_list);
 	else
 	{
 		pid = fork();
@@ -45,7 +43,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 				execve_error(shell, cmd, i);
 		}
 	}
-	if (cmd[i].cmd_id != 1)
+	if (cmd[i].cmd_id != 1 && shell->pipe_len > 0)
 		close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	return (pid);
 }
