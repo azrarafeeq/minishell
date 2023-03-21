@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 17:23:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:56:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env **env_list)
 	while (i < (shell->pipe_len + 1))
 	{
 		if ((i + 1) < shell->pipe_len)
-		{
-			printf("i = %d\n", i);
-			printf("i + 1 = %d\n", i + 1);
 			pipe(shell->pfd[i + 1]);
-		}
 		pid = process(cmds, i, shell, env_list);
 		i++;
 	}
