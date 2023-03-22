@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 20:29:50 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:42:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_line(t_infra *shell, char **envp)
 		shell->pipe_len = len - 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds, shell->env_list);;
-		while (++i < shell->pipe_len)
+		while (++i <= shell->pipe_len)
 			waitpid(-1, 0, 0);
 		if (heredoc_exist(shell, cmds))
 			unlink("temp");
