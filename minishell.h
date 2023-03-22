@@ -89,7 +89,7 @@ void	is_quote(char c, char *quote);
 int		syntax_err(t_infra *in);
 char	**ft_split_with_quotes(char const *s, char c, int *cnt);
 char	**ft_split_quote(char const *s, char c);
-void	infra_shell(t_infra *pipe, t_cmd **tmp, int len, char **envp);
+void	infra_shell(t_infra *shell, t_cmd **tmp, int len);
 void	free_cmds(char **cmds);
 char	*replace_with_space(char *input);
 void	free_structs(t_infra *sh);

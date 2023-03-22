@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 22:45:15 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:27:53 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handler(int sig)
 int	get_line(t_infra *shell, char **envp)
 {
 	int		len;
-	//int		pid;
+	int		pid;
 	t_cmd	*cmds;
 
 	len = 0;
@@ -47,7 +47,13 @@ int	get_line(t_infra *shell, char **envp)
 			continue ;
 		shell->cmds = ft_split_with_quotes(shell->trim_rd, '|', &len);
 		//free(shell->trim_rd);
-		infra_shell(shell, &cmds, len, envp);
+		infra_shell(shell, &cmds, len);
+		shell->pipe_len = len - 1;
+		shell->pfd = alloc_pipe_fds(shell->pipe_len);
+		pid = pipex(shell, cmds, shell->env_list);
+		waitpid(-1, 0, 0);
+		if (heredoc_exist(shell, cmds))
+			unlink("temp");
 		// free_cmds(shell->scmds);
 		// free_structs(shell);
 		// if(excecute(cmds->cmd))

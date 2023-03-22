@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 22:45:47 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:06:13 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	j;
+
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -32,8 +33,8 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 
 int	red_count(char *str)
 {
-	int	i;
-	int	num;
+	int		i;
+	int		num;
 	char	quote;
 
 	i = 0;
@@ -55,7 +56,7 @@ int	red_count(char *str)
 
 int	get_file(char *str, char **file_name, int i)
 {
-	int	start;
+	int		start;
 	char	quote;
 
 	start = i;
@@ -68,10 +69,10 @@ int	get_file(char *str, char **file_name, int i)
 		i++;
 	}
 	(*file_name) = ft_substr(str, start, i - start);
-	return i;
+	return (i);
 }
 
-void	get_flags(t_cmd *cmds,  int *j, int *x, int *y)
+void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
 {
 	cmds->start = *x - 1;
 	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
@@ -97,10 +98,14 @@ void	get_flags(t_cmd *cmds,  int *j, int *x, int *y)
 
 void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 {
-	int y = 0;
-	int x = -1;
-	int len;
-	char quote = 0;
+	int		y;
+	int		x;
+	int		len;
+	char	quote;
+
+	y = 0;
+	x = -1;
+	quote = 0;
 	while (shell->cmds[j][++x])
 	{
 		if (shell->cmds[j][x] == '"' || shell->cmds[j][x] == '\'')
@@ -124,13 +129,14 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 	}
 }
 
-void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
+void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
 {
 	t_cmd	*cmds;
-	int		h = 0;
-	int		j = -1;
-	int		pid;
+	int		h;
+	int		j;
 
+	h = 0;
+	j = -1;
 	*tmp = malloc(sizeof(t_cmd) * (len));
 	cmds = *tmp;
 	cmds->start = 0;
@@ -156,14 +162,10 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len, char **envp)
 				cmds[j].main = cmds[j].cmd[h];
 			}
 			printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
-			printf("in loop CMD [%d]-> %s\n",j ,cmds[j].cmd[h]);
+			printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
 			h++;
 			cmds[j].cmd_id = j + 1;
 		}
 		cmds[j].cmd_len = h;
 	}
-	shell->pipe_len = len - 1;
-	shell->pfd = alloc_pipe_fds(shell->pipe_len);
-	pid = pipex(shell, cmds, shell->env_list);
-	waitpid(pid, 0, 0);
 }
