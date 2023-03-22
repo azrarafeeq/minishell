@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/19 18:25:32 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:41:51 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,68 +58,87 @@ char *epur_str(char *av)
 	// return free(av),free(sub),output;
 }
 
-
-char *replace_with_space(char *input)
+char	*replace_with_space(char *input)
 {
-    int i, j = 0;
-    char *output = (char*) malloc((4 * ft_strlen(input) + 1) * sizeof(char));
+	int		i;
+	int		j;
+	char	*output;
+	char	quote;
+
+	output = (char *) malloc((4 * ft_strlen(input) + 1) * sizeof(char));
 	i = 0;
-	char quote = 0;
-    while (i < ft_strlen(input)) 
+	j = 0;
+	quote = 0;
+	while (i < ft_strlen(input))
 	{
-	is_quote(input[i], &quote);
-    if ((input[i] == '>' || input[i] == '<') && !quote) {
-        if (input[i+1] == '>' || input[i+1] == '<')
+		is_quote(input[i], &quote);
+		if ((input[i] == '>' || input[i] == '<') && !quote)
 		{
-            output[j++] = ' ';
-            output[j++] = ' ';
-            output[j++] = ' ';
-            output[j++] = input[i++];
-            output[j++] = input[i];
-            output[j++] = ' ';
-            output[j++] = ' ';
-        } else 
-		{
-            output[j++] = ' ';
-            output[j++] = ' ';
-            output[j++] = ' ';
-            output[j++] = input[i];
-            output[j++] = ' ';
-            output[j++] = ' ';
-        }
-    } 
-	else
-        output[j++] = input[i];
-	i++;	
-    }
-    output[j] = '\0';
-    return output;
+			if (input[i + 1] == '>' || input[i + 1] == '<')
+			{
+				output[j++] = ' ';
+				output[j++] = ' ';
+				output[j++] = ' ';
+				output[j++] = input[i++];
+				output[j++] = input[i];
+				output[j++] = ' ';
+				output[j++] = ' ';
+			}
+			else
+			{
+				output[j++] = ' ';
+				output[j++] = ' ';
+				output[j++] = ' ';
+				output[j++] = input[i];
+				output[j++] = ' ';
+				output[j++] = ' ';
+			}
+		}
+		else
+			output[j++] = input[i];
+		i++;
+	}
+	output[j] = '\0';
+	return (output);
 }
 
-char* replace(char* str, char* old, char* newstr) 
+char	*replace(char *str, char *old, char *newstr)
 {
-    int len = strlen(str);
-    int oldlen = strlen(old);
-    int count = 0;
-    for (int i = 0; i < len; i++) {
-        if (strchr(old, str[i]) != NULL) {
-            count++;
-        }
-    }
-    int newlen = len + count * (strlen(newstr) - oldlen);
-    char* result = (char*) malloc((newlen + 1) * sizeof(char));
-    int j = 0;
-    for (int i = 0; i < len; i++) {
-        if (strchr(old, str[i]) != NULL) {
-            strcpy(result + j, newstr);
-            j += strlen(newstr);
-        } else {
-            result[j] = str[i];
-            j++;
-        }
-    }
-    result[j] = '\0';
-    return result;
+	int		len;
+	int		oldlen;
+	int		newlen;
+	int		count;
+	int		j;
+	char	*result;
+
+	len = strlen(str);
+	oldlen = strlen(old);
+	count = 0;
+	for (int i = 0; i < len; i++) // can't use for
+	{
+		if (strchr(old, str[i]) != NULL)
+		{
+			count++;
+		}
+	}
+	newlen = len + count * (strlen(newstr) - oldlen);
+	result = (char *) malloc((newlen + 1) * sizeof(char));
+	j = 0;
+	for (int i = 0; i < len; i++) // can't use for
+	{
+		if (strchr(old, str[i]) != NULL)
+		{
+			ft_strcpy(result + j, newstr);
+			j += ft_strlen(newstr);
+		}
+		else
+		{
+			result[j] = str[i];
+			j++;
+		}
+	}
+	result[j] = '\0';
+	return (result);
 }
 
 void	clean_quotes(char *str)
@@ -151,9 +170,13 @@ void	clean_quotes(char *str)
 
 int	right_quotes(char *str)
 {
-	int single = 0;
-	int paired = 0;
-	int i = 0;
+	int	i;
+	int	single;
+	int	paired;
+
+	single = 0;
+	paired = 0;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -175,15 +198,6 @@ int	right_quotes(char *str)
 	if (single || paired)
 		return (0);
 	return (1);
-}
-
-void free_cmds(char **cmds)
-{
-	char **tmp;
-	tmp = cmds;
-	while(*cmds)
-		free(*cmds++);
-	free(tmp);	
 }
 
 // void	free_structs(t_infra *sh)

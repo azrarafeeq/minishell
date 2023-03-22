@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 12:27:53 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:48:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	handler(int sig)
 int	get_line(t_infra *shell, char **envp)
 {
 	int		len;
+	int		i;
 	int		pid;
 	t_cmd	*cmds;
+	t_env	*env_list;
 
 	len = 0;
-	t_env	*env_list = NULL;
+	i = -1;
+	env_list = NULL;
 	ft_envp(envp, &env_list);
 	char *path = get_path(&env_list);
 	shell->path_array = path_array(path);
@@ -51,7 +54,8 @@ int	get_line(t_infra *shell, char **envp)
 		shell->pipe_len = len - 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds, shell->env_list);
-		waitpid(-1, 0, 0);
+		while (++i <= shell->pipe_len)
+			waitpid(-1, 0, 0);
 		if (heredoc_exist(shell, cmds))
 			unlink("temp");
 		// free_cmds(shell->scmds);
