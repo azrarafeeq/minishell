@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 22:10:00 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:04:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ void	export_error(char **str)
 		if (!(ft_isalpha(str[i][0]) || str[i][0] == '_'))
 		{
 			write(2, "export: '", 9);
-			write(2, str[1], ft_strlen(str[1]));
+			write(2, str[i], ft_strlen(str[i]));
 			write(2, "': not a valid identifier\n", 27);
 			exit_stat = 1;
-			ft_exit(1);
 		}
 		i++;
 	}
