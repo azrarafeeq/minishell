@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 16:49:35 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 18:15:47 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 void	ft_exit_cmd(char **str)
 {
 	int	i;
-	//int	j;
+	int	j;
 	int	num;
 
 	i = 0;
+	j = -1;
 	printf("exit\n");
-	/* while (str[1][++j])
+	while (str[1][++j])
 		if (ft_isdigit(str[1][j]) == 0)
-			exit_error(str[1]); */
+			exit_error(str[1], 1);
 	num = ft_atoi(str[i]);
 	if (num == -1) //error return from atoi
 		exit_error(str[1], 1);
@@ -31,12 +32,10 @@ void	ft_exit_cmd(char **str)
 	if (i > 2)
 		exit_error(str[1], 2);
 	else
-		exit(ft_atoi(str[1]));
-}
-
-void	ft_exit(int exit_stat)
-{
-	exit(exit_stat);
+	{
+		exit_stat = ft_atoi(str[1]);
+		ft_exit(exit_stat);
+	}
 }
 
 void	ft_echo(char **str)
@@ -49,9 +48,6 @@ void	ft_echo(char **str)
 		i = 0;
 	while (str[++i])
 	{
-		/* if (str[i][0] == '$')
-			ft_echo_expand(str[i], env);
-		else */
 		printf("%s", str[i]);
 		if (str[i + 1])
 			printf(" ");
@@ -59,25 +55,6 @@ void	ft_echo(char **str)
 	if (ft_strcmp(str[1], "-n") == 0)
 		printf("\n");
 }
-
-/* void	ft_echo_expand(char *str, t_env **env)
-{
-	char	**split;
-	t_env	*temp;
-
-	split = ft_split(str, '$');
-	temp = *env;
-	while (temp)
-	{
-		if (strcmp(split[1], temp->var) == 0)
-		{
-			printf("%s", temp->value);
-			break ;
-		}
-		temp = temp->next;
-	}
-	free_char_array(split);
-} */
 
 int	cmd_is_built_in(char *str)
 {

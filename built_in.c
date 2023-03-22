@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 17:16:22 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 18:00:36 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_env(t_env **env_list)
 			printf("%s=%s\n", temp->var, temp->value);
 		temp = temp->next;
 	}
-	//printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
+	printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
 }
 
 void	ft_export(t_env **env_list, char **str)

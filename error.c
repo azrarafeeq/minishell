@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 17:04:21 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 18:11:35 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,19 @@ void	export_error(char **str)
 
 void	exit_error(char *str, int flag)
 {
-	ft_putstr_fd("exit: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": numeric argument required\n", 2);
 	if (flag == 1)
 	{
-		exit_stat = 255; // or accordingly
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		exit_stat = 255;
 		ft_exit(exit_stat);
 	}
 	else if (flag == 2)
+	{
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": too many arguments\n", 2);
 		exit_stat = 1;
+	}
 }

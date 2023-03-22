@@ -130,8 +130,8 @@ void	ft_pwd(void);
 void	ft_echo(char **str);
 void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
-//void	ft_echo_expand(char *str, t_env **env);
 void	ft_exit(int exit_stat);
+void	ft_exit_cmd(char **str);
 
 void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
