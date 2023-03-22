@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:59:29 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/18 20:43:43 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:05:10 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ long long	ft_atoi(const char *str)
 	ws_and_sign_check(str, &i, &ve);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (ft_isdigit(str[i]) == 0)
-			return (-1);
 		num = num * 10 + (str[i] - '0');
 		i++;
-		if (num > __LONG_LONG_MAX__ && ve == 1)
+		if (num > 9223372036854775807 && ve == 1)
 			return (-1);
-		if ((num + 1) > __LONG_LONG_MAX__ && ve == -1)
+		if ((num + 1) > 9223372036854775807 && ve == -1)
 			return (-1);
 	}
 	return (num * ve);

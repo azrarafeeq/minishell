@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 16:05:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:29:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,8 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
 				free(cmds[j].main);
 				cmds[j].main = cmds[j].cmd[h];
 			}
-			//printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
-			//printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
+			printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
+			printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
 			h++;
 			cmds[j].cmd_id = j + 1;
 		}

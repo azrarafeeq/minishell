@@ -120,9 +120,9 @@ int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
-int		cmd_is_built_in(char *str);
+int		cmd_is_built_in(char *str, int flag);
 
-void	ft_built_in(char *cmd, char **args, t_env **env);
+void	ft_built_in(char *cmd, char **args, t_env **env, int flag);
 void	ft_cd(char **str, t_env **env_list);
 void	ft_env(t_env **env_list);
 void	ft_unset(t_env **env, char **str);

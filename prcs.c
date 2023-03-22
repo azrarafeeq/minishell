@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 17:02:14 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:35:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	char	**env_arr;
 
 	pid = 0;
-	if (cmd_is_built_in(cmd[i].main))
-		ft_built_in(cmd[i].main, cmd[i].cmd, env_list);
+	if (cmd_is_built_in(cmd[i].main, 1))
+		ft_built_in(cmd[i].main, cmd[i].cmd, env_list, 1);
 	else
 	{
 		pid = fork();
@@ -38,7 +38,9 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], env_arr, shell);
-				if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
+				if (cmd_is_built_in(cmd[i].main, 2))
+					ft_built_in(cmd[i].main, cmd[i].cmd, env_list, 2);
+				else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
 					execve_error(shell, cmd, i);
 			}
 			else
