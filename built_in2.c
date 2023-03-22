@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 14:59:00 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:49:35 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,14 @@ int	cmd_is_built_in(char *str)
 	if (ft_strcmp(str, "pwd") == 0)
 		return (1);
 	if (ft_strcmp(str, "env") == 0)
+		return (1);
+	if (ft_strcmp(str, "exit") == 0)
+		return (1);
+	if (ft_strcmp(str, "cd") == 0)
+		return (1);
+	if (ft_strcmp(str, "export") == 0)
+		return (1);
+	if (ft_strcmp(str, "unset") == 0)
 		return (1);
 	return (0);
 }

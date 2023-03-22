@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 12:28:39 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:52:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 	char	**env_arr;
 
 	pid = 0;
-	if (ft_strcmp(cmd[i].main, "exit") == 0 || ft_strcmp(cmd[i].main, "cd") == 0
-		|| ft_strcmp(cmd[i].main, "export") == 0 || ft_strcmp(cmd[i].main, "unset") == 0)
+	if (cmd_is_built_in(cmd[i].main))
 		ft_built_in(cmd[i].main, cmd[i].cmd, env_list);
 	else
 	{
@@ -39,13 +38,11 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], env_arr, shell);
-				if (cmd_is_built_in(cmd[i].main))
-					ft_built_in(cmd[i].main, cmd[i].cmd, &(shell->env_list));
-				else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
+				if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
 					execve_error(shell, cmd, i);
 			}
-			else
-				ft_exit(0);
+			exit_stat = 0;
+			ft_exit(0);
 		}
 	}
 	if (cmd[i].cmd_id != 1 && shell->pipe_len > 0)

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 15:41:58 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:18:31 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,3 +74,23 @@ void	free_shell(t_infra *shell)
 	free_int_array(shell->pfd, shell->pipe_len);
 	free(shell);
 }
+
+// void	free_structs(t_infra *sh)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (i < sh->pipe_len)
+// 	{
+// 		if(sh[i].rlen)
+// 		{
+// 			j = -1;
+// 			while (++j < sh[i].rlen)
+// 				free(sh[i].red[j].file);
+// 			free(sh[i].red);
+// 		}
+// 		i++;
+// 	}
+// 	free(sh);
+// }

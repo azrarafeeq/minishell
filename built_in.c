@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 22:47:06 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:41:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,21 @@ void	ft_cd(char **str, t_env **env_list)
 	DIR				*dir;
 
 	if (str[1] == NULL || str[1][0] == '\0')
-		ft_exit(1);
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(str[1], 2);
+		ft_putstr_fd(": No directory specified\n", 2);
+		exit_stat = 1;
+		return ;
+	}
 	dir = opendir(str[1]);
 	if (dir == NULL)
 	{
-		printf("cd: %s: No such file or directory\n", str[1]);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(str[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_stat = 1;
-		ft_exit(exit_stat);
+		return ;
 	}
 	chdir(str[1]);
 	update_pwd(env_list);
@@ -53,15 +61,11 @@ void	ft_env(t_env **env_list)
 void	ft_export(t_env **env_list, char **str)
 {
 	int		i;
-	int		len;
-	t_env	*temp;
 	t_env	*env_node;
 
 	export_error(str);
 	i = 1;
-	len = envlst_len(env_list);
 	ft_env_pos(env_list);
-	temp = *env_list;
 	if (str[i])
 	{
 		if (var_exists(env_list, str[i]))
@@ -76,11 +80,27 @@ void	ft_export(t_env **env_list, char **str)
 			return ;
 		}
 	}
+	print_export(env_list);
+}
+
+void	print_export(t_env **env_list)
+{
+	int		i;
+	int		len;
+	t_env	*temp;
+
+	i = 1;
+	temp = *env_list;
+	len = envlst_len(env_list);
 	while (i <= len && temp)
 	{
 		if (i == temp->pos)
 		{
-			printf("declare -x %s=\"%s\"\n", temp->var, temp->value);
+			printf("declare -x %s=", temp->var);
+			if (temp->value)
+				printf("\"%s\"\n", temp->value);
+			else
+				printf("\"\"\n");
 			i++;
 			temp = *env_list;
 		}

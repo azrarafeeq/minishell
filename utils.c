@@ -6,40 +6,48 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 15:41:51 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:34:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *epur_str(char *av)
+char	*epur_str(char *av)
 {
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	char quote = 0;
-	int len = ft_strlen(av);
-    char *out = (char*) malloc((len + 1) * sizeof(char));
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+	char	quote;
+	char	*out;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	quote = 0;
+	len = ft_strlen(av);
+	out = (char *) malloc((len + 1) * sizeof(char));
 	len--;
 	while (av[i])
 	{
 		is_quote(av[i], &quote);
-		if(!quote)
+		if (!quote)
 		{
-			while(av[i] && av[i] != ' ')
+			while (av[i] && av[i] != ' ')
 			{
-				if(av[i] == '\t')
+				if (av[i] == '\t')
 					i++;
 				else
-			    	out[k++] = av[i++];
+					out[k++] = av[i++];
 			}
-			while(av[i]  && av[i] == ' '){
+			while (av[i] && av[i] == ' ')
+			{
 				j++;
 				i++;
 			}
-			if(j >= 1 && i <= len)
+			if (j >= 1 && i <= len)
 			{
-			    out[k++] = ' ';
+				out[k++] = ' ';
 				j = 0;
 			}
 		}
@@ -47,7 +55,7 @@ char *epur_str(char *av)
 			out[k++] = av[i++];
 	}
 	out[k] = '\0';
-	return free(av), out;
+	return (free(av), out);
 	// // while(av[i] == ' ' ||  av[i] == '\t'){
 	// // 	if(av[i] == '\"' || av[i] == '\'')
 	// // 		break;
@@ -100,45 +108,6 @@ char	*replace_with_space(char *input)
 	}
 	output[j] = '\0';
 	return (output);
-}
-
-char	*replace(char *str, char *old, char *newstr)
-{
-	int		len;
-	int		oldlen;
-	int		newlen;
-	int		count;
-	int		j;
-	char	*result;
-
-	len = strlen(str);
-	oldlen = strlen(old);
-	count = 0;
-	for (int i = 0; i < len; i++) // can't use for
-	{
-		if (strchr(old, str[i]) != NULL)
-		{
-			count++;
-		}
-	}
-	newlen = len + count * (strlen(newstr) - oldlen);
-	result = (char *) malloc((newlen + 1) * sizeof(char));
-	j = 0;
-	for (int i = 0; i < len; i++) // can't use for
-	{
-		if (strchr(old, str[i]) != NULL)
-		{
-			ft_strcpy(result + j, newstr);
-			j += ft_strlen(newstr);
-		}
-		else
-		{
-			result[j] = str[i];
-			j++;
-		}
-	}
-	result[j] = '\0';
-	return (result);
 }
 
 void	clean_quotes(char *str)
@@ -199,23 +168,3 @@ int	right_quotes(char *str)
 		return (0);
 	return (1);
 }
-
-// void	free_structs(t_infra *sh)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < sh->pipe_len)
-// 	{
-// 		if(sh[i].rlen)
-// 		{
-// 			j = -1;
-// 			while (++j < sh[i].rlen)
-// 				free(sh[i].red[j].file);
-// 			free(sh[i].red);
-// 		}
-// 		i++;
-// 	}
-// 	free(sh);
-// }
