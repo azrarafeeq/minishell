@@ -109,7 +109,7 @@ char	*check_path(char **path_array, char *command);
 
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
-void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds);
+void	ft_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
@@ -136,8 +136,8 @@ void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
 void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
-void	execve_error(t_infra *shell, t_cmd *cmd, int i);
-int		fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds);
+void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
+int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
 void	export_error(char **str);
 void	exit_error(char *str, int flag);
 

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 17:25:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:27:20 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 	{
 		printf("%s: command not found\n", cmd.main);
 		free_char_array(env_arr);
-		//free_shell_cmds(shell, cmds);
+		free_shell_cmds(shell, cmds);
 		exit_stat = 127;
 		ft_exit(exit_stat);
 	}
 }
 
-void	execve_error(t_infra *shell, t_cmd *cmd, int i)
+void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 {
 	if (get_path(&(shell->env_list)) == NULL)
 	{
@@ -55,22 +55,19 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 		printf("%s: is a Directory\n", cmd[i].main);
 		exit_stat = 126;
 	}
-	//free_shell_cmds(shell, cmds);
+	free_char_array(env_arr);
+	free_shell_cmds(shell, cmd);
 	ft_exit(exit_stat);
 }
 
-int	fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds)
+int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 {
 	(void)cmds;
-	if (fd == -1)
-	{
-		printf("%s: no such file or directory\n", file);
-		if (shell->pfd)
-		//close pipes if any
-		//free_shell_cmds(shell, cmds);
-		exit_stat = 1;
-		ft_exit(exit_stat);
-	}
+	printf("%s: no such file or directory\n", file);
+	ft_close_pipes(shell, i, cmds[i]);
+	//free_shell_cmds(shell, cmds);
+	exit_stat = 1;
+	ft_exit(exit_stat);
 	return (0);
 }
 

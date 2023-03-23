@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 17:22:00 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:42:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 		}
 	}
 }
+
+/* void	waitpid_signal(int i)
+{
+	if (i == WIFEXITED)
+	{
+		exit_stat = 
+	}
+	if (i == WIFSIGNALED)
+	{
+		exit_stat = 
+	}
+	if (i == WIFSTOPPED)
+	{
+		exit_stat = 
+	}
+}
+ */
 
 void	ft_exit(int exit_stat)
 {

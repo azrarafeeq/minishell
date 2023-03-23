@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/23 17:15:36 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:08:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	get_line(t_infra *shell, char **envp)
 {
 	int		len;
 	int		i;
+	int		j;
 	int		pid;
 	t_cmd	*cmds;
 	t_env	*env_list;
@@ -34,7 +35,7 @@ int	get_line(t_infra *shell, char **envp)
 	len = 0;
 	env_list = NULL;
 	ft_envp(envp, &env_list);
-	shell->p_a = path_array(get_path(&env_list));
+	shell->p_a = path_array(get_path(&env_list)); //can add inside if can't add
 	shell->env_list = env_list;
 	while (1)
 	{
@@ -48,18 +49,17 @@ int	get_line(t_infra *shell, char **envp)
 		if (!*shell->trim_rd || !syntax_err(shell))
 			continue ;
 		shell->cmds = ft_split_with_quotes(shell->trim_rd, '|', &len);
-		//free(shell->trim_rd);
 		infra_shell(shell, &cmds, len);
 		shell->pipe_len = len - 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds, shell->env_list);
 		while (++i < shell->pipe_len)
 			waitpid(-1, 0, 0);
-		waitpid(pid, 0 , 0); // have to do something with second arg
-		//free_shell_cmds(shell, cmds);
+		waitpid(pid, &j , 0); // have to do something with second arg
 		if (heredoc_exist(shell, cmds))
 			unlink("temp");
 	}
+		//free_shell_cmds(shell, cmds);
 }
 
 int	main(int ac, char **av, char **envp)

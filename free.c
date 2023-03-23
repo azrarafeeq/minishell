@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 17:18:02 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:05:39 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,21 @@ void	free_shell_cmds(t_infra *shell, t_cmd *cmds)
 	while (j < (shell->pipe_len + 1))
 	{
 		free(cmds[j].main);
-		free_char_array(cmds[j].tmp_cmd);
-		free_char_array(cmds[j].cmd);
-		free(cmds[j].p);
-		free(cmds[j].red->file);
-		free(cmds[j].red);
+		//free_char_array(cmds[j].tmp_cmd);
+		//free_char_array(cmds[j].cmd);
+		//free(cmds[j].p);
+		//free(cmds[j].red->file);
+		//free(cmds[j].red);
 		j++;
 	}
 	free(cmds);
 	free(shell->rd);
-	free(shell->trim_rd);
+	//free(shell->trim_rd);
 	free_char_array(shell->cmds);
 	free_env_list(&shell->env_list);
-	free_char_array(shell->p_a);
+	//free_char_array(shell->p_a);
 	free_int_array(shell->pfd, shell->pipe_len);
-	free(shell);
+	//free(shell);
 }
 
 // void	free_structs(t_infra *sh)

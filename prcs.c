@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 17:24:48 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:28:20 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 				cmd[i].p = cmd[i].main;
 			else
 				cmd[i].p = check_path(shell->p_a, ft_strjoin("/", cmd[i].main));
-			ft_dup2(cmd[i].red, cmd[i].red_len, shell, cmd);
+			ft_dup2(shell, cmd, i);
 			ft_pipe_dup2(shell, cmd, i);
 			ft_close_pipes(shell, i, cmd[i]);
 			if (cmd[i].cmd_len > 0)
@@ -40,7 +40,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 					ft_built_in(cmd[i].main, cmd[i].cmd, env_list, 2);
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, env_arr) == -1)
-					execve_error(shell, cmd, i);
+					execve_error(shell, cmd, i, env_arr);
 			}
 			else
 			{
@@ -90,24 +90,27 @@ int	open_file(char *file, int flag)
 	return (fd);
 }
 
-void	ft_dup2(t_red *redirect, int red_len, t_infra *shell, t_cmd *cmds)
+void	ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
-	int	i;
+	int	k;
 	int	fd;
 
-	i = 0;
-	while (i < red_len)
+	k = 0;
+	while (k < cmds[i].red_len)
 	{
-		fd = open_file(redirect[i].file, redirect[i].flag);
-		if (redirect[i].flag != HERE_DOC)
-			fd_error(fd, redirect[i].file, shell, cmds);
-		if (redirect[i].flag == IN_FILE || redirect[i].flag == HERE_DOC)
+		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+		if (cmds[i].red[k].flag != HERE_DOC)
+		{
+			if (fd == -1)
+				fd_error(cmds[i].red[k].file, shell, cmds, i);
+		}
+		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
 			dup2(fd, STDIN_FILENO);
-		if (redirect[i].flag == TRUNCATE || redirect[i].flag == APPEND)
+		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
 			dup2(fd, STDOUT_FILENO);
 		if (fd != -1)
 			close(fd);
-		i++;
+		k++;
 	}
 }
 
