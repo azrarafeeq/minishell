@@ -63,7 +63,7 @@ typedef struct s_cmd{
 	char	*main;
 	char	**tmp_cmd;
 	char	**cmd;
-	char	*path;
+	char	*p; //path
 	int		red_len;
 	int		cmd_len;
 	t_red	*red;
@@ -75,7 +75,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**path_array;
+	char	**p_a; //path_arra
 	int		**pfd;
 }				t_infra;
 
@@ -91,8 +91,6 @@ int		check_redirect(char *str);
 int		check_pipes(char *line);
 void	infra_shell(t_infra *shell, t_cmd **tmp, int len);
 void	expansion(char **str);
-//void	free_cmds(char **cmds);
-//void	free_structs(t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
 
 void	ft_envp(char **envp, t_env **env_list);
@@ -137,7 +135,7 @@ void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
-void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *exec);
+void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i);
 int		fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds);
 void	export_error(char **str);

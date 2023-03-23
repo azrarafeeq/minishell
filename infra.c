@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 20:29:08 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:01:59 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 			clean_quotes(cmds[j].red[y].file);
 			get_cmd(shell->cmds[j], cmds->start, len);
 			x = cmds->start - 1;
-			//printf("file name : %s\n", cmds[j].red[y].file);
-			//printf("flag	  : %d\n", cmds[j].red[y].flag);
 			y++;
 		}
 	}
@@ -161,8 +159,8 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
 				free(cmds[j].main);
 				cmds[j].main = cmds[j].cmd[h];
 			}
-			printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
-			printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
+			//printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
+			//printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
 			h++;
 			cmds[j].cmd_id = j + 1;
 		}

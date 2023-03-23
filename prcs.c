@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 14:51:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:24:48 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,21 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			//printf("The id of command = %d\n", cmd[i].cmd_id);
 			env_arr = list_to_array(env_list);
 			if (ft_strrchr(cmd[i].main, '/'))
-				cmd[i].path = cmd[i].main;
+				cmd[i].p = cmd[i].main;
 			else
-				cmd[i].path = check_path(shell->path_array, ft_strjoin("/", cmd[i].main));
-			//printf("cmd[i].path = %s\n", cmd[i].path);
+				cmd[i].p = check_path(shell->p_a, ft_strjoin("/", cmd[i].main));
 			ft_dup2(cmd[i].red, cmd[i].red_len, shell, cmd);
 			ft_pipe_dup2(shell, cmd, i);
 			ft_close_pipes(shell, i, cmd[i]);
 			if (cmd[i].cmd_len > 0)
 			{
-				mt_arg_error(cmd[i], env_arr, shell);
+				mt_arg_error(cmd[i], env_arr, shell, cmd);
 				if (cmd_is_built_in(cmd[i].main, 2))
 					ft_built_in(cmd[i].main, cmd[i].cmd, env_list, 2);
-				else if (cmd[i].path == NULL || execve(cmd[i].path, cmd[i].cmd, env_arr) == -1)
+				else if (cmd[i].p == NULL
+					|| execve(cmd[i].p, cmd[i].cmd, env_arr) == -1)
 					execve_error(shell, cmd, i);
 			}
 			else
@@ -50,8 +49,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			}
 		}
 	}
-	if (cmd[i].cmd_id != 1 && shell->pipe_len > 0)
-		close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	return (pid);
 }
 

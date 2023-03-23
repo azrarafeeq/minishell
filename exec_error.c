@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 18:11:35 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:25:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell)
+void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 {
 	int	i;
 	int	len;
 
 	i = 0;
+	(void)shell;
+	(void)cmds;
 	len = ft_strlen(cmd.main);
 	while (cmd.main[i] == ' ' && cmd.main[i])
 		i++;
@@ -25,7 +27,7 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell)
 	{
 		printf("%s: command not found\n", cmd.main);
 		free_char_array(env_arr);
-		//free_shell(shell);
+		//free_shell_cmds(shell, cmds);
 		exit_stat = 127;
 		ft_exit(exit_stat);
 	}
@@ -36,44 +38,36 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 	if (get_path(&(shell->env_list)) == NULL)
 	{
 		printf("%s: no such file or directory\n", cmd[i].main);
-		//free_shell(shell);
-		//free cmd
 		exit_stat = 127;
 	}
-	if (cmd[i].path == NULL)
+	if (cmd[i].p == NULL)
 	{
 		printf("%s: command not found\n", cmd[i].main);
-		//free_shell(shell);
-		//free cmd
 		exit_stat = 127;
 	}
-	else if (access(cmd[i].path, X_OK) == -1)
+	else if (access(cmd[i].p, X_OK) == -1)
 	{
 		printf("%s: Permission denied\n", cmd[i].main);
-		//free_shell(shell);
-		//free cmd
 		exit_stat = 126;
 	}
-	else if (access(cmd[i].path, F_OK) == -1)
+	else if (access(cmd[i].p, F_OK) == -1)
 	{
 		printf("%s: is a Directory\n", cmd[i].main);
-		//free_shell(shell);
-		//free cmd
 		exit_stat = 126;
 	}
+	//free_shell_cmds(shell, cmds);
 	ft_exit(exit_stat);
 }
 
 int	fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds)
 {
+	(void)cmds;
 	if (fd == -1)
 	{
 		printf("%s: no such file or directory\n", file);
 		if (shell->pfd)
 		//close pipes if any
-		//free_shell(shell);
-		//free_cmd(cmds);
-		//free cmd
+		//free_shell_cmds(shell, cmds);
 		exit_stat = 1;
 		ft_exit(exit_stat);
 	}

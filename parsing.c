@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/23 16:47:49 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:15:36 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	get_line(t_infra *shell, char **envp)
 	len = 0;
 	env_list = NULL;
 	ft_envp(envp, &env_list);
-	char *path = get_path(&env_list);
-	shell->path_array = path_array(path);
+	shell->p_a = path_array(get_path(&env_list));
 	shell->env_list = env_list;
 	while (1)
 	{
@@ -54,18 +53,13 @@ int	get_line(t_infra *shell, char **envp)
 		shell->pipe_len = len - 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds, shell->env_list);
-		while (++i <= shell->pipe_len)
-			waitpid(-1, 0, 0); // can't call in while loop??
-	//waitpid with the pid got from pipex and something with the second argument
+		while (++i < shell->pipe_len)
+			waitpid(-1, 0, 0);
+		waitpid(pid, 0 , 0); // have to do something with second arg
 		//free_shell_cmds(shell, cmds);
-		if (heredoc_exist(shell, cmds)) //can remove in the future
+		if (heredoc_exist(shell, cmds))
 			unlink("temp");
-		// free_cmds(shell->scmds);
-		// free_structs(shell);
-		// if(excecute(cmds->cmd))
-		// 	continue;
 	}
-	// how to return pid // if called in a while loop?
 }
 
 int	main(int ac, char **av, char **envp)

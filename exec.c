@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 14:51:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:22:00 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 		if ((i + 1) < shell->pipe_len)
 			pipe(shell->pfd[i + 1]);
 		pid = process(cmds, i, shell, &env_list);
+		if (i != 0 && shell->pipe_len > 0)
+			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 		i++;
 	}
 	return (pid);
