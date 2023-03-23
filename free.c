@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 16:18:31 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:21:44 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,7 @@ void	free_int_array(int **int_array, int len)
 	free(int_array);
 }
 
-/* void	free_cmd(t_cmd **cmd)
-{
-	int	j;
-
-	j = 0;
-	while (cmd[j])
-	{
-		free_char_array(cmd[j]->cmd);
-		free(cmd[j]->main);
-		free(cmd[j]->path);
-		free(cmd[j]->red);
-		free(cmd[j]);
-		j++;
-	}
-	free(cmd);
-} */
-
-void	free_cmds(char **cmds)
+/* void	free_cmds(char **cmds)
 {
 	char	**tmp;
 
@@ -63,13 +46,44 @@ void	free_cmds(char **cmds)
 	while (*cmds)
 		free(*cmds++);
 	free(tmp);
+} */
+
+void	free_env_list(t_env **env_list)
+{
+	t_env	*temp;
+
+	temp = *env_list;
+	while (*env_list != NULL)
+	{
+		temp = *env_list;
+		*env_list = (*env_list)->next;
+		free(temp->var);
+		free(temp->value);
+		free(temp);
+	}
+	free (*env_list);
 }
 
-void	free_shell(t_infra *shell)
+void	free_shell_cmds(t_infra *shell, t_cmd *cmds)
 {
-	//free_cmd(shell->cmds);
+	int	j;
+
+	j = 0;
+	while (j < (shell->pipe_len + 1))
+	{
+		free(cmds[j].main);
+		free_char_array(cmds[j].tmp_cmd);
+		free_char_array(cmds[j].cmd);
+		free(cmds[j].path);
+		free(cmds[j].red->file);
+		free(cmds[j].red);
+		j++;
+	}
+	free(cmds);
+	free(shell->rd);
+	free(shell->trim_rd);
 	free_char_array(shell->cmds);
-	free(shell->env_list);
+	free_env_list(&shell->env_list);
 	free_char_array(shell->path_array);
 	free_int_array(shell->pfd, shell->pipe_len);
 	free(shell);

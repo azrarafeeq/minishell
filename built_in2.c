@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 22:58:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:49:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ void	ft_exit_cmd(char **str)
 		exit_stat = ft_atoi(str[1]);
 		ft_exit(exit_stat);
 	}
+}
+
+void	ft_pwd(void)
+{
+	char	buffer[1024];
+
+	printf("%s\n", getcwd(buffer, MAX_PATH));
+	exit_stat = 0;
+	ft_exit(exit_stat);
 }
 
 void	ft_echo(char **str)

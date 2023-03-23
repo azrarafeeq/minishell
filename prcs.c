@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 22:59:21 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:51:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,25 +132,6 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 				dup2(shell->pfd[i - 1][0], STDIN_FILENO);
 			if (file_rd_exist(cmds[i], 2, 3) == 0)
 				dup2(shell->pfd[i][1], STDOUT_FILENO);
-		}
-	}
-}
-
-void ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
-{
-	if (shell->pipe_len > 0)
-	{
-		if (cmd.cmd_id == 1)
-			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
-		else if (cmd.cmd_id == (shell->pipe_len + 1))
-		{
-			close_fds(shell->pfd[shell->pipe_len - 1][0],
-				shell->pfd[shell->pipe_len - 1][1], -1, -1);
-		}
-		else if (shell->pipe_len > 1)
-		{
-			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1],
-				shell->pfd[i][0], shell->pfd[i][1]);
 		}
 	}
 }

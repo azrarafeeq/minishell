@@ -80,20 +80,19 @@ typedef struct s_infra{
 }				t_infra;
 
 int		get_line(t_infra *shell, char **envp);
+void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
+char	**ft_split_quote(char const *s, char c);
+char	**ft_split_with_quotes(char const *s, char c, int *cnt);
+char	*replace_with_space(char *input);
+char	*epur_str(char *av);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
-void	is_quote(char c, char *quote);
-int		syntax_err(t_infra *in);
-char	**ft_split_with_quotes(char const *s, char c, int *cnt);
-char	**ft_split_quote(char const *s, char c);
 void	infra_shell(t_infra *shell, t_cmd **tmp, int len);
-void	free_cmds(char **cmds);
-char	*replace_with_space(char *input);
-void	free_structs(t_infra *sh);
-char	*epur_str(char *av);
 void	expansion(char **str);
+//void	free_cmds(char **cmds);
+//void	free_structs(t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
 
 void	ft_envp(char **envp, t_env **env_list);
@@ -137,6 +136,7 @@ void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);
 
+int		syntax_err(t_infra *in);
 void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *exec);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i);
 int		fd_error(int fd, char *file, t_infra *shell, t_cmd *cmds);
@@ -145,7 +145,7 @@ void	exit_error(char *str, int flag);
 
 void	free_char_array(char **array);
 void	free_int_array(int **int_array, int len);
-void	free_cmd(t_cmd **cmd);
-void	free_shell(t_infra *shell);
+void	free_env_list(t_env **env_list);
+void	free_shell_cmds(t_infra *shell, t_cmd *cmds);
 
 #endif

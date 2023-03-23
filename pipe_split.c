@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/21 21:03:40 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:26:02 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	**ft_split_with_quotes(char const *s, char c, int *cnt)
 	}
 	spaces[h] = NULL;
 	h = 0;
-	free_cmds(split);
+	free_char_array(split);
 	// h = 0;
 	// while(spaces[h])
 	// 	printf("sp %s\n", spaces[h++]);

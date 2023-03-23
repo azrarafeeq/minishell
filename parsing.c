@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 23:01:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:26:45 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	get_line(t_infra *shell, char **envp)
 		//while (++i <= shell->pipe_len)
 			waitpid(pid, 0, 0); // can't call in while loop??
 	//waitpid with the pid got from pipex and something with the second argument
+		//free_shell_cmds(shell, cmds);
 		if (heredoc_exist(shell, cmds)) //can remove in the future
 			unlink("temp");
 		// free_cmds(shell->scmds);

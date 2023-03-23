@@ -6,15 +6,15 @@
 #    By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/20 19:08:51 by arafeeq          ###   ########.fr        #
+#    Updated: 2023/03/23 16:06:18 by arafeeq          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = parsing utils redirection pipe_err err_handling pipe_split infra\
-		exec prcs prcs_utils utils2 env path built_in built_in2 free\
-		error update
+SRCS = parsing parse_utils redirection parse_error pipe_split infra\
+		exec prcs prcs_utils exec_utils env path built_in built_in2 free\
+		exec_error update
 
 GNLSRCS = ./get_next_line/get_next_line.c\
 			./get_next_line/get_next_line_utils.c

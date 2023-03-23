@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 22:59:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:49:37 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,6 @@ void	ft_cd(char **str, t_env **env_list)
 	}
 	chdir(str[1]);
 	update_pwd(env_list);
-}
-
-void	ft_pwd(void)
-{
-	char	buffer[1024];
-
-	printf("%s\n", getcwd(buffer, MAX_PATH));
-	exit_stat = 0;
-	ft_exit(exit_stat);
 }
 
 void	ft_env(t_env **env_list)
