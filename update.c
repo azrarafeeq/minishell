@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/20 14:54:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 01:00:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,14 @@ void	update_var(t_env **env_list, char *str)
 		if (ft_strcmp(temp->var, split[0]) == 0)
 		{
 			free(temp->value);
-			temp->value = malloc(sizeof(char) * (ft_strlen(str) + 1));
-			ft_strcpy(temp->value, split[1]);
-			break ;
+			if (split[1] != NULL)
+			{
+				temp->value = malloc(sizeof(char) * (ft_strlen(str) + 1));
+				ft_strcpy(temp->value, split[1]);
+				break ;
+			}
+			else
+				temp->value = ft_strdup("");
 		}
 		temp = temp->next;
 	}

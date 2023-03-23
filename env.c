@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:30:38 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/22 18:00:07 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 01:13:47 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,24 @@ void	ft_env_pos(t_env **env_list)
 		while (t)
 		{
 			j = 0;
-			if (t2->var[j] >= t->var[j])
-			{
-				if (t2->var[j] == t->var[j])
-					while (t2->var[j] == t->var[j] && t2->var[j] && t->var[j])
-						j++;
-				if (t2->var[j] > t->var[j])
-					i++;
-			}
+			ft_env_pos2(t2, t, &i, &j);
 			t = t->next;
 		}
 		t = *env_list;
 		t2->pos = i;
 		t2 = t2->next;
+	}
+}
+
+void	ft_env_pos2(t_env *t2, t_env *t, int *i, int *j)
+{
+	if (t2->var[*j] >= t->var[*j])
+	{
+		if (t2->var[*j] == t->var[*j])
+			while (t2->var[*j] == t->var[*j] && t2->var[*j] && t->var[*j])
+				(*j)++;
+		if (t2->var[*j] > t->var[*j])
+			(*i)++;
 	}
 }
 
@@ -82,7 +87,7 @@ t_env	*init_env_node(char *str)
 	split = ft_split(str, '=');
 	env_node->var = malloc(sizeof(char) * (ft_strlen(split[0]) + 1));
 	ft_strcpy(env_node->var, split[0]);
-	if (split[1])
+	if (split[1] || ft_strchr(str, '='))
 	{
 		env_node->value = malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
 		ft_strcpy(env_node->value, split[1]);
@@ -92,18 +97,4 @@ t_env	*init_env_node(char *str)
 	env_node->next = NULL;
 	free_char_array(split);
 	return (env_node);
-}
-
-void	ft_envp(char **envp, t_env **env_list)
-{
-	int		i;
-	t_env	*env_node;
-
-	i = 0;
-	while (envp[i + 1])
-	{
-		env_node = init_env_node(envp[i]);
-		envlst_addback(env_list, env_node);
-		i++;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 14:49:37 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 01:20:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ void	ft_env(t_env **env_list)
 	temp = *env_list;
 	while (temp)
 	{
-		if (temp->value != NULL)
+		if (temp->value)
 			printf("%s=%s\n", temp->var, temp->value);
 		temp = temp->next;
 	}
 	printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
 	exit_stat = 0;
-	ft_exit(exit_stat);
 }
 
 void	ft_export(t_env **env_list, char **str)
@@ -75,7 +74,8 @@ void	ft_export(t_env **env_list, char **str)
 			return ;
 		}
 	}
-	print_export(env_list);
+	else
+		print_export(env_list);
 }
 
 void	print_export(t_env **env_list)
@@ -92,7 +92,7 @@ void	print_export(t_env **env_list)
 		if (i == temp->pos)
 		{
 			printf("declare -x %s=", temp->var);
-			if (temp->value)
+			if (temp->value != NULL)
 				printf("\"%s\"\n", temp->value);
 			else
 				printf("\"\"\n");

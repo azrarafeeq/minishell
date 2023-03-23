@@ -6,7 +6,7 @@
 #    By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/23 17:04:49 by arafeeq          ###   ########.fr        #
+#    Updated: 2023/03/23 19:45:45 by arafeeq          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -g3
 
 LIBFT = -Llibft -lft
 

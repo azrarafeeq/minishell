@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/23 16:26:02 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 19:43:31 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*ft_copy(char const *s, char c, int *i)
 		(*i)++;
 	}
 	tmp = ft_substr(s, 0, *i);
-	if (!ft_strlen(str))
+	if (!ft_strlen(tmp))
 		return (NULL);
 	str = ft_strtrim(tmp, " \t");
 	return (free(tmp), str);
@@ -77,11 +77,9 @@ char	**ft_split_quote(char const *s, char c)
 	size_t	j;
 	int		i;
 	int		len;
-	int		quote;
 
 	i = 0;
 	j = 0;
-	quote = 0;
 	if (!s)
 		return (NULL);
 	split = malloc(sizeof(*split) * (count_word(s, c) + 1));

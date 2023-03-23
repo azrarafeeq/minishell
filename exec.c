@@ -6,11 +6,25 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 17:42:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 00:44:59 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_envp(char **envp, t_env **env_list)
+{
+	int		i;
+	t_env	*env_node;
+
+	i = 0;
+	while (envp[i + 1])
+	{
+		env_node = init_env_node(envp[i]);
+		envlst_addback(env_list, env_node);
+		i++;
+	}
+}
 
 int	**alloc_pipe_fds(int pipe_amt)
 {
@@ -83,8 +97,3 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 	}
 }
  */
-
-void	ft_exit(int exit_stat)
-{
-	exit(exit_stat);
-}

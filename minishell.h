@@ -97,6 +97,7 @@ void	ft_envp(char **envp, t_env **env_list);
 char	*ft_getenv(t_env **env, char *str);
 t_env	*init_env_node(char *str);
 void	ft_env_pos(t_env **env_list);
+void	ft_env_pos2(t_env *t2, t_env *t, int *i, int *j);
 void	envlst_addback(t_env **lst, t_env *new);
 int		envlst_len(t_env **env_list);
 char	**list_to_array(t_env **envlist);

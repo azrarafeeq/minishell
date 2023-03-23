@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 18:27:20 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/23 20:28:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 	(void)cmds;
 	printf("%s: no such file or directory\n", file);
 	ft_close_pipes(shell, i, cmds[i]);
-	//free_shell_cmds(shell, cmds);
+	free_shell_cmds(shell, cmds);
 	exit_stat = 1;
 	ft_exit(exit_stat);
 	return (0);
