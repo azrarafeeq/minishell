@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/23 19:43:31 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 20:29:02 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,38 +96,29 @@ char	**ft_split_quote(char const *s, char c)
 	return (split);
 }
 
-char	**ft_split_with_quotes(char const *s, char c, int *cnt)
+char	**ft_split_with_quotes(t_infra *shell, char c)
 {
 	int		i;
 	int		h;
-	char	*tmp;
 	char	**split;
 	char	**spaces;
 
 	i = 0;
 	h = 0;
-	split = ft_split_quote(s, c);
-	tmp = (char *)s;
-	free(tmp);
-	while (split[i])
-		printf("%s\n", split[i++]);
-	// printf("i == %d\n", i);	
-	*cnt = i;
-	spaces = malloc(sizeof(*split) * (*cnt + 1));
+	shell->pipe_len = count_word(shell->trim_rd, c);
+	split = ft_split_quote(shell->trim_rd, c);
+	free(shell->trim_rd);
+	spaces = malloc(sizeof(*split) * (shell->pipe_len + 1));
 	h = 0;
 	h = -1;
-	//bool error = false;
 	while (split[++h])
 	{
-		// if (ft_strchr(split[h], '$'))
-			// expansion(&split[h]);
+		if (ft_strchr(split[h], HUNDRED_CENT))
+			get_hundred_cent(&split[h], shell);
 		spaces[h] = epur_str(replace_with_space(split[h]));
 	}
 	spaces[h] = NULL;
 	h = 0;
 	free_char_array(split);
-	// h = 0;
-	// while(spaces[h])
-	// 	printf("sp %s\n", spaces[h++]);
 	return (spaces);
 }

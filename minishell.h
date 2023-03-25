@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define MAX_PATH 1024
+# define HUNDRED_CENT '$'
 
 # include <stdio.h>
 # include <errno.h>
@@ -77,6 +78,10 @@ typedef struct s_infra{
 	int		pipe_len;
 	char	**env_arr;
 	int		**pfd;
+	int		i;
+	int		len;
+	char	single;
+	char	paired;
 }				t_infra;
 
 int		get_line(t_infra *shell, char **envp);
@@ -84,13 +89,15 @@ void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
 char	**ft_split_quote(char const *s, char c);
-char	**ft_split_with_quotes(char const *s, char c, int *cnt);
+char	**ft_split_with_quotes(t_infra *shell, char c);
 char	*replace_with_space(char *input);
 char	*epur_str(char *av);
+char	*modify_cmd(char *dol, int start, int len, char *extended);
+void	get_cmd(char *s, unsigned int start, size_t len);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
-void	infra_shell(t_infra *shell, t_cmd **tmp, int len);
-void	expansion(char **str);
+void	infra_shell(t_infra *shell, t_cmd **tmp);
+void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
 
 void	ft_envp(char **envp, t_env **env_list);
