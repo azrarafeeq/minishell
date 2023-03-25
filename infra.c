@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   infra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/23 17:01:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 21:01:33 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	get_cmd(char *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (i < start || i >= len)
-		{
-			s[j] = s[i];
-			j++;
-		}
-		i++;
-	}
-	s[j] = '\0';
-}
 
 int	red_count(char *str)
 {
@@ -127,7 +108,7 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 	}
 }
 
-void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
+void	infra_shell(t_infra *shell, t_cmd **tmp)
 {
 	t_cmd	*cmds;
 	int		h;
@@ -135,11 +116,11 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
 
 	h = 0;
 	j = -1;
-	*tmp = malloc(sizeof(t_cmd) * (len));
+	*tmp = malloc(sizeof(t_cmd) * (shell->pipe_len));
 	cmds = *tmp;
 	cmds->start = 0;
 	cmds->tmp_cmd = shell->cmds;
-	while (++j < len)
+	while (++j < shell->pipe_len)
 	{		
 		cmds[j].red_len = red_count(shell->cmds[j]);
 		if (cmds[j].red_len)
@@ -159,8 +140,6 @@ void	infra_shell(t_infra *shell, t_cmd **tmp, int len)
 				free(cmds[j].main);
 				cmds[j].main = cmds[j].cmd[h];
 			}
-			//printf("in loop main[%d]->{%s}\n", j, cmds[j].main);
-			//printf("in loop CMD [%d]-> %s\n", j, cmds[j].cmd[h]);
 			h++;
 			cmds[j].cmd_id = j + 1;
 		}

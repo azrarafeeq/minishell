@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/22 16:34:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 20:55:06 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,6 @@ char	*epur_str(char *av)
 	}
 	out[k] = '\0';
 	return (free(av), out);
-	// // while(av[i] == ' ' ||  av[i] == '\t'){
-	// // 	if(av[i] == '\"' || av[i] == '\'')
-	// // 		break;
-	// // 	i++;	
-	// // }
-	// sub = ft_substr(av, i, len+2);	
-	// output = ft_strjoin(out, sub);
-	// return free(av),free(sub),output;
 }
 
 char	*replace_with_space(char *input)

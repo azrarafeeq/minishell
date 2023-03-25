@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+         #
+#    By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/23 19:45:45 by arafeeq          ###   ########.fr        #
+#    Updated: 2023/03/25 20:58:25 by ahassan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = parsing parse_utils redirection parse_error pipe_split infra\
+SRCS = parsing parse_utils redirection parse_error pipe_split infra extend parse_utils2\
 		exec prcs prcs_utils exec_utils env path built_in built_in2 free\
 		exec_error update
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 16:55:56 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 20:46:24 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ void	handler(int sig)
 
 int	get_line(t_infra *shell, char **envp)
 {
-	int		len;
 	int		i;
 	int		j;
 	int		pid;
 	t_cmd	*cmds;
 	t_env	*env_list;
 
-	len = 0;
 	env_list = NULL;
 	ft_envp(envp, &env_list);
 	shell->env_list = env_list;
@@ -47,9 +45,9 @@ int	get_line(t_infra *shell, char **envp)
 		shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
 		if (!*shell->trim_rd || !syntax_err(shell))
 			continue ;
-		shell->cmds = ft_split_with_quotes(shell->trim_rd, '|', &len);
-		infra_shell(shell, &cmds, len);
-		shell->pipe_len = len - 1;
+		shell->cmds = ft_split_with_quotes(shell, '|');
+		infra_shell(shell, &cmds);
+		shell->pipe_len -= 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds, shell->env_list);
 		while (++i < shell->pipe_len)
