@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 15:43:36 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 16:55:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	get_line(t_infra *shell, char **envp)
 		shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");
 		if (!shell->rd)
 			return (printf("exit\n"), 0);
-		//printf("does it reach the end!\n");
 		if (ft_strcmp(shell->rd, ""))
 			add_history(shell->rd);
 		shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
@@ -56,9 +55,9 @@ int	get_line(t_infra *shell, char **envp)
 		while (++i < shell->pipe_len)
 			waitpid(-1, 0, 0);
 		waitpid(pid, &j, 0);
-		//waitpid_signal(j);
+		waitpid_signal(j);
 		if (heredoc_exist(shell, cmds))
-			unlink("temp");
+			unlink("a!");
 	}
 		//free_shell_cmds(shell, cmds);
 }
