@@ -75,7 +75,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**p_a; //path_arra
+//	char	**p_a; //path_arra
 	int		**pfd;
 }				t_infra;
 
@@ -110,7 +110,7 @@ char	*check_path(char **path_array, char *command);
 
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
-void	ft_dup2(t_infra *shell, t_cmd *cmds, int i);
+int		*ft_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
@@ -118,9 +118,9 @@ int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
-int		cmd_is_built_in(char *str, int flag);
 
-void	ft_built_in(char *cmd, char **args, t_env **env, int flag);
+int		cmd_is_built_in(char *str);
+void	ft_built_in(t_cmd cmd, t_env **env);
 void	ft_cd(char **str, t_env **env_list);
 void	ft_env(t_env **env_list);
 void	ft_unset(t_env **env, char **str);
@@ -130,6 +130,7 @@ void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
 void	ft_exit(int exit_stat);
 void	ft_exit_cmd(char **str);
+void	waitpid_signal(int j);
 
 void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);

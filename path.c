@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:52:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 16:57:27 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 14:06:30 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ char	*check_path(char **path_array, char *command)
 	if (path_array == NULL || !command)
 	{
 		free(command);
+		if (path_array != NULL)
+			free_char_array(path_array);
 		return (NULL);
 	}
 	while (path_array[++i])
@@ -120,10 +122,12 @@ char	*check_path(char **path_array, char *command)
 		if (access(path, F_OK) == 0)
 		{
 			free(command);
+			free_char_array(path_array);
 			return (path);
 		}
 		free(path);
 	}
 	free(command);
+	free_char_array(path_array);
 	return (NULL);
 }

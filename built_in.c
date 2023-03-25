@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 01:20:21 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/24 13:54:25 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	ft_unset(t_env **env, char **str)
 				prev->next = NULL;
 			else
 				prev->next = temp->next;
+			free(temp->var);
+			free(temp->value);
 			free(temp);
 			temp = NULL;
 			return ;

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 00:44:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 15:17:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ int	**alloc_pipe_fds(int pipe_amt)
 	int	**p_fd;
 
 	i = 0;
-	//error message when reached the limit....but what is the limit??
 	p_fd = malloc(sizeof(int *) * pipe_amt);
-	while (i < pipe_amt)
+	while (i < pipe_amt && pipe_amt <= INT_MAX)
 	{
 		p_fd[i] = malloc(sizeof(int) * 2);
 		i++;
@@ -81,19 +80,13 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 	}
 }
 
-/* void	waitpid_signal(int i)
+void	waitpid_signal(int j)
 {
-	if (i == WIFEXITED)
+	if (WIFEXITED(j))
+		exit_stat = WEXITSTATUS(j);
+	if (WIFSIGNALED(j))
 	{
-		exit_stat = 
-	}
-	if (i == WIFSIGNALED)
-	{
-		exit_stat = 
-	}
-	if (i == WIFSTOPPED)
-	{
-		exit_stat = 
+		exit_stat = WTERMSIG(j);
+		exit_stat += 128;
 	}
 }
- */

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 20:28:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 15:54:44 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 		printf("%s: no such file or directory\n", cmd[i].main);
 		exit_stat = 127;
 	}
-	if (cmd[i].p == NULL)
+	else if (cmd[i].p == NULL)
 	{
 		printf("%s: command not found\n", cmd[i].main);
 		exit_stat = 127;
@@ -63,7 +63,7 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 {
 	(void)cmds;
-	printf("%s: no such file or directory\n", file);
+	printf("%s: No such file or directory\n", file);
 	ft_close_pipes(shell, i, cmds[i]);
 	free_shell_cmds(shell, cmds);
 	exit_stat = 1;
@@ -101,9 +101,7 @@ void	exit_error(char *str, int flag)
 	}
 	else if (flag == 2)
 	{
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": too many arguments\n", 2);
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		exit_stat = 1;
 	}
 }

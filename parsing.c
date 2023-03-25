@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/24 00:46:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 15:43:36 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	get_line(t_infra *shell, char **envp)
 	len = 0;
 	env_list = NULL;
 	ft_envp(envp, &env_list);
-	shell->p_a = path_array(get_path(&env_list)); //can add inside if can't add
 	shell->env_list = env_list;
 	while (1)
 	{
@@ -43,6 +42,7 @@ int	get_line(t_infra *shell, char **envp)
 		shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");
 		if (!shell->rd)
 			return (printf("exit\n"), 0);
+		//printf("does it reach the end!\n");
 		if (ft_strcmp(shell->rd, ""))
 			add_history(shell->rd);
 		shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
@@ -55,7 +55,8 @@ int	get_line(t_infra *shell, char **envp)
 		pid = pipex(shell, cmds, shell->env_list);
 		while (++i < shell->pipe_len)
 			waitpid(-1, 0, 0);
-		waitpid(pid, &j , 0); // have to do something with second arg
+		waitpid(pid, &j, 0);
+		//waitpid_signal(j);
 		if (heredoc_exist(shell, cmds))
 			unlink("temp");
 	}
