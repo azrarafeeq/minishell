@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 16:51:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 18:12:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 {
 	int		pid;
-	int		*fd_arr;
 	char	**env_arr;
 
 	pid = 0;
-	fd_arr = ft_dup2(shell, cmd, i);
+	ft_dup2(shell, cmd, i);
 	ft_pipe_dup2(shell, cmd, i);
 	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
 		ft_built_in(cmd[i], env_list);
@@ -29,12 +28,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 		if (pid == 0)
 		{
 			env_arr = list_to_array(env_list);
-			if (ft_strrchr(cmd[i].main, '/'))
-				cmd[i].p = cmd[i].main;
-			else
-				cmd[i].p = check_path(path_array(get_path(env_list)),
-						ft_strjoin("/", cmd[i].main));
-			ft_close_pipes(shell, i, cmd[i]);
+			process2(shell, cmd, i, env_list);
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], env_arr, shell, cmd);
@@ -47,9 +41,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 			}
 		}
 	}
-	dup2(fd_arr[2], STDIN_FILENO);
-	dup2(fd_arr[0], STDOUT_FILENO);
-	close_fds(fd_arr[0], fd_arr[2], -1, -1);
 	return (pid);
 }
 
@@ -94,28 +85,24 @@ int	open_file(char *file, int flag)
 int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
 	int	k;
-	int	*fd_arr;
+	int	fd;
 
 	k = 0;
-	fd_arr = malloc(sizeof(int) * 3);
-	fd_arr[0] = dup(1);
-	fd_arr[2] = dup(0);
 	while (k < cmds[i].red_len)
 	{
-		fd_arr[1] = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
 		if (cmds[i].red[k].flag != HERE_DOC)
-			if (fd_arr[1] == -1)
+			if (fd == -1)
 				fd_error(cmds[i].red[k].file, shell, cmds, i);
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
-			dup2(fd_arr[1], STDIN_FILENO);
+			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
-			dup2(fd_arr[1], STDOUT_FILENO);
-		if (fd_arr[1] != -1)
-			close(fd_arr[1]);
+			dup2(fd, STDOUT_FILENO);
+		if (fd != -1)
+			close(fd);
 		k++;
 	}
-	fd_arr[1] = -1;
-	return (fd_arr);
+	return (NULL);
 }
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)

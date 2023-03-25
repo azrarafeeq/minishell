@@ -110,6 +110,7 @@ char	*check_path(char **path_array, char *command);
 
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
+void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list);
 int		*ft_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
