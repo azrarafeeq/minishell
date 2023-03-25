@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 19:55:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:45:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 		if (pid == 0)
 		{
 			process2(shell, cmd, i, env_list);
+			ft_close_pipes(shell, i, cmd[i]);
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], shell->env_arr, shell, cmd);
@@ -95,7 +96,7 @@ int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
 			dup2(fd, STDOUT_FILENO);
-		if (fd != -1)
+		if (fd != -1 && k < cmds[i].red_len - 1)
 			close(fd);
 		k++;
 	}
@@ -109,17 +110,16 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 	{
 		if (i == 0 || i == shell->pipe_len)
 		{
-			if (file_rd_exist(cmds[i], 1, 2) == 0 && cmds[i].cmd_id == 1)
+			if (file_rd_exist(cmds[i], 1, 2) == 0 && i == 0)
 				dup2(shell->pfd[0][1], STDOUT_FILENO);
-			else if (file_rd_exist(cmds[i], 0, 3) == 0
-				&& cmds[i].cmd_id == (shell->pipe_len + 1))
+			else if (file_rd_exist(cmds[i], 0, 3) == 0 && i == shell->pipe_len)
 				dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
 		}
 		else if (shell->pipe_len > 1)
 		{
-			if (file_rd_exist(cmds[i], 0, 1) == 0)
+			if (file_rd_exist(cmds[i], 0, 3) == 0)
 				dup2(shell->pfd[i - 1][0], STDIN_FILENO);
-			if (file_rd_exist(cmds[i], 2, 3) == 0)
+			if (file_rd_exist(cmds[i], 1, 2) == 0)
 				dup2(shell->pfd[i][1], STDOUT_FILENO);
 		}
 	}

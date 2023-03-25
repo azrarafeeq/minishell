@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 19:36:58 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:16:54 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 {
+	(void)cmd;
 	if (shell->pipe_len > 0)
 	{
-		if (cmd.cmd_id == 1)
+		if (i == 0)
 			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
-		else if (cmd.cmd_id == (shell->pipe_len + 1))
+		else if (i == shell->pipe_len)
 		{
 			close_fds(shell->pfd[shell->pipe_len - 1][0],
 				shell->pfd[shell->pipe_len - 1][1], -1, -1);
