@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:08:50 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:51:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list)
 	else
 		cmd[i].p = check_path(path_array(get_path(env_list)),
 				ft_strjoin("/", cmd[i].main));
-	//ft_close_pipes(shell, i, cmd[i]);
+	ft_close_pipes(shell, i, cmd[i]);
 }

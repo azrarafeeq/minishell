@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:45:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:51:02 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 		if (pid == 0)
 		{
 			process2(shell, cmd, i, env_list);
-			ft_close_pipes(shell, i, cmd[i]);
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], shell->env_arr, shell, cmd);
