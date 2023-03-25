@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 18:12:01 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 19:36:58 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,28 @@ int	**alloc_pipe_fds(int pipe_amt)
 int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 {
 	int	i;
-	int	fd1;
-	int	fd2;
+	int	fd[2];
 	int	pid;
 
-	i = 0;
-	fd1 = dup(0);
-	fd2 = dup(1);
+	i = -1;
+	fd[0] = dup(0);
+	fd[1] = dup(1);
 	if (shell->pipe_len > 0)
 		pipe(shell->pfd[0]);
-	while (i < (shell->pipe_len + 1))
+	while (++i < (shell->pipe_len + 1))
 	{
 		if ((i + 1) < shell->pipe_len)
 			pipe(shell->pfd[i + 1]);
+		if (shell->env_arr)
+			free_char_array(shell->env_arr);
+		shell->env_arr = list_to_array(&env_list);
 		pid = process(cmds, i, shell, &env_list);
-		dup2(fd1, STDIN_FILENO);
-		dup2(fd2, STDOUT_FILENO);
+		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
 		if (i != 0 && shell->pipe_len > 0)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
-		i++;
 	}
-	close_fds(fd1, fd2, -1, -1);
+	close_fds(fd[0], fd[1], -1, -1);
 	return (pid);
 }
 

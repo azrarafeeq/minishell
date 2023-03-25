@@ -63,7 +63,7 @@ typedef struct s_cmd{
 	char	*main;
 	char	**tmp_cmd;
 	char	**cmd;
-	char	*p; //path
+	char	*p;
 	int		red_len;
 	int		cmd_len;
 	t_red	*red;
@@ -75,7 +75,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-//	char	**p_a; //path_arra
+	char	**env_arr;
 	int		**pfd;
 }				t_infra;
 

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 18:12:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/25 19:55:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 {
 	int		pid;
-	char	**env_arr;
 
 	pid = 0;
-	ft_dup2(shell, cmd, i);
 	ft_pipe_dup2(shell, cmd, i);
 	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
 		ft_built_in(cmd[i], env_list);
@@ -27,16 +25,15 @@ int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			env_arr = list_to_array(env_list);
 			process2(shell, cmd, i, env_list);
 			if (cmd[i].cmd_len > 0)
 			{
-				mt_arg_error(cmd[i], env_arr, shell, cmd);
+				mt_arg_error(cmd[i], shell->env_arr, shell, cmd);
 				if (cmd_is_built_in(cmd[i].main))
 					ft_built_in(cmd[i], env_list);
 				else if (cmd[i].p == NULL
-					|| execve(cmd[i].p, cmd[i].cmd, env_arr) == -1)
-					execve_error(shell, cmd, i, env_arr);
+					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
+					execve_error(shell, cmd, i, shell->env_arr);
 				ft_exit(exit_stat);
 			}
 		}
@@ -107,6 +104,7 @@ int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
+	ft_dup2(shell, cmds, i);
 	if (shell->pipe_len > 0)
 	{
 		if (i == 0 || i == shell->pipe_len)
