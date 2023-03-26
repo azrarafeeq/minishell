@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 16:09:57 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 13:39:11 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_cd(char **str, t_env **env_list)
 	}
 	chdir(str[1]);
 	update_pwd(env_list);
+	exit_stat = 0;
 }
 
 void	ft_env(t_env **env_list)
@@ -55,7 +56,8 @@ void	ft_export(t_env **env_list, char **str)
 	int		i;
 	t_env	*env_node;
 
-	export_error(str);
+	if (export_error(str))
+		return ;
 	i = 1;
 	ft_env_pos(env_list);
 	if (str[i])
@@ -63,17 +65,17 @@ void	ft_export(t_env **env_list, char **str)
 		if (var_exists(env_list, str[i]))
 		{
 			if (ft_strchr(str[i], '='))
-				return (update_var(env_list, str[i]));
+				update_var(env_list, str[i]);
 		}
 		else
 		{
 			env_node = init_env_node(str[i]);
 			envlst_addback(env_list, env_node);
-			return ;
 		}
 	}
 	else
 		print_export(env_list);
+	exit_stat = 0;
 }
 
 void	print_export(t_env **env_list)
@@ -128,4 +130,5 @@ void	ft_unset(t_env **env, char **str)
 		prev = temp;
 		temp = temp->next;
 	}
+	exit_stat = 0;
 }

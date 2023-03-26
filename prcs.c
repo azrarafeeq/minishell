@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 13:28:33 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 13:47:07 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,17 @@ int	open_file(char *file, int flag)
 	return (fd);
 }
 
-int	ft_dup2(t_infra *shell, t_cmd *cmds, int i)
+int	ft_dup2(t_cmd *cmds, int i)
 {
 	int	k;
 	int	fd1;
 	int	fd2;
 
 	k = 0;
-	fd1 = 42;
-	fd2 = 42;
 	while (k < cmds[i].red_len)
 	{
+		fd1 = 42;
+		fd2 = 42;
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
 			fd1 = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
 		else
@@ -100,7 +100,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 		{
 			if (fd1 == -1 || fd2 == -1)
 			{
-				fd_error(cmds[i].red[k].file, shell, cmds, i);
+				fd_error(cmds[i].red[k].file);
 				return (1);
 			}
 		}
@@ -119,7 +119,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 
 int	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
-	if (ft_dup2(shell, cmds, i))
+	if (ft_dup2(cmds, i))
 		return (1);
 	if (shell->pipe_len > 0)
 	{

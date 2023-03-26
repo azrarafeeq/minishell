@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:16:54 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 13:43:47 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 	return (pid);
 }
 
-void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
+void	ft_close_pipes(t_infra *shell, int i)
 {
-	(void)cmd;
 	if (shell->pipe_len > 0)
 	{
 		if (i == 0)
