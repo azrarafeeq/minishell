@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 14:27:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 16:36:22 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ void	ft_pwd(void)
 void	ft_echo(char **str)
 {
 	int		i;
-
+	if(!str[1])
+	{
+		g_exit_stat = 0;
+		printf("\n");
+		return ;
+	}
 	if (ft_strcmp(str[1], "-n") == 0)
 		i = 1;
 	else
