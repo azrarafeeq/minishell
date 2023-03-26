@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 20:54:20 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 13:42:25 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 	{
 		printf("%s: command not found\n", cmd.main);
 		free_char_array(env_arr);
-		free_shell_cmds(shell, cmds);
+		//free_shell_cmds(shell, cmds);
 		exit_stat = 127;
 		ft_exit(exit_stat);
 	}
@@ -66,18 +66,14 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	ft_exit(exit_stat);
 }
 
-int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
+void	fd_error(char *file)
 {
-	(void)cmds;
 	printf("%s: No such file or directory\n", file);
-	ft_close_pipes(shell, i, cmds[i]);
-	free_shell_cmds(shell, cmds);
+	//ft_close_pipes(shell, i, cmds[i]);
 	exit_stat = 1;
-	ft_exit(exit_stat);
-	return (0);
 }
 
-void	export_error(char **str)
+int	export_error(char **str)
 {
 	int	i;
 
@@ -90,9 +86,11 @@ void	export_error(char **str)
 			write(2, str[i], ft_strlen(str[i]));
 			write(2, "': not a valid identifier\n", 27);
 			exit_stat = 1;
+			return (1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	exit_error(char *str, int flag)

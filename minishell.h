@@ -76,7 +76,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**env_arr;
+	char	**e_a;
 	int		**pfd;
 	int		i;
 	int		len;
@@ -118,14 +118,15 @@ char	*check_path(char **path_array, char *command);
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
 void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list);
-int		*ft_dup2(t_infra *shell, t_cmd *cmds, int i);
-void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
+int		ft_dup2(t_cmd *cmds, int i);
+int		ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2);
+int		ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
 int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
-void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
+void	ft_close_pipes(t_infra *shell, int i);
 
 int		cmd_is_built_in(char *str);
 void	ft_built_in(t_cmd cmd, t_env **env);
@@ -147,8 +148,8 @@ void	update_var(t_env **env_list, char *str);
 int		syntax_err(t_infra *in);
 void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
-int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
-void	export_error(char **str);
+void	fd_error(char *file);
+int		export_error(char **str);
 void	exit_error(char *str, int flag);
 
 void	free_char_array(char **array);

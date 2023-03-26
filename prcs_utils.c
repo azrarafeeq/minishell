@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:51:08 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 14:13:45 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,29 @@ int	heredoc_exist(t_infra *shell, t_cmd *cmd)
 
 void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list)
 {
-	(void)shell;
 	if (ft_strrchr(cmd[i].main, '/'))
 		cmd[i].p = cmd[i].main;
 	else
 		cmd[i].p = check_path(path_array(get_path(env_list)),
 				ft_strjoin("/", cmd[i].main));
-	ft_close_pipes(shell, i, cmd[i]);
+	ft_close_pipes(shell, i);
+}
+
+int	ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2)
+{
+	if (cmds.red[k].flag != HERE_DOC)
+	{
+		if (fd1 == -1 || fd2 == -1)
+		{
+			fd_error(cmds.red[k].file);
+			return (1);
+		}
+	}
+	if ((cmds.red[k].flag == IN_FILE || cmds.red[k].flag == HERE_DOC)
+		&& k < cmds.red_len - 1)
+		close(fd1);
+	if ((cmds.red[k].flag == TRUNCATE || cmds.red[k].flag == APPEND)
+		&& k < cmds.red_len - 1)
+		close(fd2);
+	return (0);
 }

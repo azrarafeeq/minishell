@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 20:46:24 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 14:16:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	get_line(t_infra *shell, char **envp)
 		while (++i < shell->pipe_len)
 			waitpid(-1, 0, 0);
 		waitpid(pid, &j, 0);
-		waitpid_signal(j);
+		if (pid != 0)
+			waitpid_signal(j);
 		if (heredoc_exist(shell, cmds))
 			unlink("a!");
 	}
