@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/26 20:16:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:41:04 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,15 @@ char	**ft_split_quote(char const *s, char c)
 
 char	**ft_split_with_quotes(t_infra *shell, char c)
 {
-	//int		i;
 	int		h;
 	char	**split;
 	char	**spaces;
 
-	//i = 0;
 	h = 0;
 	shell->paired = 0;
 	shell->single = 0;
+	shell->len = 0;
+	shell->i = 0;
 	shell->pipe_len = count_word(shell->trim_rd, c);
 	split = ft_split_quote(shell->trim_rd, c);
 	free(shell->trim_rd);
@@ -120,7 +120,6 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 		spaces[h] = epur_str(replace_with_space(split[h]));
 	}
 	spaces[h] = NULL;
-	h = 0;
 	free_char_array(split);
 	return (spaces);
 }

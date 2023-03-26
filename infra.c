@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 21:01:33 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:30:13 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,6 @@ int	get_file(char *str, char **file_name, int i)
 	return (i);
 }
 
-void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
-{
-	cmds->start = *x - 1;
-	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
-		|| cmds->tmp_cmd[*j][*x + 1] == '<')
-	{
-		if (cmds->tmp_cmd[*j][*x + 1] == '>')
-			cmds[*j].red[*y].flag = APPEND;
-		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
-			cmds[*j].red[*y].flag = HERE_DOC;
-		*x += 2;
-	}
-	else if (cmds->tmp_cmd[*j][*x] == '>')
-	{
-		cmds[*j].red[*y].flag = TRUNCATE;
-		(*x)++;
-	}
-	else if (cmds->tmp_cmd[*j][*x] == '<')
-	{
-		cmds[*j].red[*y].flag = IN_FILE;
-		(*x)++;
-	}
-}
-
 void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 {
 	int		y;
@@ -89,23 +65,37 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 	quote = 0;
 	while (shell->cmds[j][++x])
 	{
-		if (shell->cmds[j][x] == '"' || shell->cmds[j][x] == '\'')
-		{
-			if (quote == 0)
-				quote = shell->cmds[j][x];
-			else if (quote == shell->cmds[j][x])
-				quote = 0;
-		}
+		is_quote(shell->cmds[j][x], &quote);
 		if ((shell->cmds[j][x] == '>' || shell->cmds[j][x] == '<') && !quote)
 		{
 			get_flags(cmds, &j, &x, &y);
 			len = get_file(shell->cmds[j], &cmds[j].red[y].file, x + 1);
 			clean_quotes(cmds[j].red[y].file);
 			get_cmd(shell->cmds[j], cmds->start, len);
-			x = cmds->start - 1;
+			x = -1;
 			y++;
 		}
 	}
+}
+
+void cmds_init(t_cmd **cmds, int h, int j)
+{
+	while ((*cmds)[j].cmd[h])
+			clean_quotes((*cmds)[j].cmd[h++]);
+	(*cmds)[j].main = ft_strdup("");
+	(*cmds)[j].cmd_id = 0;
+	h = 0;
+	while ((*cmds)[j].cmd[h])
+	{
+		if (h == 0)
+		{
+			free((*cmds)[j].main);
+			(*cmds)[j].main = (*cmds)[j].cmd[h];
+		}
+		h++;
+		(*cmds)[j].cmd_id = j + 1;
+	}
+	(*cmds)[j].cmd_len = h;
 }
 
 void	infra_shell(t_infra *shell, t_cmd **tmp)
@@ -128,21 +118,6 @@ void	infra_shell(t_infra *shell, t_cmd **tmp)
 		init_infra(shell, cmds, j);
 		cmds[j].cmd = ft_split_quote(shell->cmds[j], ' ');
 		h = 0;
-		while (cmds[j].cmd[h])
-			clean_quotes(cmds[j].cmd[h++]);
-		cmds[j].main = ft_strdup("");
-		cmds[j].cmd_id = 0;
-		h = 0;
-		while (cmds[j].cmd[h])
-		{
-			if (h == 0)
-			{
-				free(cmds[j].main);
-				cmds[j].main = cmds[j].cmd[h];
-			}
-			h++;
-			cmds[j].cmd_id = j + 1;
-		}
-		cmds[j].cmd_len = h;
+		cmds_init(&cmds, h, j);
 	}
 }

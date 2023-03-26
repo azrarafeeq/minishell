@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 16:56:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:20:05 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,28 @@ int	check_redirect(char *str)
 			return (FALSE);
 	}
 	return (TRUE);
+}
+
+void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
+{
+	cmds->start = *x - 1;
+	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
+		|| cmds->tmp_cmd[*j][*x + 1] == '<')
+	{
+		if (cmds->tmp_cmd[*j][*x + 1] == '>')
+			cmds[*j].red[*y].flag = APPEND;
+		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
+			cmds[*j].red[*y].flag = HERE_DOC;
+		*x += 2;
+	}
+	else if (cmds->tmp_cmd[*j][*x] == '>')
+	{
+		cmds[*j].red[*y].flag = TRUNCATE;
+		(*x)++;
+	}
+	else if (cmds->tmp_cmd[*j][*x] == '<')
+	{
+		cmds[*j].red[*y].flag = IN_FILE;
+		(*x)++;
+	}
 }

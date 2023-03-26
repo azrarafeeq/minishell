@@ -36,7 +36,7 @@
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 
-int	g_exit_stat;
+int	exit_stat;
 
 enum e_types
 {
@@ -76,7 +76,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**e_a;
+	char	**env_arr;
 	int		**pfd;
 	int		i;
 	int		len;
@@ -92,11 +92,12 @@ char	**ft_split_quote(char const *s, char c);
 char	**ft_split_with_quotes(t_infra *shell, char c);
 char	*replace_with_space(char *input);
 char	*epur_str(char *av);
+void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
+void seperate_quote(char cur, t_infra *sh);
 char	*modify_cmd(char *dol, int start, int len, char *extended);
 void	get_cmd(char *s, unsigned int start, size_t len);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
-void seperate_quote(char cur, t_infra *sh);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
 void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
@@ -117,17 +118,16 @@ char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
-int		process(t_cmd *c, int i, t_infra *shell, int *fd);
+int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
 void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list);
-int		ft_dup2(t_cmd *cmds, int i);
-int		ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2);
-int		ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
+int		*ft_dup2(t_infra *shell, t_cmd *cmds, int i);
+void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
 int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
-void	ft_close_pipes(t_infra *shell, int i);
+void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
 
 int		cmd_is_built_in(char *str);
 void	ft_built_in(t_cmd cmd, t_env **env);
@@ -138,7 +138,7 @@ void	ft_pwd(void);
 void	ft_echo(char **str);
 void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
-void	ft_exit(int g_exit_stat);
+void	ft_exit(int exit_stat);
 void	ft_exit_cmd(char **str);
 void	waitpid_signal(int j);
 
@@ -148,9 +148,9 @@ void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
 void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
-void	execve_error(t_infra *shell, t_cmd *cmd, int i, int *fd);
-void	fd_error(char *file);
-int		export_error(char **str);
+void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
+int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
+void	export_error(char **str);
 void	exit_error(char *str, int flag);
 
 void	free_char_array(char **array);
