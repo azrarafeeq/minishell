@@ -1,0 +1,6 @@
+minishell.dSYM
+*.o
+libft/libft.a
+minishell
+objects
+.vscode

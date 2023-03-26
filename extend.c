@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 01:41:22 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 03:24:15 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 {
 	char	*expandable;
 
+	sh->len = 0;
+	sh->i = 0;
 	char *dol = *fifty_cent;
 	while (sh->i < ft_strlen(dol))
 	{
