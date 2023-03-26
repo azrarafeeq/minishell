@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+         #
+#    By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/25 20:58:25 by ahassan          ###   ########.fr        #
+#    Updated: 2023/03/26 15:36:58 by arafeeq          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -g3
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -g3 -fsanitize=address
 
 LIBFT = -Llibft -lft
 
