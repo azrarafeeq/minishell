@@ -116,7 +116,7 @@ char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
 int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
-int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
+int		process(t_cmd *c, int i, t_infra *shell, int *fd);
 void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list);
 int		ft_dup2(t_cmd *cmds, int i);
 int		ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2);
@@ -147,7 +147,7 @@ void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
 void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
-void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
+void	execve_error(t_infra *shell, t_cmd *cmd, int i, int *fd);
 void	fd_error(char *file);
 int		export_error(char **str);
 void	exit_error(char *str, int flag);

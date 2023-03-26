@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 14:27:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 16:13:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 	}
 }
 
-void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
+void	execve_error(t_infra *shell, t_cmd *cmd, int i, int *fd)
 {
-	if (get_path(&(shell->env_list)) == NULL || access(cmd[i].p, F_OK) == -1)
+	dup2(fd[1], STDOUT_FILENO);
+	if (get_path(&(shell->env_list)) == NULL)
 	{
 		printf("%s: No such file or directory\n", cmd[i].main);
 		g_exit_stat = 127;
@@ -43,6 +44,11 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	else if (cmd[i].p == NULL)
 	{
 		printf("%s: command not found\n", cmd[i].main);
+		g_exit_stat = 127;
+	}
+	else if (access(cmd[i].p, F_OK) == -1)
+	{
+		printf("%s: No such file or directory\n", cmd[i].main);
 		g_exit_stat = 127;
 	}
 	else if (access(cmd[i].p, X_OK) == -1)
@@ -61,7 +67,7 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 		printf("cmd[i].p = {%s}\n", cmd[i].p);
 		printf("NONE of them\n");
 	}
-	free_char_array(env_arr);
+	free_char_array(shell-> e_a);
 	free_shell_cmds(shell, cmd);
 	ft_exit(g_exit_stat);
 }

@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 15:50:06 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 16:14:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process(t_cmd *c, int i, t_infra *shell, t_env **env_list)
+int	process(t_cmd *c, int i, t_infra *shell, int *fd)
 {
 	int		pid;
 
@@ -20,20 +20,20 @@ int	process(t_cmd *c, int i, t_infra *shell, t_env **env_list)
 	if (ft_pipe_dup2(shell, c, i) == 1)
 		return (0);
 	if (cmd_is_built_in(c[0].main) && shell->pipe_len == 0)
-		ft_built_in(c[i], env_list);
+		ft_built_in(c[i], &shell->env_list);
 	else if (c[i].cmd_len > 0)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			process2(shell, c, i, env_list);
+			process2(shell, c, i, &shell->env_list);
 			if (c[i].cmd_len > 0)
 			{
 				mt_arg_error(c[i], shell->e_a, shell, c);
 				if (cmd_is_built_in(c[i].main))
-					ft_built_in(c[i], env_list);
+					ft_built_in(c[i], &shell->env_list);
 				else if (!c[i].p || execve(c[i].p, c[i].cmd, shell->e_a) == -1)
-					execve_error(shell, c, i, shell->e_a);
+					execve_error(shell, c, i, fd);
 				ft_exit(g_exit_stat);
 			}
 		}
