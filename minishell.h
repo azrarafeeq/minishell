@@ -76,7 +76,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**env_arr;
+	char	**e_a;
 	int		**pfd;
 	int		i;
 	int		len;
@@ -119,6 +119,7 @@ int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
 int		process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list);
 void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list);
 int		ft_dup2(t_cmd *cmds, int i);
+int		ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2);
 int		ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
