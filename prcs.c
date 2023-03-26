@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 20:43:41 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 21:00:16 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	process(t_cmd *c, int i, t_infra *shell, int *fd)
 		if (pid == 0)
 		{
 			process2(shell, c, i, &shell->env_list);
-			close_fds(fd[0], fd[1], -1, -1);
 			if (c[i].cmd_len > 0)
 			{
 				mt_arg_error(c[i], shell->e_a, shell, c);
@@ -83,29 +82,28 @@ int	open_file(char *file, int flag)
 int	ft_dup2(t_cmd *cmds, int i)
 {
 	int	k;
-	int	fd1;
-	int	fd2;
+	int	f[2];
 
 	k = -1;
 	while (++k < cmds[i].red_len)
 	{
-		fd1 = -2;
-		fd2 = -2;
+		f[0] = -2;
+		f[1] = -2;
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
-			fd1 = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+			f[0] = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
 		else
 		{
-			if (fd2 > 2)
-				close(fd2);
-			fd2 = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+			if (f[1] > 2)
+				close(f[1]);
+			f[1] = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
 		}
-		if (ft_dup2_part_2(cmds[i], k, fd1, fd2))
+		if (ft_dup2_part_2(cmds[i], k, f[0], f[1]))
 			return (1);
 	}
-	if (fd2 != -2)
+	if (f[1] != -2)
 	{
-		dup2(fd2, STDOUT_FILENO);
-		close(fd2);
+		dup2(f[1], STDOUT_FILENO);
+		close(f[1]);
 	}
 	return (0);
 }
