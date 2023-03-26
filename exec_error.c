@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 20:54:20 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 13:07:59 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,14 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	ft_exit(exit_stat);
 }
 
-int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
+void	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 {
 	(void)cmds;
+	(void)i;
+	(void)shell;
 	printf("%s: No such file or directory\n", file);
-	ft_close_pipes(shell, i, cmds[i]);
-	free_shell_cmds(shell, cmds);
+	//ft_close_pipes(shell, i, cmds[i]);
 	exit_stat = 1;
-	ft_exit(exit_stat);
-	return (0);
 }
 
 void	export_error(char **str)
