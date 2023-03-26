@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 16:14:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:43:41 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	process(t_cmd *c, int i, t_infra *shell, int *fd)
 		if (pid == 0)
 		{
 			process2(shell, c, i, &shell->env_list);
+			close_fds(fd[0], fd[1], -1, -1);
 			if (c[i].cmd_len > 0)
 			{
 				mt_arg_error(c[i], shell->e_a, shell, c);
@@ -93,14 +94,19 @@ int	ft_dup2(t_cmd *cmds, int i)
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
 			fd1 = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
 		else
+		{
+			if (fd2 > 2)
+				close(fd2);
 			fd2 = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+		}
 		if (ft_dup2_part_2(cmds[i], k, fd1, fd2))
 			return (1);
-		if (fd2 != -2)
-			dup2(fd1, STDIN_FILENO);
 	}
 	if (fd2 != -2)
+	{
 		dup2(fd2, STDOUT_FILENO);
+		close(fd2);
+	}
 	return (0);
 }
 

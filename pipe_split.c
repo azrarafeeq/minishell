@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/26 16:22:47 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:16:16 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ char	**ft_split_quote(char const *s, char c)
 
 char	**ft_split_with_quotes(t_infra *shell, char c)
 {
-	int		i;
+	//int		i;
 	int		h;
 	char	**split;
 	char	**spaces;
 
-	i = 0;
+	//i = 0;
 	h = 0;
 	shell->paired = 0;
 	shell->single = 0;

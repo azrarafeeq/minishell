@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 14:13:45 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:43:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ int	ft_dup2_part_2(t_cmd cmds, int k, int fd1, int fd2)
 			return (1);
 		}
 	}
-	if ((cmds.red[k].flag == IN_FILE || cmds.red[k].flag == HERE_DOC)
-		&& k < cmds.red_len - 1)
+	if (fd1 != -2)
+	{
+		dup2(fd1, STDIN_FILENO);
 		close(fd1);
-	if ((cmds.red[k].flag == TRUNCATE || cmds.red[k].flag == APPEND)
-		&& k < cmds.red_len - 1)
-		close(fd2);
+	}
 	return (0);
 }
