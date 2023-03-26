@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 13:42:25 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 14:27:29 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 		printf("%s: command not found\n", cmd.main);
 		free_char_array(env_arr);
 		//free_shell_cmds(shell, cmds);
-		exit_stat = 127;
-		ft_exit(exit_stat);
+		g_exit_stat = 127;
+		ft_exit(g_exit_stat);
 	}
 }
 
@@ -38,22 +38,22 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	if (get_path(&(shell->env_list)) == NULL || access(cmd[i].p, F_OK) == -1)
 	{
 		printf("%s: No such file or directory\n", cmd[i].main);
-		exit_stat = 127;
+		g_exit_stat = 127;
 	}
 	else if (cmd[i].p == NULL)
 	{
 		printf("%s: command not found\n", cmd[i].main);
-		exit_stat = 127;
+		g_exit_stat = 127;
 	}
 	else if (access(cmd[i].p, X_OK) == -1)
 	{
 		printf("%s: Permission denied\n", cmd[i].main);
-		exit_stat = 126;
+		g_exit_stat = 126;
 	}
 	else if (access(cmd[i].p, F_OK) == 0)
 	{
 		printf("%s: is a Directory\n", cmd[i].main);
-		exit_stat = 126;
+		g_exit_stat = 126;
 	}
 	else //remove at the end once everything finised
 	{
@@ -63,14 +63,14 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	}
 	free_char_array(env_arr);
 	free_shell_cmds(shell, cmd);
-	ft_exit(exit_stat);
+	ft_exit(g_exit_stat);
 }
 
 void	fd_error(char *file)
 {
 	printf("%s: No such file or directory\n", file);
 	//ft_close_pipes(shell, i, cmds[i]);
-	exit_stat = 1;
+	g_exit_stat = 1;
 }
 
 int	export_error(char **str)
@@ -85,7 +85,7 @@ int	export_error(char **str)
 			write(2, "export: '", 9);
 			write(2, str[i], ft_strlen(str[i]));
 			write(2, "': not a valid identifier\n", 27);
-			exit_stat = 1;
+			g_exit_stat = 1;
 			return (1);
 		}
 		i++;
@@ -100,12 +100,12 @@ void	exit_error(char *str, int flag)
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		exit_stat = 255;
-		ft_exit(exit_stat);
+		g_exit_stat = 255;
+		ft_exit(g_exit_stat);
 	}
 	else if (flag == 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
-		exit_stat = 1;
+		g_exit_stat = 1;
 	}
 }

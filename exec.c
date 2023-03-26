@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/26 14:20:34 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 14:27:29 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ void	ft_close_pipes(t_infra *shell, int i)
 void	waitpid_signal(int j)
 {
 	if (WIFEXITED(j))
-		exit_stat = WEXITSTATUS(j);
+		g_exit_stat = WEXITSTATUS(j);
 	if (WIFSIGNALED(j))
 	{
-		exit_stat = WTERMSIG(j);
-		exit_stat += 128;
+		g_exit_stat = WTERMSIG(j);
+		g_exit_stat += 128;
 	}
 }

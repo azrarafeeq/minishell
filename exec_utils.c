@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 00:46:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/26 14:27:29 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	var_exists(t_env **env_list, char *str)
 	return (0);
 }
 
-void	ft_exit(int exit_stat)
+void	ft_exit(int g_exit_stat)
 {
-	exit(exit_stat);
+	exit(g_exit_stat);
 }

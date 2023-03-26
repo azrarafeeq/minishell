@@ -36,7 +36,7 @@
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 
-int	exit_stat;
+int	g_exit_stat;
 
 enum e_types
 {
@@ -137,7 +137,7 @@ void	ft_pwd(void);
 void	ft_echo(char **str);
 void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
-void	ft_exit(int exit_stat);
+void	ft_exit(int g_exit_stat);
 void	ft_exit_cmd(char **str);
 void	waitpid_signal(int j);
 
