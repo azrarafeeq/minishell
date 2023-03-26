@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 20:29:02 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 02:49:52 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 
 	i = 0;
 	h = 0;
+	shell->paired = 0;
+	shell->single = 0;
 	shell->pipe_len = count_word(shell->trim_rd, c);
 	split = ft_split_quote(shell->trim_rd, c);
 	free(shell->trim_rd);

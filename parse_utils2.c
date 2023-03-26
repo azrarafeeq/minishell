@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 20:57:10 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 20:57:36 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 15:07:04 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,22 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	s[j] = '\0';
+}
+
+void seperate_quote(char cur, t_infra *sh)
+{
+	if (cur == '\"')
+	{
+			if (!sh->paired)
+				sh->paired = cur;
+			else if (sh->paired)
+				sh->paired = 0;
+	}
+	if (cur == '\'' && !sh->paired)
+	{
+			if (!sh->single)
+				sh->single = cur;
+			else if (sh->single)
+				sh->single = 0;
+	}
 }

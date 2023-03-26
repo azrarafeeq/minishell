@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/25 21:00:54 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/26 15:07:06 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,6 @@ int	expande_it(char **dol, char **expandable, t_infra *sh)
 	return (0);
 }
 
-void seperate_quote(char cur, t_infra *sh)
-{
-	if (cur == '\"')
-	{
-			if (!sh->paired)
-				sh->paired = cur;
-			else if (sh->paired)
-				sh->paired = 0;
-	}
-	if (cur == '\'' && !sh->paired)
-	{
-			if (!sh->single)
-				sh->single = cur;
-			else if (sh->single)
-				sh->single = 0;
-	}
-}
-
 void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 {
 	char	*expandable;
@@ -89,8 +71,9 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 	char *dol = *fifty_cent;
 	while (sh->i < ft_strlen(dol))
 	{
+
 		seperate_quote(dol[sh->i], sh);
-		if (dol[sh->i] == '$' && !sh->single)
+		if ((*fifty_cent)[sh->i] == '$' && !sh->single)
 		{
 			if (!ft_isalpha(dol[++sh->i]))
 				continue;
