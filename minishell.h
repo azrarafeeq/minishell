@@ -117,8 +117,8 @@ char	*append_path_to_array(char *path, int *i);
 char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
-int		pipex(t_infra *shell, t_cmd *cmds, t_env *env_list);
-int		process(t_cmd *cmd, int i, t_infra *shell);
+int		pipex(t_infra *shell, t_cmd *cmds);
+int		process(t_cmd *cmd, int i, t_infra *shell, int *fd);
 int		parent_process(t_cmd *cmd, int i, t_infra *shell);
 int		ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
@@ -147,7 +147,7 @@ void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
-void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds);
+void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
 int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
 void	export_error(char **str);
@@ -156,6 +156,6 @@ void	exit_error(char *str, int flag);
 void	free_char_array(char **array);
 void	free_int_array(int **int_array, int len);
 void	free_env_list(t_env **env_list);
-void	free_shell_cmds(t_infra *shell, t_cmd *cmds);
+void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds);
 
 #endif

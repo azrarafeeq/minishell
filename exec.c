@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 14:29:31 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:20:06 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	**alloc_pipe_fds(int pipe_amt)
 	return (p_fd);
 }
 
-int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
+int	pipex(t_infra *shell, t_cmd *cmds)
 {
 	int	i;
 	int	fd[2];
@@ -50,6 +50,7 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 	i = -1;
 	fd[0] = dup(0);
 	fd[1] = dup(1);
+	shell->env_arr = NULL;
 	if (shell->pipe_len > 0)
 		pipe(shell->pfd[0]);
 	while (++i < (shell->pipe_len + 1))
@@ -58,11 +59,12 @@ int	pipex(t_infra *shell, t_cmd *cmds, t_env *env_list)
 			pipe(shell->pfd[i + 1]);
 		if (shell->env_arr)
 			free_char_array(shell->env_arr);
-		shell->env_arr = list_to_array(&env_list);
-		pid = process(cmds, i, shell);
+		shell->env_arr = list_to_array(&shell->env_list);
+		pid = process(cmds, i, shell, fd);
 		if (i != 0 && shell->pipe_len > 0)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	}
+	free_char_array(shell->env_arr);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close_fds(fd[0], fd[1], -1, -1);

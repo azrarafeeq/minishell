@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 14:34:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 18:28:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
+void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j)
 {
 	int	i;
 	int	len;
@@ -20,14 +20,16 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 	i = 0;
 	(void)shell;
 	(void)cmds;
-	len = ft_strlen(cmd.main);
-	while (cmd.main[i] == ' ' && cmd.main[i])
+	len = ft_strlen(cmds[j].main);
+	while (cmds[i].main[i] == ' ' && cmds[i].main[i])
 		i++;
-	if (cmd.main == NULL || i == len)
+	if (cmds[i].main == NULL || i == len)
 	{
-		printf("%s: command not found\n", cmd.main);
-		free_char_array(env_arr);
-		free_shell_cmds(shell, cmds);
+		ft_putstr_fd(": command not found\n", 2);
+		exit_stat = 127;
+		free(cmds[i].p);
+		free_char_array(shell->env_arr);
+		free_shell_cmds_in_child(shell, cmds);
 		exit_stat = 127;
 		ft_exit(exit_stat);
 	}
@@ -36,7 +38,7 @@ void	mt_arg_error(t_cmd cmd, char **env_arr, t_infra *shell, t_cmd *cmds)
 void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 {
 	ft_putstr_fd(cmd[i].main, 2);
-	if (get_path(&(shell->env_list)) == NULL || access(cmd[i].p, F_OK) == -1)
+	if (get_path(&(shell->env_list)) == NULL)
 	{
 		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_stat = 127;
@@ -44,6 +46,11 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 	else if (cmd[i].p == NULL)
 	{
 		ft_putstr_fd(": command not found\n", 2);
+		exit_stat = 127;
+	}
+	else if (access(cmd[i].p, F_OK) == -1)
+	{
+		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_stat = 127;
 	}
 	else if (access(cmd[i].p, X_OK) == -1)
@@ -61,7 +68,7 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
 		ft_putstr_fd("NONE of them\n", 2);
 	}
 	free_char_array(env_arr);
-	free_shell_cmds(shell, cmd);
+	free_shell_cmds_in_child(shell, cmd);
 	ft_exit(exit_stat);
 }
 
@@ -72,7 +79,8 @@ int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 	ft_putstr_fd(": No such file or directory\n", 2);
 	exit_stat = 1;
 	ft_close_pipes(shell, i, cmds[i]);
-	free_shell_cmds(shell, cmds);
+	if (i > 0)
+		free_shell_cmds_in_child(shell, cmds);
 	return (0);
 }
 
@@ -89,6 +97,7 @@ void	export_error(char **str)
 			write(2, str[i], ft_strlen(str[i]));
 			write(2, "': not a valid identifier\n", 27);
 			exit_stat = 1;
+			//return or exit based on parent or child
 		}
 		i++;
 	}
@@ -102,6 +111,7 @@ void	exit_error(char *str, int flag)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		exit_stat = 255;
+		//return or exit based on child or parent
 		ft_exit(exit_stat);
 	}
 	else if (flag == 2)

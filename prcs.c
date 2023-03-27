@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 14:29:48 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:28:47 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process(t_cmd *cmd, int i, t_infra *shell)
+int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 {
 	int		pid;
 
@@ -24,10 +24,11 @@ int	process(t_cmd *cmd, int i, t_infra *shell)
 		pid = fork();
 		if (pid == 0)
 		{
+			close_fds(fd[0], fd[1], -1, -1);
 			ft_pipe_dup2(shell, cmd, i);
 			if (cmd[i].cmd_len > 0)
 			{
-				mt_arg_error(cmd[i], shell->env_arr, shell, cmd);
+				mt_arg_error(shell, cmd, i);
 				if (cmd_is_built_in(cmd[i].main))
 					ft_built_in(cmd[i], &shell->env_list);
 				else if (cmd[i].p == NULL
@@ -98,7 +99,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
 			dup2(fd, STDOUT_FILENO);
-		if (fd != -1 && k < cmds[i].red_len - 1)
+		if (fd != -1 )/* && k < cmds[i].red_len - 1 */
 			close(fd);
 		k++;
 	}

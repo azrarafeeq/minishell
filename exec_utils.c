@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 00:46:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 17:50:55 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	**list_to_array(t_env **envlist)
 	{
 		join = ft_strjoin(t->var, "=");
 		array[i] = ft_strjoin(join, t->value);
+		free(join);
 		i++;
 		t = t->next;
 	}
