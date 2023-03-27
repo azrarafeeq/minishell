@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 20:19:06 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:29:30 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	free_char_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i] != NULL)
+	if (array)
 	{
-		free(array[i]);
-		i++;
+		while (array[i] != NULL)
+		{
+			if (array[i])
+				free(array[i]);
+			i++;
+		}
+		free(array);
 	}
-	free(array);
 }
 
 void	free_int_array(int **int_array, int len)
