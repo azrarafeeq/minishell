@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 20:32:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:25:39 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 	if (cmd_is_built_in(cmds[0].main) == 0 || shell->pipe_len > 0)
 	{
 		free_char_array(shell->env_arr);
-		free_env_list(&shell->env_list);
+		//free_env_list(&shell->env_list);
 	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
