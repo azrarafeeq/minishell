@@ -6,31 +6,30 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:51:02 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 14:29:48 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process(t_cmd *cmd, int i, t_infra *shell, t_env **env_list)
+int	process(t_cmd *cmd, int i, t_infra *shell)
 {
 	int		pid;
 
 	pid = 0;
-	ft_pipe_dup2(shell, cmd, i);
-	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
-		ft_built_in(cmd[i], env_list);
+	if (parent_process(cmd, i, shell))
+		return (0);
 	else if (cmd[i].cmd_len > 0)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			process2(shell, cmd, i, env_list);
+			ft_pipe_dup2(shell, cmd, i);
 			if (cmd[i].cmd_len > 0)
 			{
 				mt_arg_error(cmd[i], shell->env_arr, shell, cmd);
 				if (cmd_is_built_in(cmd[i].main))
-					ft_built_in(cmd[i], env_list);
+					ft_built_in(cmd[i], &shell->env_list);
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i, shell->env_arr);
@@ -79,7 +78,7 @@ int	open_file(char *file, int flag)
 	return (fd);
 }
 
-int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
+int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 {
 	int	k;
 	int	fd;
@@ -88,9 +87,13 @@ int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 	while (k < cmds[i].red_len)
 	{
 		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
-		if (cmds[i].red[k].flag != HERE_DOC)
-			if (fd == -1)
-				fd_error(cmds[i].red[k].file, shell, cmds, i);
+		if (fd == -1 && cmds[i].red[k].flag != HERE_DOC)
+		{
+			fd_error(cmds[i].red[k].file, shell, cmds, i);
+			if (flag == 2)
+				ft_exit(exit_stat);
+			return (1);
+		}
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
 			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
@@ -99,12 +102,17 @@ int	*ft_dup2(t_infra *shell, t_cmd *cmds, int i)
 			close(fd);
 		k++;
 	}
-	return (NULL);
+	return (0);
 }
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
-	ft_dup2(shell, cmds, i);
+	if (ft_strrchr(cmds[i].main, '/'))
+		cmds[i].p = cmds[i].main;
+	else
+		cmds[i].p = check_path(path_array(get_path(&shell->env_list)),
+				ft_strjoin("/", cmds[i].main));
+	ft_dup2(shell, cmds, i, 2);
 	if (shell->pipe_len > 0)
 	{
 		if (i == 0 || i == shell->pipe_len)
@@ -122,4 +130,5 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 				dup2(shell->pfd[i][1], STDOUT_FILENO);
 		}
 	}
+	ft_close_pipes(shell, i, cmds[i]);
 }

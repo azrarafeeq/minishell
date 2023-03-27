@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/25 22:51:08 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 14:30:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	close_fds(int fd1, int fd2, int fd3, int fd4)
 	return ;
 }
 
-int	heredoc_exist(t_infra *shell, t_cmd *cmd)
+/* int	heredoc_exist(t_infra *shell, t_cmd *cmd)
 {
 	int	i;
 	int	j;
@@ -57,15 +57,15 @@ int	heredoc_exist(t_infra *shell, t_cmd *cmd)
 		i++;
 	}
 	return (0);
-}
+} */
 
-void	process2(t_infra *shell, t_cmd *cmd, int i, t_env **env_list)
+int	parent_process(t_cmd *cmd, int i, t_infra *shell)
 {
-	(void)shell;
-	if (ft_strrchr(cmd[i].main, '/'))
-		cmd[i].p = cmd[i].main;
-	else
-		cmd[i].p = check_path(path_array(get_path(env_list)),
-				ft_strjoin("/", cmd[i].main));
-	ft_close_pipes(shell, i, cmd[i]);
+	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
+	{
+		if (ft_dup2(shell, cmd, i, 1))
+			return (1);
+		ft_built_in(cmd[i], &shell->env_list);
+	}
+	return (0);
 }
