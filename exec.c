@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 19:59:11 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 20:32:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 		if (i != 0 && shell->pipe_len > 0)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	}
-	//free_char_array(shell->env_arr);
+	if (cmd_is_built_in(cmds[0].main) == 0 || shell->pipe_len > 0)
+	{
+		free_char_array(shell->env_arr);
+		free_env_list(&shell->env_list);
+	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close_fds(fd[0], fd[1], -1, -1);
@@ -94,10 +98,10 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 void	waitpid_signal(int j)
 {
 	if (WIFEXITED(j))
-		g_exit_stat= WEXITSTATUS(j);
+		g_exit_stat = WEXITSTATUS(j);
 	if (WIFSIGNALED(j))
 	{
-		g_exit_stat= WTERMSIG(j);
+		g_exit_stat = WTERMSIG(j);
 		g_exit_stat+= 128;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 19:59:53 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 20:03:01 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
 			dup2(fd, STDOUT_FILENO);
-		if (fd != -1 )/* && k < cmds[i].red_len - 1 */
+		if (fd != -1)
 			close(fd);
 		k++;
 	}

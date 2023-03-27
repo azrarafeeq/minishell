@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 18:10:25 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 20:19:06 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	free(shell->rd);
 	//free(shell->trim_rd);
 	free_char_array(shell->cmds);
+	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
 	free_int_array(shell->pfd, shell->pipe_len);
 	//free(shell);

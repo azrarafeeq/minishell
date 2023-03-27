@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 19:59:11 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 20:17:43 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_cd(char **str, t_env **env_list)
 	if (str[1] == NULL || str[1][0] == '\0')
 	{
 		ft_putstr_fd("cd: No directory specified\n", 2);
-		g_exit_stat= 1;
+		g_exit_stat = 1;
 		return ;
 	}
 	dir = opendir(str[1]);
@@ -28,7 +28,7 @@ void	ft_cd(char **str, t_env **env_list)
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(str[1], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		g_exit_stat= 1;
+		g_exit_stat = 1;
 		return ;
 	}
 	chdir(str[1]);
@@ -47,7 +47,7 @@ void	ft_env(t_env **env_list)
 		temp = temp->next;
 	}
 	printf("_=/Users/arafeeq/Desktop/minishell/./minishell\n");
-	g_exit_stat= 0;
+	g_exit_stat = 0;
 }
 
 void	ft_export(t_env **env_list, char **str)
