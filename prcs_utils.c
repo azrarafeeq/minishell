@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 14:30:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:55:31 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int	parent_process(t_cmd *cmd, int i, t_infra *shell)
 		if (ft_dup2(shell, cmd, i, 1))
 			return (1);
 		ft_built_in(cmd[i], &shell->env_list);
+		free_char_array(shell->env_arr);
+		free_env_list(&shell->env_list);
 	}
+	//free_int_array(shell->pfd, shell->pipe_len);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 13:15:46 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 20:00:33 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	ft_exit_cmd(char **str)
 		if (str[2])
 			exit_error(str[1], 2);
 		else
-			exit_stat = ft_atoi(str[1]);
+			g_exit_stat= ft_atoi(str[1]);
 	}
 	else
-		ft_exit(exit_stat);
+		ft_exit(g_exit_stat);
 }
 
 void	ft_pwd(void)
@@ -45,7 +45,7 @@ void	ft_pwd(void)
 	char	buffer[1024];
 
 	printf("%s\n", getcwd(buffer, MAX_PATH));
-	exit_stat = 0;
+	g_exit_stat= 0;
 }
 
 void	ft_echo(char **str)
@@ -64,7 +64,7 @@ void	ft_echo(char **str)
 	}
 	if (ft_strcmp(str[1], "-n") != 0)
 		printf("\n");
-	exit_stat = 0;
+	g_exit_stat= 0;
 }
 
 int	cmd_is_built_in(char *str)

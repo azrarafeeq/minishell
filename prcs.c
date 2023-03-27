@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 19:28:47 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:59:53 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i, shell->env_arr);
-				ft_exit(exit_stat);
+				ft_exit(g_exit_stat);
 			}
 		}
 	}
@@ -92,7 +92,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
 			if (flag == 2)
-				ft_exit(exit_stat);
+				ft_exit(g_exit_stat);
 			return (1);
 		}
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
