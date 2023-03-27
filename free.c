@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 22:54:13 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 02:26:30 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,42 +73,43 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	int	j;
 
 	j = 0;
-	/* while (j < (shell->pipe_len + 1))
+	while (j < (shell->pipe_len + 1))
 	{
-		//free(cmds[j].main);
+		free(cmds[j].main);
 		//free_char_array(cmds[j].tmp_cmd);
 		//free_char_array(cmds[j].cmd);
 		//free(cmds[j].p);
 		//free(cmds[j].red->file);
 		//free(cmds[j].red);
 		j++;
-	} */
+	}
 	free(cmds);
 	free(shell->rd);
 	//free(shell->trim_rd);
-	free_char_array(shell->cmds);
+	// free_char_array(shell->cmds);
 	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
 	free_int_array(shell->pfd, shell->pipe_len);
 	//free(shell);
 }
 
-// void	free_structs(t_infra *sh)
-// {
-// 	int	i;
-// 	int	j;
+void	free_structs(t_cmd *cmd)
+{
+	int	i;
+	int	j;
 
-// 	i = 0;
-// 	while (i < sh->pipe_len)
-// 	{
-// 		if(sh[i].rlen)
-// 		{
-// 			j = -1;
-// 			while (++j < sh[i].rlen)
-// 				free(sh[i].red[j].file);
-// 			free(sh[i].red);
-// 		}
-// 		i++;
-// 	}
-// 	free(sh);
-// }
+	i = 0;
+	while (i < cmd->cmd_len)
+	{
+		if(cmd[i].red_len)
+		{
+			j = -1;
+			while (++j < cmd[i].red_len)
+				free(cmd[i].red[j].file);
+			free(cmd[i].red);
+		}
+		free_char_array(cmd[i].cmd);
+		i++;
+	}
+	free(cmd);
+}

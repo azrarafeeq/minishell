@@ -108,6 +108,7 @@ int		check_pipes(char *line);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
 void	seperate_quote(char cur, t_infra *sh);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
+void	free_structs(t_cmd *cmd);
 void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
 
