@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 22:26:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 23:00:59 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,24 @@ void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j)
 	}
 }
 
-void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr)
+void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 {
-	(void)env_arr;
 	ft_putstr_fd(cmd[i].main, 2);
 	if (get_path(&(shell->env_list)) == NULL)
-	{
 		ft_putstr_fd(": No such file or directory\n", 2);
-		g_exit_stat = 127;
-	}
 	else if (cmd[i].p == NULL)
-	{
 		ft_putstr_fd(": command not found\n", 2);
-		g_exit_stat = 127;
-	}
 	else if (access(cmd[i].p, F_OK) == -1)
-	{
 		ft_putstr_fd(": No such file or directory\n", 2);
+	if (get_path(&(shell->env_list)) == NULL || cmd[i].p == NULL
+		|| access(cmd[i].p, F_OK) == -1)
 		g_exit_stat = 127;
-	}
 	else if (access(cmd[i].p, X_OK) == -1)
-	{
 		ft_putstr_fd(": Permission denied\n", 2);
-		g_exit_stat = 126;
-	}
 	else if (access(cmd[i].p, F_OK) == 0)
-	{
 		ft_putstr_fd(": is a Directory\n", 2);
+	if (access(cmd[i].p, X_OK) == -1 || access(cmd[i].p, F_OK) == 0)
 		g_exit_stat = 126;
-	}
-	//free_char_array(env_arr);
 	free(cmd[i].p);
 	free_shell_cmds_in_child(shell, cmd);
 	ft_exit(g_exit_stat);

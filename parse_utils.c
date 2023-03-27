@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 21:43:43 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:56:36 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void in_init(t_in *in, char *str)
+void	in_init(t_in *in, char *str)
 {
 	in->i = 0;
 	in->j = 0;
@@ -50,9 +50,9 @@ char	*epur_str(char *av, t_in *in)
 	return (free(av), in->out);
 }
 
-void fill_spaces(t_in *in, char *input, int flag)
+void	fill_spaces(t_in *in, char *input, int flag)
 {
-	if(!flag)
+	if (!flag)
 	{
 		in->out[in->j++] = ' ';
 		in->out[in->j++] = ' ';
@@ -75,9 +75,9 @@ void fill_spaces(t_in *in, char *input, int flag)
 
 char	*replace_with_space(char *input)
 {
-	t_in in;
-	in_init(&in, input);
+	t_in	in;
 
+	in_init(&in, input);
 	while (in.i < ft_strlen(input))
 	{
 		is_quote(input[in.i], &in.quote);

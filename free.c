@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 21:29:30 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:54:13 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	int	j;
 
 	j = 0;
-	while (j < (shell->pipe_len + 1))
+	/* while (j < (shell->pipe_len + 1))
 	{
-		free(cmds[j].main);
+		//free(cmds[j].main);
 		//free_char_array(cmds[j].tmp_cmd);
 		//free_char_array(cmds[j].cmd);
 		//free(cmds[j].p);
 		//free(cmds[j].red->file);
 		//free(cmds[j].red);
 		j++;
-	}
+	} */
 	free(cmds);
 	free(shell->rd);
 	//free(shell->trim_rd);

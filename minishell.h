@@ -106,7 +106,7 @@ void	get_cmd(char *s, unsigned int start, size_t len);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
-void seperate_quote(char cur, t_infra *sh);
+void	seperate_quote(char cur, t_infra *sh);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
 void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
@@ -157,7 +157,7 @@ void	update_var(t_env **env_list, char *str);
 
 int		syntax_err(t_infra *in);
 void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j);
-void	execve_error(t_infra *shell, t_cmd *cmd, int i, char **env_arr);
+void	execve_error(t_infra *shell, t_cmd *cmd, int i);
 int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
 void	export_error(char **str);
 void	exit_error(char *str, int flag);

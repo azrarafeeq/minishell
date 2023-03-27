@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 20:57:10 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/26 15:07:04 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:57:07 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ void	get_cmd(char *s, unsigned int start, size_t len)
 	s[j] = '\0';
 }
 
-void seperate_quote(char cur, t_infra *sh)
+void	seperate_quote(char cur, t_infra *sh)
 {
 	if (cur == '\"')
 	{
-			if (!sh->paired)
-				sh->paired = cur;
-			else if (sh->paired)
-				sh->paired = 0;
+		if (!sh->paired)
+			sh->paired = cur;
+		else if (sh->paired)
+			sh->paired = 0;
 	}
 	if (cur == '\'' && !sh->paired)
 	{
-			if (!sh->single)
-				sh->single = cur;
-			else if (sh->single)
-				sh->single = 0;
+		if (!sh->single)
+			sh->single = cur;
+		else if (sh->single)
+			sh->single = 0;
 	}
 }

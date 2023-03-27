@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 21:43:34 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:57:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	get_line(t_infra *shell, char **envp)
 		//if (heredoc_exist(shell, cmds))
 			unlink("a!");
 	}
-		//free_shell_cmds(shell, cmds);
 }
 
 int	main(int ac, char **av, char **envp)
