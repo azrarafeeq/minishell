@@ -84,6 +84,15 @@ typedef struct s_infra{
 	char	paired;
 }				t_infra;
 
+typedef struct s_in{
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+	char	quote;
+	char	*out;
+}t_in;
+
 int		get_line(t_infra *shell, char **envp);
 void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
@@ -91,13 +100,13 @@ void	clean_quotes(char *str);
 char	**ft_split_quote(char const *s, char c);
 char	**ft_split_with_quotes(t_infra *shell, char c);
 char	*replace_with_space(char *input);
-char	*epur_str(char *av);
+char	*epur_str(char *av, t_in *in);
 char	*modify_cmd(char *dol, int start, int len, char *extended);
 void	get_cmd(char *s, unsigned int start, size_t len);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
-void	seperate_quote(char cur, t_infra *sh);
+void seperate_quote(char cur, t_infra *sh);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
 void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);

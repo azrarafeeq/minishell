@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 19:21:15 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:43:34 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ int	get_line(t_infra *shell, char **envp)
 		i = -1;
 		shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");
 		if (!shell->rd)
-		{
-			if (shell)
-				free_env_list(&shell->env_list);
 			return (printf("exit\n"), 0);
-		}
 		if (ft_strcmp(shell->rd, ""))
 			add_history(shell->rd);
 		shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
@@ -51,6 +47,10 @@ int	get_line(t_infra *shell, char **envp)
 			continue ;
 		shell->cmds = ft_split_with_quotes(shell, '|');
 		infra_shell(shell, &cmds);
+		free_char_array(shell->cmds);
+		/* ---------> free at the end <----------  */
+		// free_char_array(cmds->cmd);
+		// free(cmds);
 		shell->pipe_len -= 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds);
@@ -62,6 +62,7 @@ int	get_line(t_infra *shell, char **envp)
 		//if (heredoc_exist(shell, cmds))
 			unlink("a!");
 	}
+		//free_shell_cmds(shell, cmds);
 }
 
 int	main(int ac, char **av, char **envp)

@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 03:27:19 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:15:50 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	int		h;
 	char	**split;
 	char	**spaces;
+	t_in in;
 
 	h = 0;
+	in.out = NULL;
 	shell->paired = 0;
 	shell->single = 0;
 	shell->len = 0;
@@ -117,7 +119,7 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	{
 		if (ft_strchr(split[h], HUNDRED_CENT))
 			get_hundred_cent(&split[h], shell);
-		spaces[h] = epur_str(replace_with_space(split[h]));
+		spaces[h] = epur_str(replace_with_space(split[h]), &in);
 	}
 	spaces[h] = NULL;
 	free_char_array(split);
