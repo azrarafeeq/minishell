@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:55:35 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 16:56:53 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 00:01:51 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 int	syntax_err(t_infra *shell)
 {
 	if (!right_quotes(shell->trim_rd))
-		return (printf("error quoets\n"), 0);
+		return ((g_exit_stat = 258), \
+			(printf("syntax error near unexpected token\n"), 0));
 	if (!check_redirect(shell->trim_rd))
-		return (printf("error redirect\n"), 0);
+		return ((g_exit_stat = 258), \
+			(printf("syntax error near unexpected token\n"), 0));
 	if (!check_pipes(shell->trim_rd))
-		return (printf("error pipe\n"), 0);
+		return ((g_exit_stat = 258), \
+			(printf("syntax error near unexpected token\n"), 0));
 	return (1);
 }
 

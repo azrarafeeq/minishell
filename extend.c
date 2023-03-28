@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 03:24:15 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 23:55:33 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ char *add_quotes(char *str)
     return new_str;
 }
 
+int get_stat(char **fifty_cent, t_infra *sh, char *expandable)
+{
+	sh->i++;
+	if ((*fifty_cent)[sh->i] == '?' && (*fifty_cent)[sh->i - 1] == '$')
+	{
+		expandable = ft_itoa(g_exit_stat);
+		*fifty_cent = modify_cmd(*fifty_cent, sh->i - 1, 2, expandable);
+		sh->i += ft_strlen(expandable) - 2;
+		free(expandable);
+		return 1;
+	}
+	return 0;
+}
+
 void update_cmd(char **dol, char *expanded, t_infra *sh)
 {
 	if (!sh->paired)
@@ -41,25 +55,17 @@ void update_cmd(char **dol, char *expanded, t_infra *sh)
 	}
 }
 
-int	expande_it(char **dol, char **expandable, t_infra *sh)
+int is_alpha_num(char *dol, t_infra *sh)
 {
-	char	*expanded;
-
-	expanded = NULL;
-	if (*expandable)
+	if(!ft_isalpha(dol[sh->i]))
+		return 1;
+	sh->len = 0;
+	while (ft_isalnum(dol[sh->i]))
 	{
-		expanded = ft_getenv(&sh->env_list, *expandable);
-		if (expanded)
-			update_cmd(dol, expanded, sh);
-		else
-		{
-			*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, "");
-			sh->i -= sh->len + 1;
-		}
-		free(*expandable);
-		return (1);
+		sh->len++;
+		sh->i++;
 	}
-	return (0);
+	return 0;
 }
 
 void	get_hundred_cent(char **fifty_cent, t_infra *sh)
@@ -77,14 +83,10 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 			return ;
 		if ((*fifty_cent)[sh->i] == '$' && !sh->single)
 		{
-			if (!ft_isalpha(dol[++sh->i]))
+			if(get_stat(fifty_cent, sh, expandable))
 				continue;
-			sh->len = 0;
-			while (ft_isalnum(dol[sh->i]))
-			{
-				sh->len++;
-				sh->i++;
-			}
+			if(is_alpha_num(dol, sh))
+				continue;
 			expandable = ft_substr(dol, sh->i - sh->len, sh->len);
 			if (expande_it(fifty_cent, &expandable, sh))
 				continue ;

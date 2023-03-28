@@ -104,6 +104,8 @@ char	*replace_with_space(char *input);
 char	*epur_str(char *av, t_in *in);
 char	*modify_cmd(char *dol, int start, int len, char *extended);
 void	get_cmd(char *s, unsigned int start, size_t len);
+int		expande_it(char **dol, char **expandable, t_infra *sh);
+void	update_cmd(char **dol, char *expanded, t_infra *sh);
 void	fill_spaces(t_in *in, char *input, int flag);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
