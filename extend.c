@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 23:55:33 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 01:32:04 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int get_stat(char **fifty_cent, t_infra *sh, char *expandable)
 
 void update_cmd(char **dol, char *expanded, t_infra *sh)
 {
+	char *quoted;
+	
 	if (!sh->paired)
 	{
-		char *quoted = add_quotes(expanded);
+		quoted = add_quotes(expanded);
 		*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, quoted);
 		sh->i += ft_strlen(expanded) - sh->len - 1;
 		free(quoted);
@@ -71,10 +73,11 @@ int is_alpha_num(char *dol, t_infra *sh)
 void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 {
 	char	*expandable;
+	char *dol;
 
 	sh->len = 0;
 	sh->i = 0;
-	char *dol = *fifty_cent;
+	dol = *fifty_cent;
 	while (sh->i < ft_strlen(dol))
 	{
 

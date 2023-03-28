@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 17:03:20 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 01:44:37 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,72 +102,39 @@ void	clean_quotes(char *str)
 	str[j] = '\0';
 }
 
+void check_quotes(char c, char *single, char *paired)
+{
+	if (c == '\'')
+		{
+			if (*single)
+				*single = 0;
+			else if (!*paired)
+				*single = c;
+		}
+		else if (c == '\"')
+		{
+			if (*paired)
+				*paired = 0;
+			else if (!*single)
+				*paired = c;
+		}
+}
+
 int	right_quotes(char *str)
 {
 	int	i;
-	int	single;
-	int	paired;
+	char	single;
+	char	paired;
 
 	single = 0;
 	paired = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
-		{
-			if (single)
-				single = 0;
-			else if (!paired)
-				single = 1;
-		}
-		else if (str[i] == '\"')
-		{
-			if (paired)
-				paired = 0;
-			else if (!single)
-				paired = 1;
-		}
+		check_quotes(str[i], &single, &paired);
 		i++;
 	}
 	if (single || paired)
 		return (0);
 	return (1);
 }
-
-
-// void check_backslash(char c, char *single, char *paired)
-// {
-// 	if (c == '\'')
-// 		{
-// 			if (*single)
-// 				*single = 0;
-// 			else if (!paired)
-// 				*single = c;
-// 		}
-// 		else if (c == '\"')
-// 		{
-// 			if (*paired)
-// 				*paired = 0;
-// 			else if (!single)
-// 				*paired = c;
-// 		}
-// }
-
-// int	right_quotes(char *str)
-// {
-// 	int	i;
-// 	char	single;
-// 	char	paired;
-
-// 	single = 0;
-// 	paired = 0;
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		check_backslash(str[i], &single, &paired);
-// 		i++;
-// 	}
-// 	if (single || paired)
-// 		return (0);
-// 	return (1);
-// }

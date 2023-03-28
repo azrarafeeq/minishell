@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:55:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 22:50:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 02:02:46 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ void	handler(int sig)
 	}
 }
 
+void free_trim(char **trim)
+{
+	if(*trim)
+		free(*trim);
+	*trim = NULL;	
+}
+
 int	get_line(t_infra *shell, char **envp)
 {
 	int		i;
@@ -32,6 +39,7 @@ int	get_line(t_infra *shell, char **envp)
 	t_env	*env_list;
 
 	env_list = NULL;
+	shell->trim_rd = NULL;
 	ft_envp(envp, &env_list);
 	shell->env_list = env_list;
 	while (1)
@@ -42,7 +50,7 @@ int	get_line(t_infra *shell, char **envp)
 		{
 			if (shell->env_list)
 				free_env_list(&shell->env_list);
-			return (printf("exit\n"), 0);
+			return (printf("exit\n"), (free_trim(&shell->trim_rd)), 0);
 		}
 		if (ft_strcmp(shell->rd, ""))
 			add_history(shell->rd);
