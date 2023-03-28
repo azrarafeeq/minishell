@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 20:54:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 21:12:42 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,16 @@ void	free_env_list(t_env **env_list)
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 {
 	int	j;
+	int	i;
+
 	j = 0;
+	i = -1;
 	while (j < (shell->pipe_len + 1) && cmds[j].cmd_len > 0)
 	{
 		free_char_array(cmds[j].cmd);
 		if (cmds[j].red_len > 0)
 		{
-			if (cmds[j].red->file)
+			while (++i < cmds[j].red_len)
 				free(cmds[j].red->file);
 			if (cmds[j].red)
 				free(cmds[j].red);
@@ -87,13 +90,10 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	if (cmds)
 		free(cmds);
 	free(shell->rd);
-	// free(cmds);
-	// free_char_array(shell->cmds);
 	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
 	if (shell->pfd)
 		free_int_array(shell->pfd, shell->pipe_len);
-	//free(shell);
 }
 
 void	free_structs(t_cmd *cmd)
@@ -104,7 +104,7 @@ void	free_structs(t_cmd *cmd)
 	i = 0;
 	while (i < cmd->cmd_cnt)
 	{
-		if(cmd[i].red_len)
+		if (cmd[i].red_len)
 		{
 			j = -1;
 			while (++j < cmd[i].red_len)

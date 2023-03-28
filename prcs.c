@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 16:54:15 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 21:15:13 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 		if (pid == 0)
 		{
 			close_fds(fd[0], fd[1], -1, -1);
+			close_fds(0, 1, 2, -1);
 			ft_pipe_dup2(shell, cmd, i);
 			if (cmd[i].cmd_len > 0)
 			{
