@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 22:58:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:33:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 	int		pid;
 
 	pid = 0;
-	if (parent_process(cmd, i, shell))
-		return (0);
+	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
+		return (parent_process(cmd, i, shell));
 	else if (cmd[i].cmd_len > 0)
 	{
 		pid = fork();

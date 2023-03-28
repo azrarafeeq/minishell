@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 23:00:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:34:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 		ft_putstr_fd(": command not found\n", 2);
 	else if (access(cmd[i].p, F_OK) == -1)
 		ft_putstr_fd(": No such file or directory\n", 2);
-	if (get_path(&(shell->env_list)) == NULL || cmd[i].p == NULL
-		|| access(cmd[i].p, F_OK) == -1)
-		g_exit_stat = 127;
 	else if (access(cmd[i].p, X_OK) == -1)
 		ft_putstr_fd(": Permission denied\n", 2);
 	else if (access(cmd[i].p, F_OK) == 0)
 		ft_putstr_fd(": is a Directory\n", 2);
-	if (access(cmd[i].p, X_OK) == -1 || access(cmd[i].p, F_OK) == 0)
+	if (get_path(&(shell->env_list)) == NULL || cmd[i].p == NULL
+		|| access(cmd[i].p, F_OK) == -1)
+		g_exit_stat = 127;
+	else if (access(cmd[i].p, X_OK) == -1 || access(cmd[i].p, F_OK) == 0)
 		g_exit_stat = 126;
 	free(cmd[i].p);
 	free_shell_cmds_in_child(shell, cmd);
@@ -70,7 +70,7 @@ int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 	return (0);
 }
 
-void	export_error(char **str)
+int	export_error(char **str)
 {
 	int	i;
 
@@ -83,10 +83,12 @@ void	export_error(char **str)
 			write(2, str[i], ft_strlen(str[i]));
 			write(2, "': not a valid identifier\n", 27);
 			g_exit_stat = 1;
+			return (1);
 			//return or exit based on parent or child
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	exit_error(char *str, int flag)

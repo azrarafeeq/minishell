@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 20:17:54 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:37:51 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_exit_cmd(char **str)
 		if (str[2])
 			exit_error(str[1], 2);
 		else
-			g_exit_stat = ft_atoi(str[1]);
+			g_exit_stat = (unsigned char)ft_atoi(str[1]);
 	}
 	else
 		ft_exit(g_exit_stat);
