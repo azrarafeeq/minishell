@@ -67,7 +67,7 @@ typedef struct s_cmd{
 	char	*p;
 	int		red_len;
 	int		cmd_len;
-	int cmd_cnt;
+	int		cmd_cnt;
 	t_red	*red;
 }				t_cmd;
 

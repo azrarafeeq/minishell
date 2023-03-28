@@ -6,10 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 17:51:54 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:54:43 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
 void	free_char_array(char **array)
 {
@@ -70,35 +71,21 @@ void	free_env_list(t_env **env_list)
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 {
 	//int	j;
-
-<<<<<<< HEAD
 	//j = 0;
 	/* while (j < (shell->pipe_len + 1))
 	{
 		//free(cmds[j].main);
-=======
-	j = 0;
-	(void)cmds;
-	while (j < (shell->pipe_len + 1))
-	{
-		// free(cmds[j].main);
->>>>>>> 67f64a37912ab9736f4371a6ac7d74eb52d2bfeb
 		//free_char_array(cmds[j].tmp_cmd);
 		//free_char_array(cmds[j].cmd);
 		//free(cmds[j].p);
 		//free(cmds[j].red->file);
 		//free(cmds[j].red);
 		j++;
-<<<<<<< HEAD
 	} */
 	if (cmds)
 		free(cmds);
 	free(shell->rd);
-	//free(shell->trim_rd);
-=======
-	}
 	// free(cmds);
->>>>>>> 67f64a37912ab9736f4371a6ac7d74eb52d2bfeb
 	// free_char_array(shell->cmds);
 	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
