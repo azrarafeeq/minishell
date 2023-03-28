@@ -6,7 +6,7 @@
 #    By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 19:43:43 by arafeeq           #+#    #+#              #
-#    Updated: 2023/03/28 03:36:00 by ahassan          ###   ########.fr        #
+#    Updated: 2023/03/28 17:30:31 by ahassan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -g3
+CFLAGS =  -I/usr/local/Cellar/readline/8.1/include -I/usr/local/opt/readline/include/ -g3 
 
 LIBFT = -Llibft -lft
 

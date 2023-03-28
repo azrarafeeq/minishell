@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 03:25:37 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:28:32 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,23 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 }
 
 void cmds_init(t_cmd **cmds, int h, int j)
-{
-	int f;
-	
+{	
 	while ((*cmds)[j].cmd[h])
 			clean_quotes((*cmds)[j].cmd[h++]);
-	(*cmds)[j].main = ft_strdup("");
+	(*cmds)[j].main = NULL;
 	(*cmds)[j].cmd_id = 0;
 	h = 0;
-	f = 0;
 	while ((*cmds)[j].cmd[h])
 	{
 		if (h == 0)
-		{
-			free((*cmds)[j].main);
-			f = 1;
 			(*cmds)[j].main = (*cmds)[j].cmd[h];
-		}
 		h++;
 		(*cmds)[j].cmd_id = j + 1;
 	}
-	(*cmds)[j].cmd_len = h;
-	if (!f)
-		free((*cmds)[j].main);
+	if(!((*cmds)[j].main))
+		(*cmds)[j].cmd_len = 0;
+	else	
+		(*cmds)[j].cmd_len = h;
 }
 
 void	infra_shell(t_infra *shell, t_cmd **tmp)
@@ -126,6 +120,6 @@ void	infra_shell(t_infra *shell, t_cmd **tmp)
 		h = 0;
 		cmds_init(&cmds, h, j);
 	}
-	cmds->cmd_len = j;
+	cmds->cmd_cnt = j;
 	free_char_array(shell->cmds);
 }

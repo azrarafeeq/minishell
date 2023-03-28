@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 20:57:10 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 22:57:07 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 16:50:10 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,28 @@ void	seperate_quote(char cur, t_infra *sh)
 			sh->single = cur;
 		else if (sh->single)
 			sh->single = 0;
+	}
+}
+
+void	fill_spaces(t_in *in, char *input, int flag)
+{
+	if (!flag)
+	{
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = input[in->i++];
+		in->out[in->j++] = input[in->i];
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
+	}
+	else
+	{
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = input[in->i];
+		in->out[in->j++] = ' ';
+		in->out[in->j++] = ' ';
 	}
 }

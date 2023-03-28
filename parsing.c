@@ -6,7 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/28 16:55:38 by arafeeq          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/28 17:39:41 by ahassan          ###   ########.fr       */
+>>>>>>> 67f64a37912ab9736f4371a6ac7d74eb52d2bfeb
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +36,6 @@ int	get_line(t_infra *shell, char **envp)
 	t_env	*env_list;
 
 	env_list = NULL;
-	cmds = NULL;
 	ft_envp(envp, &env_list);
 	shell->env_list = env_list;
 	while (1)
