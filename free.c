@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 02:26:30 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:58:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,28 @@ void	free_env_list(t_env **env_list)
 
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 {
-	int	j;
+	//int	j;
 
-	j = 0;
-	while (j < (shell->pipe_len + 1))
+	//j = 0;
+	/* while (j < (shell->pipe_len + 1))
 	{
-		free(cmds[j].main);
+		//free(cmds[j].main);
 		//free_char_array(cmds[j].tmp_cmd);
 		//free_char_array(cmds[j].cmd);
 		//free(cmds[j].p);
 		//free(cmds[j].red->file);
 		//free(cmds[j].red);
 		j++;
-	}
-	free(cmds);
+	} */
+	if (cmds)
+		free(cmds);
 	free(shell->rd);
 	//free(shell->trim_rd);
 	// free_char_array(shell->cmds);
 	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
-	free_int_array(shell->pfd, shell->pipe_len);
+	if (shell->pfd)
+		free_int_array(shell->pfd, shell->pipe_len);
 	//free(shell);
 }
 

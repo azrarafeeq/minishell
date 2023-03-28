@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 14:33:08 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 16:54:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
 			if (flag == 2)
+			{
+				free_shell_cmds_in_child(shell, cmds);
 				ft_exit(g_exit_stat);
+			}
 			return (1);
 		}
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
@@ -108,11 +111,14 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
-	if (ft_strrchr(cmds[i].main, '/'))
-		cmds[i].p = cmds[i].main;
-	else
-		cmds[i].p = check_path(path_array(get_path(&shell->env_list)),
-				ft_strjoin("/", cmds[i].main));
+	if (cmds[i].cmd_len > 0)
+	{
+		if (ft_strrchr(cmds[i].main, '/'))
+			cmds[i].p = cmds[i].main;
+		else
+			cmds[i].p = check_path(path_array(get_path(&shell->env_list)),
+					ft_strjoin("/", cmds[i].main));
+	}
 	ft_dup2(shell, cmds, i, 2);
 	if (shell->pipe_len > 0)
 	{
