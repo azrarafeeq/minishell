@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 19:51:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:56:08 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,6 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	}
 	free_char_array(shell->env_arr);
-	/* if (cmd_is_built_in(cmds[0].main) == 0 || shell->pipe_len > 0)
-	{
-		//free_env_list(&shell->env_list);
-	} */
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close_fds(fd[0], fd[1], -1, -1);
