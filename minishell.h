@@ -67,6 +67,7 @@ typedef struct s_cmd{
 	char	*p;
 	int		red_len;
 	int		cmd_len;
+	int cmd_cnt;
 	t_red	*red;
 }				t_cmd;
 
@@ -103,6 +104,7 @@ char	*replace_with_space(char *input);
 char	*epur_str(char *av, t_in *in);
 char	*modify_cmd(char *dol, int start, int len, char *extended);
 void	get_cmd(char *s, unsigned int start, size_t len);
+void	fill_spaces(t_in *in, char *input, int flag);
 int		check_redirect(char *str);
 int		check_pipes(char *line);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);

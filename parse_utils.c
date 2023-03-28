@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 22:56:36 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:03:20 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,6 @@ char	*epur_str(char *av, t_in *in)
 	}
 	in->out[in->k] = '\0';
 	return (free(av), in->out);
-}
-
-void	fill_spaces(t_in *in, char *input, int flag)
-{
-	if (!flag)
-	{
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = input[in->i++];
-		in->out[in->j++] = input[in->i];
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-	}
-	else
-	{
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = input[in->i];
-		in->out[in->j++] = ' ';
-		in->out[in->j++] = ' ';
-	}
 }
 
 char	*replace_with_space(char *input)
@@ -156,3 +133,41 @@ int	right_quotes(char *str)
 		return (0);
 	return (1);
 }
+
+
+// void check_backslash(char c, char *single, char *paired)
+// {
+// 	if (c == '\'')
+// 		{
+// 			if (*single)
+// 				*single = 0;
+// 			else if (!paired)
+// 				*single = c;
+// 		}
+// 		else if (c == '\"')
+// 		{
+// 			if (*paired)
+// 				*paired = 0;
+// 			else if (!single)
+// 				*paired = c;
+// 		}
+// }
+
+// int	right_quotes(char *str)
+// {
+// 	int	i;
+// 	char	single;
+// 	char	paired;
+
+// 	single = 0;
+// 	paired = 0;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		check_backslash(str[i], &single, &paired);
+// 		i++;
+// 	}
+// 	if (single || paired)
+// 		return (0);
+// 	return (1);
+// }

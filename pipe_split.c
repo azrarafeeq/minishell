@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 01:17:14 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:33:16 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static char	*ft_copy(char const *s, char c, int *i)
 		(*i)++;
 	}
 	tmp = ft_substr(s, 0, *i);
+	printf("{%s}\n", tmp);
 	return tmp;
 }
 

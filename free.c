@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 02:26:30 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:42:36 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	int	j;
 
 	j = 0;
+	(void)cmds;
 	while (j < (shell->pipe_len + 1))
 	{
-		free(cmds[j].main);
+		// free(cmds[j].main);
 		//free_char_array(cmds[j].tmp_cmd);
 		//free_char_array(cmds[j].cmd);
 		//free(cmds[j].p);
@@ -83,9 +84,7 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 		//free(cmds[j].red);
 		j++;
 	}
-	free(cmds);
-	free(shell->rd);
-	//free(shell->trim_rd);
+	// free(cmds);
 	// free_char_array(shell->cmds);
 	free_char_array(shell->env_arr);
 	free_env_list(&shell->env_list);
@@ -99,7 +98,7 @@ void	free_structs(t_cmd *cmd)
 	int	j;
 
 	i = 0;
-	while (i < cmd->cmd_len)
+	while (i < cmd->cmd_cnt)
 	{
 		if(cmd[i].red_len)
 		{

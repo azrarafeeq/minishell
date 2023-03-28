@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 03:35:53 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:39:41 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_line(t_infra *shell, char **envp)
 	t_env	*env_list;
 
 	env_list = NULL;
-	ft_envp(envp, &env_list);
+	// ft_envp(envp, &env_list);
 	shell->env_list = env_list;
 	while (1)
 	{
