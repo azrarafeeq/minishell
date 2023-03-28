@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 17:54:43 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 18:12:07 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,15 @@ void	free_env_list(t_env **env_list)
 
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 {
-	//int	j;
-	//j = 0;
-	/* while (j < (shell->pipe_len + 1))
+	int	j;
+	j = 0;
+	while (j < (shell->pipe_len + 1) && cmds[j].cmd_len > 0)
 	{
-		//free(cmds[j].main);
-		//free_char_array(cmds[j].tmp_cmd);
-		//free_char_array(cmds[j].cmd);
-		//free(cmds[j].p);
+		free_char_array(cmds[j].cmd);
 		//free(cmds[j].red->file);
 		//free(cmds[j].red);
 		j++;
-	} */
+	}
 	if (cmds)
 		free(cmds);
 	free(shell->rd);

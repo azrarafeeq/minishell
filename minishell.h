@@ -136,7 +136,6 @@ int		ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
-//int		heredoc_exist(t_infra *shell, t_cmd *cmd);
 int		var_exists(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
@@ -152,7 +151,7 @@ void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
 void	ft_exit(int g_exit_stat);
 void	ft_exit_cmd(char **str);
-void	waitpid_signal(int j);
+void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
 
 void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);

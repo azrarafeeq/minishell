@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:55:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 17:55:21 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:49:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	handler(int sig)
 int	get_line(t_infra *shell, char **envp)
 {
 	int		i;
-	//int		j;
-	//int		pid;
+	int		j;
+	int		pid;
 	t_cmd	*cmds;
 	t_env	*env_list;
 
@@ -52,15 +52,14 @@ int	get_line(t_infra *shell, char **envp)
 		shell->cmds = ft_split_with_quotes(shell, '|');
 		infra_shell(shell, &cmds);
 		shell->pipe_len -= 1;
-		printf("cmd_len = %d\n", cmds[0].cmd_len);
-		/* shell->pfd = alloc_pipe_fds(shell->pipe_len);
+		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds);
 		free_int_array(shell->pfd, shell->pipe_len);
 		while (++i < shell->pipe_len)
 			waitpid(-1, 0, 0);
 		waitpid(pid, &j, 0);
-		waitpid_signal(j);
-		unlink("a!"); */
+		waitpid_signal(j, cmds, shell);
+		unlink("a!");
 		free_structs(cmds);
 	}
 }
