@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 22:57:41 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 01:17:14 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	*ft_copy(char const *s, char c, int *i)
 {
 	char	quote;
 	char	*tmp;
-	char	*str;
 
 	quote = 0;
 	*i = 0;
@@ -39,10 +38,7 @@ static char	*ft_copy(char const *s, char c, int *i)
 		(*i)++;
 	}
 	tmp = ft_substr(s, 0, *i);
-	if (!ft_strlen(tmp))
-		return (NULL);
-	str = ft_strtrim(tmp, " \t");
-	return (free(tmp), str);
+	return tmp;
 }
 
 static size_t	count_word(char const *s, char c)
@@ -101,7 +97,7 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	int		h;
 	char	**split;
 	char	**spaces;
-	t_in	in;
+	t_in in;
 
 	h = 0;
 	in.out = NULL;

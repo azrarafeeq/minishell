@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:21:37 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 22:57:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/28 03:35:53 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ int	get_line(t_infra *shell, char **envp)
 			continue ;
 		shell->cmds = ft_split_with_quotes(shell, '|');
 		infra_shell(shell, &cmds);
-		free_char_array(shell->cmds);
-		/* ---------> free at the end <----------  */
-		// free_char_array(cmds->cmd);
-		// free(cmds);
 		shell->pipe_len -= 1;
 		shell->pfd = alloc_pipe_fds(shell->pipe_len);
 		pid = pipex(shell, cmds);
@@ -59,8 +55,9 @@ int	get_line(t_infra *shell, char **envp)
 			waitpid(-1, 0, 0);
 		waitpid(pid, &j, 0);
 		waitpid_signal(j);
-		//if (heredoc_exist(shell, cmds))
+		//// if (heredoc_exist(shell, cmds))
 			unlink("a!");
+		free_structs(cmds);
 	}
 }
 
@@ -74,6 +71,4 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	get_line(&shell, envp);
-	// free(shell.rd);
-	// free(shell.trim_rd);
 }
