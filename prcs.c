@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 14:30:46 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:40:27 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 {
-	int		pid;
-
-	pid = 0;
 	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
 		return (parent_process(cmd, i, shell));
 	else if (cmd[i].cmd_len > 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		fd[2] = fork();
+		if (fd[2] == 0)
 		{
 			close_fds(fd[0], fd[1], -1, -1);
 			ft_pipe_dup2(shell, cmd, i);
@@ -39,7 +36,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 			ft_exit(g_exit_stat);
 		}
 	}
-	return (pid);
+	return (fd[2]);
 }
 
 void	ft_heredoc(char *delimeter)
@@ -84,8 +81,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 			dup2(fd, STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
 			dup2(fd, STDOUT_FILENO);
-		if (fd != -1)
-			close(fd);
+		close(fd);
 		k++;
 	}
 	return (0);
@@ -102,22 +98,19 @@ void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 					ft_strjoin("/", cmds[i].main));
 	}
 	ft_dup2(shell, cmds, i, 2);
-	if (shell->pipe_len > 0)
+	if ((i == 0 || i == shell->pipe_len) && shell->pipe_len > 0)
 	{
-		if (i == 0 || i == shell->pipe_len)
-		{
-			if (file_rd_exist(cmds[i], 1, 2) == 0 && i == 0)
-				dup2(shell->pfd[0][1], STDOUT_FILENO);
-			else if (file_rd_exist(cmds[i], 0, 3) == 0 && i == shell->pipe_len)
-				dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
-		}
-		else if (shell->pipe_len > 1)
-		{
-			if (file_rd_exist(cmds[i], 0, 3) == 0)
-				dup2(shell->pfd[i - 1][0], STDIN_FILENO);
-			if (file_rd_exist(cmds[i], 1, 2) == 0)
-				dup2(shell->pfd[i][1], STDOUT_FILENO);
-		}
+		if (file_rd_exist(cmds[i], 1, 2) == 0 && i == 0)
+			dup2(shell->pfd[0][1], STDOUT_FILENO);
+		else if (file_rd_exist(cmds[i], 0, 3) == 0 && i == shell->pipe_len)
+			dup2(shell->pfd[shell->pipe_len - 1][0], STDIN_FILENO);
+	}
+	else if (shell->pipe_len > 1)
+	{
+		if (file_rd_exist(cmds[i], 0, 3) == 0)
+			dup2(shell->pfd[i - 1][0], STDIN_FILENO);
+		if (file_rd_exist(cmds[i], 1, 2) == 0)
+			dup2(shell->pfd[i][1], STDOUT_FILENO);
 	}
 	ft_close_pipes(shell, i, cmds[i]);
 }

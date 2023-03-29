@@ -6,21 +6,11 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 12:22:48 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:44:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	in_init(t_in *in, char *str)
-{
-	in->i = 0;
-	in->j = 0;
-	in->k = 0;
-	in->quote = 0;
-	in->len = ft_strlen(str);
-	in->out = (char *) malloc((in->len + 1) * 3 * sizeof(char));
-}
 
 char	*epur_str(char *av, t_in *in)
 {

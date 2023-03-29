@@ -6,33 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 12:23:49 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:44:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	red_count(char *str)
+void	in_init(t_in *in, char *str)
 {
-	int		i;
-	int		num;
-	char	quote;
-
-	i = 0;
-	num = 0;
-	quote = 0;
-	while (str[i])
-	{
-		is_quote(str[i], &quote);
-		if (!quote && (str[i] == '>' || str[i] == '<'))
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<')
-				i++;
-			num++;
-		}
-		i++;
-	}
-	return (num);
+	in->i = 0;
+	in->j = 0;
+	in->k = 0;
+	in->quote = 0;
+	in->len = ft_strlen(str);
+	in->out = (char *) malloc((in->len + 1) * 3 * sizeof(char));
 }
 
 int	get_file(char *str, char **file_name, int i)

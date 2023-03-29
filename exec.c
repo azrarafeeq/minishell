@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 13:11:56 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:40:20 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	execute(t_infra *shell, t_cmd *cmds)
 int	pipex(t_infra *shell, t_cmd *cmds)
 {
 	int	i;
-	int	fd[2];
-	int	pid;
+	int	fd[3];
 
 	i = -1;
 	fd[0] = dup(0);
@@ -78,7 +77,7 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 		if (shell->env_arr)
 			free_char_array(shell->env_arr);
 		shell->env_arr = list_to_array(&shell->env_list);
-		pid = process(cmds, i, shell, fd);
+		fd[2] = process(cmds, i, shell, fd);
 		if (i != 0 && shell->pipe_len > 0)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	}
@@ -86,7 +85,7 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close_fds(fd[0], fd[1], -1, -1);
-	return (pid);
+	return (fd[2]);
 }
 
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)

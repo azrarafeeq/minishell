@@ -6,11 +6,34 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/27 22:58:22 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:44:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	red_count(char *str)
+{
+	int		i;
+	int		num;
+	char	quote;
+
+	i = 0;
+	num = 0;
+	quote = 0;
+	while (str[i])
+	{
+		is_quote(str[i], &quote);
+		if (!quote && (str[i] == '>' || str[i] == '<'))
+		{
+			if (str[i + 1] == '>' || str[i + 1] == '<')
+				i++;
+			num++;
+		}
+		i++;
+	}
+	return (num);
+}
 
 int	is_redirect(char *str, int *i, int flag)
 {
