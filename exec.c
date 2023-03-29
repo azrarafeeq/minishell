@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:26:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 22:50:37 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:11:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ int	**alloc_pipe_fds(int pipe_amt)
 	return (p_fd);
 }
 
+void	execute(t_infra *shell, t_cmd *cmds)
+{
+	int		i;
+	int		j;
+	int		pid;
+
+	i = -1;
+	shell->pipe_len -= 1;
+	shell->pfd = alloc_pipe_fds(shell->pipe_len);
+	pid = pipex(shell, cmds);
+	free_int_array(shell->pfd, shell->pipe_len);
+	waitpid(pid, &j, 0);
+	while (++i < shell->pipe_len)
+		waitpid(-1, 0, 0);
+	waitpid_signal(j, cmds, shell);
+	unlink("a!");
+}
+
 int	pipex(t_infra *shell, t_cmd *cmds)
 {
 	int	i;
@@ -69,26 +87,6 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 	dup2(fd[1], STDOUT_FILENO);
 	close_fds(fd[0], fd[1], -1, -1);
 	return (pid);
-}
-
-void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
-{
-	(void)cmd;
-	if (shell->pipe_len > 0)
-	{
-		if (i == 0)
-			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
-		else if (i == shell->pipe_len)
-		{
-			close_fds(shell->pfd[shell->pipe_len - 1][0],
-				shell->pfd[shell->pipe_len - 1][1], -1, -1);
-		}
-		else if (shell->pipe_len > 1)
-		{
-			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1],
-				shell->pfd[i][0], shell->pfd[i][1]);
-		}
-	}
 }
 
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)

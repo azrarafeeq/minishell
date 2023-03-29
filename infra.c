@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/28 17:28:32 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:23:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	init_infra(t_infra *shell, t_cmd *cmds, int j)
 	}
 }
 
-void cmds_init(t_cmd **cmds, int h, int j)
+void	cmds_init(t_cmd **cmds, int h, int j)
 {	
 	while ((*cmds)[j].cmd[h])
-			clean_quotes((*cmds)[j].cmd[h++]);
+		clean_quotes((*cmds)[j].cmd[h++]);
 	(*cmds)[j].main = NULL;
 	(*cmds)[j].cmd_id = 0;
 	h = 0;
@@ -92,9 +92,9 @@ void cmds_init(t_cmd **cmds, int h, int j)
 		h++;
 		(*cmds)[j].cmd_id = j + 1;
 	}
-	if(!((*cmds)[j].main))
+	if (!((*cmds)[j].main))
 		(*cmds)[j].cmd_len = 0;
-	else	
+	else
 		(*cmds)[j].cmd_len = h;
 }
 

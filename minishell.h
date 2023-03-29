@@ -113,8 +113,6 @@ int		check_pipes(char *line);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
 void	seperate_quote(char cur, t_infra *sh);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
-void	free_structs(t_cmd *cmd);
-void free_trim(char **trim);
 void	get_hundred_cent(char **fifty_cent, t_infra *sh);
 int		**alloc_pipe_fds(int pipe_amt);
 
@@ -133,9 +131,11 @@ char	*append_path_to_array(char *path, int *i);
 char	**path_array(char *path);
 char	*check_path(char **path_array, char *command);
 
+void	execute(t_infra *shell, t_cmd *cmds);
 int		pipex(t_infra *shell, t_cmd *cmds);
 int		process(t_cmd *cmd, int i, t_infra *shell, int *fd);
 int		parent_process(t_cmd *cmd, int i, t_infra *shell);
+int		open_file(char *file, int flag);
 int		ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter);
@@ -172,5 +172,7 @@ void	free_char_array(char **array);
 void	free_int_array(int **int_array, int len);
 void	free_env_list(t_env **env_list);
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds);
+void	free_structs(t_cmd *cmd);
+void	free_trim(char **trim);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 22:51:38 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:52:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 		return (parent_process(cmd, i, shell));
 	else if (cmd[i].cmd_len > 0)
 	{
+		printf("HELLO\n");
 		pid = fork();
 		if (pid == 0)
 		{
@@ -34,6 +35,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i);
+				printf("exit stat = %d\n", g_exit_stat);
 				ft_exit(g_exit_stat);
 			}
 		}
@@ -58,25 +60,6 @@ void	ft_heredoc(char *delimeter)
 	}
 	free(line);
 	close(fd);
-}
-
-int	open_file(char *file, int flag)
-{
-	int	fd;
-
-	fd = -1;
-	if (flag == IN_FILE)
-		fd = open(file, O_RDONLY, 0777);
-	else if (flag == TRUNCATE)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (flag == APPEND)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else if (flag == HERE_DOC)
-	{
-		ft_heredoc(file);
-		fd = open("a!", O_RDONLY, 0777);
-	}
-	return (fd);
 }
 
 int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)

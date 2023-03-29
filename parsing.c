@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:55:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 04:17:43 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:36:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handler(int sig)
 	}
 }
 
-int at_exit(t_infra *shell)
+int	at_exit(t_infra *shell)
 {
 	shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");
 	if (!shell->rd)
@@ -32,38 +32,20 @@ int at_exit(t_infra *shell)
 			free_env_list(&shell->env_list);
 		return (printf("exit\n"), (free_trim(&shell->trim_rd)), 0);
 	}
-	return 1;
+	return (1);
 }
 
-int infra(t_infra *shell, t_cmd **cmds)
+int	infra(t_infra *shell, t_cmd **cmds)
 {
 	if (ft_strcmp(shell->rd, ""))
 		add_history(shell->rd);
 	shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
 	if (!*shell->trim_rd || !syntax_err(shell))
-		return 1;
+		return (1);
 	(*shell).cmds = ft_split_with_quotes(shell, '|');
 	free_trim(&shell->trim_rd);
 	infra_shell(shell, &*cmds);
-	return 42;
-}
-
-void execute(t_infra *shell, t_cmd *cmds)
-{
-	int		i;
-	int		j;
-	int		pid;
-
-	i = -1;
-	shell->pipe_len -= 1;
-	shell->pfd = alloc_pipe_fds(shell->pipe_len);
-	pid = pipex(shell, cmds);
-	free_int_array(shell->pfd, shell->pipe_len);
-	while (++i < shell->pipe_len)
-		waitpid(-1, 0, 0);
-	waitpid(pid, &j, 0);
-	waitpid_signal(j, cmds, shell);
-	unlink("a!");
+	return (42);
 }
 
 int	get_line(char **envp)
@@ -76,13 +58,14 @@ int	get_line(char **envp)
 	shell.trim_rd = NULL;
 	ft_envp(envp, &env_list);
 	shell.env_list = env_list;
+	g_exit_stat = 0;
 	while (1)
 	{
-		if(!at_exit(&shell))
+		if (!at_exit(&shell))
 			exit(0);
-		if(infra(&shell, &cmds) == 1)
-			continue;
-		execute(&shell, cmds);	
+		if (infra(&shell, &cmds) == 1)
+			continue ;
+		execute(&shell, cmds);
 		free_structs(cmds);
 	}
 }

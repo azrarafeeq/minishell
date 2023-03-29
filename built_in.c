@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 23:09:41 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:47:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_export(t_env **env_list, char **str)
 
 	if (export_error(str))
 		return ;
+	g_exit_stat = 0;
 	i = 1;
 	ft_env_pos(env_list);
 	if (str[i])

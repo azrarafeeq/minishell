@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:17:58 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 01:44:37 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:22:48 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,27 @@ void	clean_quotes(char *str)
 	str[j] = '\0';
 }
 
-void check_quotes(char c, char *single, char *paired)
+void	check_quotes(char c, char *single, char *paired)
 {
 	if (c == '\'')
-		{
-			if (*single)
-				*single = 0;
-			else if (!*paired)
-				*single = c;
-		}
-		else if (c == '\"')
-		{
-			if (*paired)
-				*paired = 0;
-			else if (!*single)
-				*paired = c;
-		}
+	{
+		if (*single)
+			*single = 0;
+		else if (!*paired)
+			*single = c;
+	}
+	else if (c == '\"')
+	{
+		if (*paired)
+			*paired = 0;
+		else if (!*single)
+			*paired = c;
+	}
 }
 
 int	right_quotes(char *str)
 {
-	int	i;
+	int		i;
 	char	single;
 	char	paired;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:55:35 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 04:12:29 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:23:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	check_pipes(char *line)
 	return (1);
 }
 
-void free_trim(char **trim)
+void	free_trim(char **trim)
 {
-	if(*trim)
+	if (*trim)
 		free(*trim);
-	*trim = NULL;	
+	*trim = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 18:12:00 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:28:25 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	export_error(char **str)
 			write(2, "': not a valid identifier\n", 27);
 			g_exit_stat = 1;
 			return (1);
-			//return or exit based on parent or child
 		}
 		i++;
 	}
