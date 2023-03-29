@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 13:29:42 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:30:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 		g_exit_stat = 127;
 	else if (access(cmd[i].p, X_OK) == -1 || access(cmd[i].p, F_OK) == 0)
 		g_exit_stat = 126;
-	free(cmd[i].p);
-	free_shell_cmds_in_child(shell, cmd);
-	ft_exit(g_exit_stat);
+	if (ft_strchr(cmd[i].main, '/') == 0)
+		free(cmd[i].p);
 }
 
 int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)

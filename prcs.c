@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 13:40:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:30:46 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i);
-				ft_exit(g_exit_stat);
 			}
+			free_shell_cmds_in_child(shell, cmd);
+			ft_exit(g_exit_stat);
 		}
 	}
 	return (pid);

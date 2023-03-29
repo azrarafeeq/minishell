@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/28 21:12:42 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:19:10 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ void	free_int_array(int **int_array, int len)
 	free(int_array);
 }
 
-/* void	free_cmds(char **cmds)
-{
-	char	**tmp;
-
-	tmp = cmds;
-	while (*cmds)
-		free(*cmds++);
-	free(tmp);
-} */
-
 void	free_env_list(t_env **env_list)
 {
 	t_env	*temp;
@@ -75,9 +65,10 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 
 	j = 0;
 	i = -1;
-	while (j < (shell->pipe_len + 1) && cmds[j].cmd_len > 0)
+	while (j < (shell->pipe_len + 1))
 	{
-		free_char_array(cmds[j].cmd);
+		if (cmds[j].cmd != NULL)
+			free_char_array(cmds[j].cmd);
 		if (cmds[j].red_len > 0)
 		{
 			while (++i < cmds[j].red_len)
