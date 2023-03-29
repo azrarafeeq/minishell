@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/27 20:00:15 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:20:46 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int	var_exists(t_env **env_list, char *str)
 		while (temp)
 		{
 			if (ft_strcmp(split[0], temp->var) == 0)
-				return (1);
+				return (free_char_array(split), 1);
 			temp = temp->next;
 		}
+		free_char_array(split);
 	}
 	else
 	{
