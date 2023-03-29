@@ -6,19 +6,20 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 12:46:16 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:41:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit_cmd(char **str)
+void	ft_exit_cmd(char **str, t_infra *shell)
 {
 	int			j;
 	long long	num;
 
 	j = -1;
-	printf("exit\n");
+	if (shell->pipe_len == 0)
+		printf("exit\n");
 	if (str[1])
 	{
 		while (str[1][++j])
@@ -88,18 +89,18 @@ int	cmd_is_built_in(char *str)
 	return (0);
 }
 
-void	ft_built_in(t_cmd cmd, t_env **env)
+void	ft_built_in(t_cmd cmd, t_infra *shell)
 {
 	if (ft_strcmp(cmd.main, "cd") == 0)
-		ft_cd(cmd.cmd, env);
+		ft_cd(cmd.cmd, &shell->env_list);
 	else if (ft_strcmp(cmd.main, "export") == 0)
-		ft_export(env, cmd.cmd);
+		ft_export(&shell->env_list, cmd.cmd);
 	else if (ft_strcmp(cmd.main, "unset") == 0)
-		ft_unset(env, cmd.cmd);
+		ft_unset(&shell->env_list, cmd.cmd);
 	else if (ft_strcmp(cmd.main, "exit") == 0)
-		ft_exit_cmd(cmd.cmd);
+		ft_exit_cmd(cmd.cmd, shell);
 	else if (ft_strcmp(cmd.main, "env") == 0)
-		ft_env(env);
+		ft_env(&shell->env_list);
 	else if (ft_strcmp(cmd.main, "echo") == 0)
 		ft_echo(cmd.cmd);
 	else if (ft_strcmp(cmd.main, "pwd") == 0)

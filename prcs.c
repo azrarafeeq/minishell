@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 12:52:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:40:10 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 		return (parent_process(cmd, i, shell));
 	else if (cmd[i].cmd_len > 0)
 	{
-		printf("HELLO\n");
 		pid = fork();
 		if (pid == 0)
 		{
@@ -31,11 +30,10 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 			{
 				mt_arg_error(shell, cmd, i);
 				if (cmd_is_built_in(cmd[i].main))
-					ft_built_in(cmd[i], &shell->env_list);
+					ft_built_in(cmd[i], shell);
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i);
-				printf("exit stat = %d\n", g_exit_stat);
 				ft_exit(g_exit_stat);
 			}
 		}

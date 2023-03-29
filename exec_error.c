@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 12:28:25 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:29:42 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	exit_error(char *str, int flag)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_exit_stat = 255;
-		//return or exit based on child or parent
 		ft_exit(g_exit_stat);
 	}
 	else if (flag == 2)

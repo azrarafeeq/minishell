@@ -145,7 +145,7 @@ void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
 
 int		cmd_is_built_in(char *str);
-void	ft_built_in(t_cmd cmd, t_env **env);
+void	ft_built_in(t_cmd cmd, t_infra *shell);
 void	ft_cd(char **str, t_env **env_list);
 void	ft_env(t_env **env_list);
 void	ft_unset(t_env **env, char **str);
@@ -154,7 +154,7 @@ void	ft_echo(char **str);
 void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
 void	ft_exit(int g_exit_stat);
-void	ft_exit_cmd(char **str);
+void	ft_exit_cmd(char **str, t_infra *shell);
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
 
 void	update_pwd(t_env **env_list);
