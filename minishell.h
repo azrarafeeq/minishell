@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # define MAX_PATH 1024
 # define HUNDRED_CENT '$'
+# define SYN_ERR "syntax error near unexpected token\n"
 
 # include <stdio.h>
 # include <errno.h>
@@ -95,6 +96,7 @@ typedef struct s_in{
 }t_in;
 
 void	is_quote(char c, char *quote);
+void	free_trim(char **trim);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
 char	**ft_split_quote(char const *s, char c);

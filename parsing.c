@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:55:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 03:58:34 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 04:17:43 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ void	handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-}
-
-void free_trim(char **trim)
-{
-	if(*trim)
-		free(*trim);
-	*trim = NULL;	
 }
 
 int at_exit(t_infra *shell)
@@ -55,11 +48,26 @@ int infra(t_infra *shell, t_cmd **cmds)
 	return 42;
 }
 
-int	get_line(char **envp)
+void execute(t_infra *shell, t_cmd *cmds)
 {
 	int		i;
 	int		j;
 	int		pid;
+
+	i = -1;
+	shell->pipe_len -= 1;
+	shell->pfd = alloc_pipe_fds(shell->pipe_len);
+	pid = pipex(shell, cmds);
+	free_int_array(shell->pfd, shell->pipe_len);
+	while (++i < shell->pipe_len)
+		waitpid(-1, 0, 0);
+	waitpid(pid, &j, 0);
+	waitpid_signal(j, cmds, shell);
+	unlink("a!");
+}
+
+int	get_line(char **envp)
+{
 	t_cmd	*cmds;
 	t_infra	shell;
 	t_env	*env_list;
@@ -70,20 +78,11 @@ int	get_line(char **envp)
 	shell.env_list = env_list;
 	while (1)
 	{
-		i = -1;
 		if(!at_exit(&shell))
 			exit(0);
 		if(infra(&shell, &cmds) == 1)
 			continue;
-		shell.pipe_len -= 1;
-		shell.pfd = alloc_pipe_fds(shell.pipe_len);
-		pid = pipex(&shell, cmds);
-		free_int_array(shell.pfd, shell.pipe_len);
-		while (++i < shell.pipe_len)
-			waitpid(-1, 0, 0);
-		waitpid(pid, &j, 0);
-		waitpid_signal(j, cmds, &shell);
-		unlink("a!");
+		execute(&shell, cmds);	
 		free_structs(cmds);
 	}
 }
