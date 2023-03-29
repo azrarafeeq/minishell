@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 01:57:08 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/29 03:52:15 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	shell->i = 0;
 	shell->pipe_len = count_word(shell->trim_rd, c);
 	split = ft_split_quote(shell->trim_rd, c);
-	free_trim(&shell->trim_rd);
 	spaces = malloc(sizeof(*split) * (shell->pipe_len + 1));
 	h = 0;
 	h = -1;

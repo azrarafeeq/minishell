@@ -94,7 +94,6 @@ typedef struct s_in{
 	char	*out;
 }t_in;
 
-int		get_line(t_infra *shell, char **envp);
 void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
