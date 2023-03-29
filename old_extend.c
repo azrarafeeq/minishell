@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   extend.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 22:37:54 by ahassan          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "minishell.h"
 
 char	*add_quotes(char *str)
 {
@@ -44,9 +32,23 @@ int	get_stat(char **fifty_cent, t_infra *sh, char *expandable)
 
 void	update_cmd(char **dol, char *expanded, t_infra *sh)
 {
+	char	*quoted;
 
-	*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, expanded);
-	sh->i += ft_strlen(expanded) - sh->len - 1;
+	// if (!sh->paired)
+	// {
+	// 	quoted = add_quotes(expanded);
+	// 	*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, quoted);
+	// 	sh->i += ft_strlen(expanded) - sh->len - 1;
+	// 	free(quoted);
+	// }
+	// else
+	// {
+		// printf("exp %s\n", expanded);
+		// quoted = add_quotes(expanded);
+		// printf("quot %s\n", expanded);
+		*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, expanded);
+		sh->i += ft_strlen(expanded) - sh->len - 1;
+	// }
 }
 
 int	is_alpha_num(char *dol, t_infra *sh)
@@ -70,6 +72,9 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 	sh->len = 0;
 	sh->i = 0;
 	dol = *fifty_cent;
+	sh->paired = 0;
+	sh->single = 0;
+	// printf("fresh {%s}\n", (*fifty_cent));
 	while (sh->i < ft_strlen((*fifty_cent)))
 	{
 		seperate_quote((*fifty_cent)[sh->i], sh);
@@ -87,4 +92,5 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 		}
 		sh->i++;
 	}
+	// printf("%s\n",*fifty_cent );
 }
