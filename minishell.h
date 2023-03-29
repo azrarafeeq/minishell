@@ -150,6 +150,7 @@ void	ft_built_in(t_cmd cmd, t_infra *shell);
 void	ft_cd(char **str, t_env **env_list);
 void	ft_env(t_env **env_list);
 void	ft_unset(t_env **env, char **str);
+void	delete_node(t_env **env, t_env *temp, t_env *prev);
 void	ft_pwd(void);
 void	ft_echo(char **str);
 void	ft_export(t_env **env_list, char **str);
@@ -166,7 +167,7 @@ int		syntax_err(t_infra *in);
 void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i);
 int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
-int		export_error(char **str);
+int		export_unset_error(char *str);
 void	exit_error(char *str, int flag);
 
 void	free_char_array(char **array);

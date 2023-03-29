@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 14:02:51 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 20:03:51 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ void	ft_echo(char **str)
 {
 	int		i;
 
-	i = 0;
+	i = 1;
 	if (str[1])
-		if (ft_strcmp(str[1], "-n") == 0)
-			i = 1;
-	while (str[++i])
+		while (ft_strcmp(str[i], "-n") == 0)
+			i++;
+	while (str[i])
 	{
 		printf("%s", str[i]);
 		if (str[i + 1])
 			printf(" ");
+		i++;
 	}
 	if (str[1])
 		if (ft_strcmp(str[1], "-n") != 0)
@@ -92,6 +93,7 @@ int	cmd_is_built_in(char *str)
 
 void	ft_built_in(t_cmd cmd, t_infra *shell)
 {
+	g_exit_stat = 0;
 	if (ft_strcmp(cmd.main, "cd") == 0)
 		ft_cd(cmd.cmd, &shell->env_list);
 	else if (ft_strcmp(cmd.main, "export") == 0)

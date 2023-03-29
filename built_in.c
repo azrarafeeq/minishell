@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 12:47:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/29 20:27:18 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,25 @@ void	ft_export(t_env **env_list, char **str)
 	int		i;
 	t_env	*env_node;
 
-	if (export_error(str))
-		return ;
-	g_exit_stat = 0;
-	i = 1;
+	i = 0;
 	ft_env_pos(env_list);
-	if (str[i])
+	while (str[++i])
 	{
-		if (var_exists(env_list, str[i]))
+		if (export_unset_error(str[i]) == 0)
 		{
-			if (ft_strchr(str[i], '='))
-				return (update_var(env_list, str[i]));
-		}
-		else
-		{
-			env_node = init_env_node(str[i]);
-			envlst_addback(env_list, env_node);
-			return ;
+			if (var_exists(env_list, str[i]))
+			{
+				if (ft_strchr(str[i], '='))
+					update_var(env_list, str[i]);
+			}
+			else
+			{
+				env_node = init_env_node(str[i]);
+				envlst_addback(env_list, env_node);
+			}
 		}
 	}
-	else
+	if (!str[1])
 		print_export(env_list);
 }
 
@@ -91,11 +90,10 @@ void	print_export(t_env **env_list)
 	{
 		if (i == temp->pos)
 		{
-			printf("declare -x %s=", temp->var);
+			printf("declare -x %s", temp->var);
 			if (temp->value != NULL)
-				printf("\"%s\"\n", temp->value);
-			else
-				printf("\"\"\n");
+				printf("=\"%s\"", temp->value);
+			printf("\n");
 			i++;
 			temp = *env_list;
 		}
@@ -108,26 +106,27 @@ void	ft_unset(t_env **env, char **str)
 {
 	t_env	*temp;
 	t_env	*prev;
+	int		i;
 
 	temp = *env;
 	prev = *env;
-	while (temp)
+	i = 1;
+	while (str[i])
 	{
-		if (ft_strcmp(str[1], temp->var) == 0)
+		if (export_unset_error(str[i]) == 0)
 		{
-			if (temp == *env)
-				(*env) = (*env)->next;
-			else if (temp->next == NULL)
-				prev->next = NULL;
-			else
-				prev->next = temp->next;
-			free(temp->var);
-			free(temp->value);
-			free(temp);
-			temp = NULL;
-			return ;
+			while (temp)
+			{
+				if (ft_strcmp(str[i], temp->var) == 0)
+				{
+					delete_node(env, temp, prev);
+					break ;
+				}
+				prev = temp;
+				temp = temp->next;
+			}
+			temp = *env;
 		}
-		prev = temp;
-		temp = temp->next;
+		i++;
 	}
 }
