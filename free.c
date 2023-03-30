@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 14:19:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/30 21:30:53 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ void	free_char_array(char **array)
 		{
 			if (array[i])
 				free(array[i]);
+			array[i] = NULL;	
 			i++;
 		}
 		free(array);
+		array = NULL;
 	}
 }
 

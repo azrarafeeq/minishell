@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 20:13:55 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:24:49 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j)
 		ft_putstr_fd(": command not found\n", 2);
 		g_exit_stat = 127;
 		free(cmds[i].p);
-		free_char_array(shell->env_arr);
+		// free_char_array(shell->env_arr);
 		free_shell_cmds_in_child(shell, cmds);
 		g_exit_stat = 127;
 		ft_exit(g_exit_stat);
