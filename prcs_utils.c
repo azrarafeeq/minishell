@@ -6,13 +6,13 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 13:43:07 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/30 21:32:33 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_file(char *file, int flag)
+int	open_file(char *file, int flag, int in_fd)
 {
 	int	fd;
 
@@ -25,7 +25,7 @@ int	open_file(char *file, int flag)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (flag == HERE_DOC)
 	{
-		ft_heredoc(file);
+		ft_heredoc(file, in_fd);
 		fd = open("a!", O_RDONLY, 0777);
 	}
 	return (fd);

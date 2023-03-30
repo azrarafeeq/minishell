@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 15:40:27 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/30 21:37:57 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 {
+	fd[2] = 0;
 	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
 		return (parent_process(cmd, i, shell));
-	else if (cmd[i].cmd_len > 0)
+	else
 	{
 		fd[2] = fork();
 		if (fd[2] == 0)
@@ -36,16 +37,18 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 			ft_exit(g_exit_stat);
 		}
 	}
+	if (i != 0)
+		close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	return (fd[2]);
 }
 
-void	ft_heredoc(char *delimeter)
+void	ft_heredoc(char *delimeter, int in_fd)
 {
 	int		fd;
 	char	*line;
 
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	line = get_next_line(0);
+	line = get_next_line(in_fd);
 	while (line)
 	{
 		if (ft_strcmp(delimeter, line) == 0)
@@ -62,16 +65,19 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 {
 	int	k;
 	int	fd;
+	int	in_fd;
 
 	k = 0;
+	in_fd = dup(0);
 	while (k < cmds[i].red_len)
 	{
-		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag);
+		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag, in_fd);
 		if (fd == -1 && cmds[i].red[k].flag != HERE_DOC)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
 			if (flag == 2)
 			{
+				close(in_fd);
 				free_shell_cmds_in_child(shell, cmds);
 				ft_exit(g_exit_stat);
 			}
@@ -84,6 +90,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		close(fd);
 		k++;
 	}
+	close(in_fd);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:17:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 14:19:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/30 21:34:20 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 		if (cmds[j].red_len > 0)
 		{
 			while (++i < cmds[j].red_len)
-				free(cmds[j].red->file);
+				free(cmds[j].red[i].file);
 			if (cmds[j].red)
 				free(cmds[j].red);
 		}

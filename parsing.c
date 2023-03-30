@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:55:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 05:27:56 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/30 21:27:02 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	infra(t_infra *shell, t_cmd **cmds)
 		add_history(shell->rd);
 	shell->trim_rd = ft_strtrim(shell->rd, "\t \n\v\r");
 	if (!shell->trim_rd || !*shell->trim_rd || !syntax_err(shell))
-		return free_trim(&shell->trim_rd),(1);
+		return (free_trim(&shell->trim_rd), (1));
 	(*shell).cmds = ft_split_with_quotes(shell, '|');
 	free_trim(&shell->trim_rd);
 	infra_shell(shell, &*cmds);
