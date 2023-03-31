@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:08 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 20:37:35 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/31 22:20:14 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_char_array(char **array)
 		{
 			if (array[i])
 				free(array[i]);
-			array[i] = NULL;	
+			array[i] = NULL;
 			i++;
 		}
 		free(array);
@@ -86,6 +86,7 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	free_env_list(&shell->env_list);
 	if (shell->pfd)
 		free_int_array(shell->pfd, shell->pipe_len);
+	ft_exit(g_exit_stat);
 }
 
 void	free_structs(t_cmd *cmd)

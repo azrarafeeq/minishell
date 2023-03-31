@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 21:01:53 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 22:20:42 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j)
 		g_exit_stat = 127;
 		free(cmds[j].p);
 		free_shell_cmds_in_child(shell, cmds);
-		g_exit_stat = 127;
-		ft_exit(g_exit_stat);
 	}
 }
 

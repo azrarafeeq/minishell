@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 15:27:03 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 22:21:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 					execve_error(shell, cmd, i);
 			}
 			free_shell_cmds_in_child(shell, cmd);
-			ft_exit(g_exit_stat);
 		}
 	}
 	if (i != 0)
@@ -64,34 +63,28 @@ void	ft_heredoc(char *delimeter, int in_fd)
 int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 {
 	int	k;
-	int	fd;
-	int	in_fd;
+	int	fd[2];
 
-	k = 0;
-	in_fd = dup(0);
-	while (k < cmds[i].red_len)
+	k = -1;
+	fd[0] = dup(0);
+	while (++k < cmds[i].red_len)
 	{
-		fd = open_file(cmds[i].red[k].file, cmds[i].red[k].flag, in_fd);
-		if (fd == -1 && cmds[i].red[k].flag != HERE_DOC)
+		fd[1] = open_file(cmds[i].red[k].file, cmds[i].red[k].flag, fd[0]);
+		if (fd[1] == -1 && cmds[i].red[k].flag != HERE_DOC)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
+			close(fd[0]);
 			if (flag == 2)
-			{
-				close(in_fd);
 				free_shell_cmds_in_child(shell, cmds);
-				ft_exit(g_exit_stat);
-			}
 			return (1);
 		}
 		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
-			dup2(fd, STDIN_FILENO);
+			dup2(fd[1], STDIN_FILENO);
 		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
-		k++;
+			dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 	}
-	close(in_fd);
-	return (0);
+	return (close(fd[0]), 0);
 }
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
