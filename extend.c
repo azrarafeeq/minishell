@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/30 22:13:20 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 17:45:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	get_stat(char **fifty_cent, t_infra *sh, char *expandable)
 
 void	update_cmd(char **dol, char *expanded, t_infra *sh)
 {
-
 	*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, expanded);
 	sh->i += ft_strlen(expanded) - sh->len - 1;
 }

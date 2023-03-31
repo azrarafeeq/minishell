@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 20:57:10 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 16:09:28 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 17:31:14 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*modify_cmd(char *dol, int start, int len, char *extended)
 	while (dol[i + len])
 		new_str[j++] = dol[i++ + len];
 	new_str[j] = '\0';
-	return (new_str);
+	return (free(dol), new_str);
 }
 
 void	get_cmd(char *s, unsigned int start, size_t len)
