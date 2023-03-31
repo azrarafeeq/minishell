@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 20:03:51 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:24:46 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,15 @@ void	ft_echo(char **str)
 
 	i = 1;
 	if (str[1])
-		while (ft_strcmp(str[i], "-n") == 0)
-			i++;
+	{
+		while (str[i])
+		{
+			if (ft_strcmp(str[i], "-n") == 0)
+				i++;
+			else
+				break ;
+		}
+	}
 	while (str[i])
 	{
 		printf("%s", str[i]);

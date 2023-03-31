@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 21:32:33 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:46:49 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 	if (shell->pipe_len > 0)
 	{
 		if (i == 0)
+		{
 			close_fds(shell->pfd[0][0], shell->pfd[0][1], -1, -1);
+			if (shell->pipe_len > 1)
+				close_fds(shell->pfd[1][0], shell->pfd[1][1], -1, -1);
+		}
 		else if (i == shell->pipe_len)
 		{
 			close_fds(shell->pfd[shell->pipe_len - 1][0],
@@ -74,6 +78,8 @@ void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd)
 		{
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1],
 				shell->pfd[i][0], shell->pfd[i][1]);
+			if ((i + 1) < shell->pipe_len)
+				close_fds(shell->pfd[i + 1][0], shell->pfd[i + 1][1], -1, -1);
 		}
 	}
 }

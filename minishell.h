@@ -99,6 +99,7 @@ void	in_init(t_in *in, char *str);
 void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
+void	handler(int sig);
 char	**ft_split_quote(char const *s, char c);
 char	**ft_split_with_quotes(t_infra *shell, char c);
 void	seperate_quote(char cur, t_infra *sh);

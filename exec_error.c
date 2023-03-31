@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 18:24:49 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/30 23:04:58 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,15 @@ void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j)
 	int	len;
 
 	i = 0;
-	(void)shell;
-	(void)cmds;
 	len = ft_strlen(cmds[j].main);
-	while (cmds[i].main[i] == ' ' && cmds[i].main[i])
+	while (cmds[j].main[i] == ' ' && cmds[j].main[i])
 		i++;
-	if (cmds[i].main == NULL || i == len)
+	if (cmds[j].main == NULL || i == len)
 	{
+		printf("path = %s\n", cmds[j].p);
 		ft_putstr_fd(": command not found\n", 2);
 		g_exit_stat = 127;
-		free(cmds[i].p);
-		// free_char_array(shell->env_arr);
+		free(cmds[j].p);
 		free_shell_cmds_in_child(shell, cmds);
 		g_exit_stat = 127;
 		ft_exit(g_exit_stat);

@@ -25,6 +25,7 @@ cd bark bark
 cd '/' 
 cd $PWD/file_tests 
 cd $OLDPWD/something 
+sleep 1
 echo
 echo echo
 eCho 
@@ -95,6 +96,7 @@ echo $PWD/file
 echo "$PWD/file"
 echo "text" "text$USER" ... "$USER"
 echo $PWD
+sleep 1
 test
 | test
 echo > <
@@ -126,8 +128,6 @@ EechoE
 >>echo>>
 echo
 |echo|
-echo -n
-echo -n
 echo
 echo something
 rm -f something
@@ -142,6 +142,7 @@ hi im thallard
 nice to meet you if these tests are green
 your minishell is perfect
 0 0
+sleep 1
 42 42
 -42 -24
 42

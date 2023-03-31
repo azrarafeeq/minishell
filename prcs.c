@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 21:37:57 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 15:27:03 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i)
 {
-	if (cmds[i].cmd_len > 0)
+	if (cmds[i].cmd_len > 0 && cmd_is_built_in(cmds[i].main) == 0)
 	{
 		if (ft_strrchr(cmds[i].main, '/'))
 			cmds[i].p = cmds[i].main;

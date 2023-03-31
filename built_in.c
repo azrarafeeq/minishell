@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 20:27:18 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:19:11 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	ft_env(t_env **env_list)
 {
 	t_env	*temp;
 
+	if (get_path(env_list) == NULL)
+	{
+		ft_putstr_fd("env: No such file or directory\n", 2);
+		g_exit_stat = 127;
+		return ;
+	}
 	temp = *env_list;
 	while (temp)
 	{
