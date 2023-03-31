@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 23:04:58 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 21:01:53 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,22 @@ int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 	return (0);
 }
 
-int	export_unset_error(char *str)
+int	export_unset_error(char *str, int flag)
 {
-	if (!(ft_isalpha(str[0]) || str[0] == '_'))
+	int	i;
+
+	i = -1;
+	while (str[++i])
 	{
-		write(2, "export: '", 9);
+		if (str[i] == '-')
+			break ;
+	}
+	if (!(ft_isalpha(str[0]) || str[0] == '_') || i != ft_strlen(str))
+	{
+		if (flag)
+			write(2, "export: '", 9);
+		else
+			write(2, "unset: '", 9);
 		write(2, str, ft_strlen(str));
 		write(2, "': not a valid identifier\n", 27);
 		g_exit_stat = 1;

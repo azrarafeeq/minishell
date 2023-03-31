@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 16:19:11 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 21:02:42 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_export(t_env **env_list, char **str)
 	ft_env_pos(env_list);
 	while (str[++i])
 	{
-		if (export_unset_error(str[i]) == 0)
+		if (export_unset_error(str[i], 1) == 0)
 		{
 			if (var_exists(env_list, str[i]))
 			{
@@ -119,7 +119,7 @@ void	ft_unset(t_env **env, char **str)
 	i = 1;
 	while (str[i])
 	{
-		if (export_unset_error(str[i]) == 0)
+		if (export_unset_error(str[i], 0) == 0)
 		{
 			while (temp)
 			{

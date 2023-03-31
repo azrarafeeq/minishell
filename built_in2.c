@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 16:24:46 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 21:19:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,29 @@
 void	ft_exit_cmd(char **str, t_infra *shell)
 {
 	int			j;
-	long long	num;
 
 	j = -1;
 	if (shell->pipe_len == 0)
 		printf("exit\n");
 	if (str[1])
 	{
+		if (ft_strcmp(str[1], "-9223372036854775808"))
+			ft_exit(0);
 		while (str[1][++j])
 		{
-			if (str[1][0] == '-')
+			if ((str[1][0] == '-' || str[1][0] == '+') && j == 0)
 				j++;
 			if (ft_isdigit(str[1][j]) == 0)
 				exit_error(str[1], 1);
 		}
-		num = ft_atoi(str[1]);
-		if (num == -1 && ft_strlen(str[1]) != 2)
+		if (ft_atoi(str[1]) == -1 && ft_strlen(str[1]) != 2)
 			exit_error(str[1], 1);
 		if (str[2])
-			exit_error(str[1], 2);
+			return (exit_error(str[1], 2));
 		else
 			g_exit_stat = (unsigned char)ft_atoi(str[1]);
 	}
-	else
-		ft_exit(g_exit_stat);
+	ft_exit(g_exit_stat);
 }
 
 void	ft_pwd(void)

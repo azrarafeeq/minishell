@@ -168,7 +168,7 @@ int		syntax_err(t_infra *in);
 void	mt_arg_error(t_infra *shell, t_cmd *cmds, int j);
 void	execve_error(t_infra *shell, t_cmd *cmd, int i);
 int		fd_error(char *file, t_infra *shell, t_cmd *cmds, int i);
-int		export_unset_error(char *str);
+int		export_unset_error(char *str, int flag);
 void	exit_error(char *str, int flag);
 
 void	free_char_array(char **array);
