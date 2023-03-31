@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 01:00:17 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 20:42:13 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	update_pwd(t_env **env_list)
 		}
 		temp = temp->next;
 	}
-	update_oldpwd(env_list, cur_pwd);
+	if(!cur_pwd)
+		printf("\n"); //print in stderror
+	else	
+		update_oldpwd(env_list, cur_pwd);
 	free(cur_pwd);
 }
 
@@ -54,6 +57,8 @@ void	update_oldpwd(t_env **env_list, char *cur_pwd)
 		}
 		temp = temp->next;
 	}
+	if (temp == NULL)
+		printf(""); //print in stderror
 }
 
 void	update_var(t_env **env_list, char *str)
