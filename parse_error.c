@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:55:35 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 20:03:55 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/03/31 18:22:24 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	syntax_err(t_infra *shell)
 {
-	if (!right_quotes(shell->trim_rd) || !check_redirect(shell->trim_rd) \
-		|| !check_pipes(shell->trim_rd))
+	if (!right_quotes(shell->trim_rd))
+		return ((g_exit_stat = 1), (printf(SYN_ERR), 0));
+	if (!check_redirect(shell->trim_rd) || !check_pipes(shell->trim_rd))
 		return ((g_exit_stat = 258), (printf(SYN_ERR), 0));
 	return (1);
 }
