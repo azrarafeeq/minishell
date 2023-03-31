@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:20:42 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 22:53:26 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,19 @@ int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
 int	export_unset_error(char *str, int flag)
 {
 	int	i;
+	int	err;
 
 	i = -1;
-	while (str[++i])
+	err = 0;
+	while (str[++i] && str[i] != '=')
 	{
 		if (str[i] == '-')
+		{
+			err = 1;
 			break ;
+		}
 	}
-	if (!(ft_isalpha(str[0]) || str[0] == '_') || i != ft_strlen(str))
+	if (!(ft_isalpha(str[0]) || str[0] == '_') || err)
 	{
 		if (flag)
 			write(2, "export: '", 9);

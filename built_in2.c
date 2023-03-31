@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 21:19:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/03/31 22:46:54 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_exit_cmd(char **str, t_infra *shell)
 		printf("exit\n");
 	if (str[1])
 	{
-		if (ft_strcmp(str[1], "-9223372036854775808"))
+		if (ft_strcmp(str[1], "-9223372036854775808") == 0)
 			ft_exit(0);
 		while (str[1][++j])
 		{
@@ -34,8 +34,7 @@ void	ft_exit_cmd(char **str, t_infra *shell)
 			exit_error(str[1], 1);
 		if (str[2])
 			return (exit_error(str[1], 2));
-		else
-			g_exit_stat = (unsigned char)ft_atoi(str[1]);
+		g_exit_stat = (unsigned char)ft_atoi(str[1]);
 	}
 	ft_exit(g_exit_stat);
 }
