@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 23:48:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 03:34:55 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,31 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 	return (fd[2]);
 }
 
-void	handler2(int sig)
+void	hd_handler(int sig)
 {
-	int	flag;
-
-	flag = (waitpid(-1, NULL, WNOHANG) == -1);
-	if (flag && sig == SIGINT)
+	if (sig == SIGINT)
 	{
-		exit(0);
+		g_exit_stat = 1;
+		write(2, "\nPress enter to exit\n", 22);
+		rl_on_new_line();
+		rl_replace_line("", 0);
 	}
-}
-void ft_signal(t_infra *shell, t_cmd *cmds)
-{
-	ft_putnbr_fd(*(int *)signal(SIGINT, handler2), 2);
 }
 
 void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 {
 	int		fd;
 	char	*line;
-
-	ft_signal(shell, cmds);
+	
+	signal(SIGINT, hd_handler);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);
 	while (line)
 	{
-		if (ft_strcmp(delimeter, line) == 0)
+		if (g_exit_stat == 1 || ft_strcmp(delimeter, line) == 0)
 			break ;
+		if (ft_strchr(line, HUNDRED_CENT))
+			get_hundred_cent(&line, shell);
 		ft_putstr_fd(line, fd);
 		free(line);
 		line = get_next_line(in_fd);

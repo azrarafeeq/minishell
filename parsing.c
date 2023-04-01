@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 23:20:57 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 00:55:01 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_line(char **envp)
 	ft_envp(envp, &env_list);
 	shell.env_list = env_list;
 	g_exit_stat = 0;
-	print_prompt();
+	// print_prompt();
 	while (1)
 	{
 		if (!at_exit(&shell))
