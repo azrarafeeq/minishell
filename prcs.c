@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:21:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 20:35:27 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ void	ft_heredoc(char *delimeter, int in_fd)
 	line = get_next_line(in_fd);
 	while (line)
 	{
+		printf("delimeter : %s   line : %s\n", delimeter, line);
 		if (ft_strcmp(delimeter, line) == 0)
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
-		line = get_next_line(0);
+		line = get_next_line(in_fd);
 	}
 	free(line);
 	close(fd);

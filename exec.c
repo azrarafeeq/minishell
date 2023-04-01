@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/30 21:48:32 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 20:44:04 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	pipex(t_infra *shell, t_cmd *cmds)
 			free_char_array(shell->env_arr);
 		shell->env_arr = list_to_array(&shell->env_list);
 		fd[2] = process(cmds, i, shell, fd);
+		if (heredoc_exist(shell, cmds, i))
+			waitpid(fd[2], 0, 0);
 		if (i != 0 && shell->pipe_len > 0)
 			close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
 	}

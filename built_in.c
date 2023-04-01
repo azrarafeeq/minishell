@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 21:02:42 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 20:35:52 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	ft_cd(char **str, t_env **env_list)
 		g_exit_stat = 1;
 		return ;
 	}
-	dir = opendir(str[1]);
-	if (dir == NULL)
+	if (chdir(str[1]) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(str[1], 2);
@@ -31,7 +30,6 @@ void	ft_cd(char **str, t_env **env_list)
 		g_exit_stat = 1;
 		return ;
 	}
-	chdir(str[1]);
 	update_pwd(env_list);
 }
 
