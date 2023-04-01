@@ -179,4 +179,6 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds);
 void	free_structs(t_cmd *cmd);
 void	free_trim(char **trim);
 
+int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
+
 #endif

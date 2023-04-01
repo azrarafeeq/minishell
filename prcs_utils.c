@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 16:46:49 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 20:43:58 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,19 @@ int	parent_process(t_cmd *cmd, int i, t_infra *shell)
 	if (ft_dup2(shell, cmd, i, 1))
 		return (0);
 	ft_built_in(cmd[i], shell);
+	return (0);
+}
+
+int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < cmd[i].red_len)
+	{
+		if (cmd[i].red[j].flag == HERE_DOC)
+			return (1);
+		j++;
+	}
 	return (0);
 }
