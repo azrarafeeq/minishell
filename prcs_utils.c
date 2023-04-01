@@ -6,26 +6,26 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 20:43:58 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 23:31:22 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_file(char *file, int flag, int in_fd)
+int	open_file(t_red red, int in_fd, t_infra *shell, t_cmd *cmds)
 {
 	int	fd;
 
 	fd = -1;
-	if (flag == IN_FILE)
-		fd = open(file, O_RDONLY, 0777);
-	else if (flag == TRUNCATE)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (flag == APPEND)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else if (flag == HERE_DOC)
+	if (red.flag == IN_FILE)
+		fd = open(red.file, O_RDONLY, 0777);
+	else if (red.flag == TRUNCATE)
+		fd = open(red.file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (red.flag == APPEND)
+		fd = open(red.file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else if (red.flag == HERE_DOC)
 	{
-		ft_heredoc(file, in_fd);
+		ft_heredoc(red.file, in_fd, shell, cmds);
 		fd = open("a!", O_RDONLY, 0777);
 	}
 	return (fd);

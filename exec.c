@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 20:44:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 23:49:06 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	execute(t_infra *shell, t_cmd *cmds)
 	int		pid;
 
 	i = -1;
+	j = 0;
 	shell->pipe_len -= 1;
 	shell->pfd = alloc_pipe_fds(shell->pipe_len);
 	pid = pipex(shell, cmds);

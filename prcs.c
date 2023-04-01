@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 21:43:34 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 23:48:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,21 @@ void	handler2(int sig)
 
 	flag = (waitpid(-1, NULL, WNOHANG) == -1);
 	if (flag && sig == SIGINT)
+	{
 		exit(0);
+	}
+}
+void ft_signal(t_infra *shell, t_cmd *cmds)
+{
+	ft_putnbr_fd(*(int *)signal(SIGINT, handler2), 2);
 }
 
-void	ft_heredoc(char *delimeter, int in_fd)
+void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 {
 	int		fd;
 	char	*line;
 
-	signal(SIGINT, handler2);
-	signal(SIGQUIT, SIG_IGN);
+	ft_signal(shell, cmds);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);
 	while (line)
@@ -80,7 +85,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 	fd[0] = dup(0);
 	while (++k < cmds[i].red_len)
 	{
-		fd[1] = open_file(cmds[i].red[k].file, cmds[i].red[k].flag, fd[0]);
+		fd[1] = open_file(cmds[i].red[k], fd[0], shell, cmds);
 		if (fd[1] == -1 && cmds[i].red[k].flag != HERE_DOC)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
