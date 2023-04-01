@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 21:10:43 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:43:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -55,13 +54,13 @@ void	ft_heredoc(char *delimeter, int in_fd)
 {
 	int		fd;
 	char	*line;
+
 	signal(SIGINT, handler2);
 	signal(SIGQUIT, SIG_IGN);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);
 	while (line)
 	{
-		printf("delimeter : %s   line : %s\n", delimeter, line);
 		if (ft_strcmp(delimeter, line) == 0)
 			break ;
 		ft_putstr_fd(line, fd);
@@ -85,6 +84,8 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		if (fd[1] == -1 && cmds[i].red[k].flag != HERE_DOC)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
+			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0)
+				free(cmds[i].p);
 			close(fd[0]);
 			if (flag == 2)
 				free_shell_cmds_in_child(shell, cmds);
