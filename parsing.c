@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 03:25:28 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/01 03:30:01 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,13 @@ int	get_line(char **envp)
 	t_cmd	*cmds;
 	t_infra	shell;
 	t_env	*env_list;
-	int flag = 0;
 
 	env_list = NULL;
 	shell.trim_rd = NULL;
 	ft_envp(envp, &env_list);
 	shell.env_list = env_list;
 	g_exit_stat = 0;
-	print_prompt(&flag);
+	print_prompt();
 	while (1)
 	{
 		if (!at_exit(&shell))
