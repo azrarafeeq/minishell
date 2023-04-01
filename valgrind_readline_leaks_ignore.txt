@@ -10,3 +10,21 @@
 	...
 	fun:add_history
 }
+{
+   opendirs
+   Memcheck:Leak
+   ...
+   fun:opendir
+}
+{
+   opendirs
+   Memcheck:Leak
+   ...
+   fun:open
+}
+{
+   FDS
+   None:
+   ...
+   fun:opendir
+}
