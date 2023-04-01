@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 03:30:01 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:16:54 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	handler(int sig)
 {
-	if (sig == SIGINT)
+	int	flag;
+
+	flag = (waitpid(-1, NULL, WNOHANG) == -1);
+	if (flag && sig == SIGINT)
 	{
 		write(2, "\n", 1);
 		rl_replace_line("", 0);
