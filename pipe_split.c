@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/31 22:08:20 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 07:09:14 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	h = -1;
 	while (split[++h])
 	{
-		if (ft_strchr(split[h], HUNDRED_CENT))
+		if (ft_strchr(split[h], HUNDRED_CENT) && ft_strncmp(split[h], "<<", 2) != 0)
 			get_hundred_cent(&split[h], shell);
 		spaces[h] = epur_str(replace_with_space(split[h]), &in);
 	}

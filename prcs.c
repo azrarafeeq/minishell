@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:11:23 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:21:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:05:01 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,21 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 	return (fd[2]);
 }
 
+void	handler2(int sig)
+{
+	int	flag;
+
+	flag = (waitpid(-1, NULL, WNOHANG) == -1);
+	if (flag && sig == SIGINT)
+		exit(0);
+}
+
 void	ft_heredoc(char *delimeter, int in_fd)
 {
 	int		fd;
 	char	*line;
-
+	signal(SIGINT, handler2);
+	signal(SIGQUIT, SIG_IGN);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);
 	while (line)
