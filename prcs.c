@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 06:23:52 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 15:35:24 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 {
 	int		fd;
 	char	*line;
-	
+
 	signal(SIGINT, hd_handler);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);

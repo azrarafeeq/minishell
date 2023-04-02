@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   prcs_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 14:51:01 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 15:49:38 by arafeeq          ###   ########.fr       */
+/*   Created: 2023/04/02 16:04:57 by arafeeq           #+#    #+#             */
+/*   Updated: 2023/04/02 16:05:10 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i)
 {
-	int		i;
+	int	j;
 
-	i = 0;
-	c = c % 256;
-	while (s[i])
+	j = 0;
+	while (j < cmd[i].red_len)
 	{
-		if (s[i] == c)
-			return ((char *)(s + i));
-		i++;
+		if (cmd[i].red[j].flag == HERE_DOC)
+			return (1);
+		j++;
 	}
-	if (s[i] == c)
-		return ((char *)(s + i));
-	return (NULL);
+	return (0);
 }

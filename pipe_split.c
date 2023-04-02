@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/02 06:26:02 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 16:03:40 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	h = -1;
 	while (split[++h])
 	{
-		printf("%d\n", (int)(ft_strchr(split[h], HUNDRED_CENT) - split[h]));
+		//printf("%d\n", (int)(ft_strchr(split[h], HUNDRED_CENT) - split[h]));
 		if (ft_strchr(split[h], HUNDRED_CENT) && \
 			ft_strncmp(split[h], "<<", ft_strlen(split[h]) - (int)(ft_strchr(split[h], HUNDRED_CENT) - split[h])) == 0)
 			get_hundred_cent(&split[h], shell, 1);

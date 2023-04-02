@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extend.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/02 06:24:21 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 16:06:28 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh, int flag)
 	dol = *fifty_cent;
 	while (sh->i < ft_strlen((*fifty_cent)))
 	{
-		if(flag)
+		if (flag)
 			seperate_quote((*fifty_cent)[sh->i], sh);
 		if (!(*fifty_cent)[sh->i])
 			return ;
