@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:38:24 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 16:20:46 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 19:22:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_getenv(t_env **env, char *str)
 	return (NULL);
 }
 
-int	var_exists(t_env **env_list, char *str)
+int	var_exist(t_env **env_list, char *str)
 {
 	char	**split;
 	t_env	*temp;
