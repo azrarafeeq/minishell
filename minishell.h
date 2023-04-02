@@ -115,7 +115,7 @@ int		red_count(char *str);
 int		check_redirect(char *str);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
-void	get_hundred_cent(char **fifty_cent, t_infra *sh);
+void	get_hundred_cent(char **fifty_cent, t_infra *sh, int flag);
 int		check_pipes(char *line);
 int		**alloc_pipe_fds(int pipe_amt);
 

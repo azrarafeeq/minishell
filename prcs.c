@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 03:34:55 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 06:23:52 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	hd_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_exit_stat = 1;
-		write(2, "\nPress enter to exit\n", 22);
+		write(2, "\nPress enter to exit\n", 21);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
@@ -65,7 +65,7 @@ void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 		if (g_exit_stat == 1 || ft_strcmp(delimeter, line) == 0)
 			break ;
 		if (ft_strchr(line, HUNDRED_CENT))
-			get_hundred_cent(&line, shell);
+			get_hundred_cent(&line, shell, 0);
 		ft_putstr_fd(line, fd);
 		free(line);
 		line = get_next_line(in_fd);

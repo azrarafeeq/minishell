@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extend.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/31 17:45:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 06:24:21 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	is_alpha_num(char *dol, t_infra *sh)
 	return (0);
 }
 
-void	get_hundred_cent(char **fifty_cent, t_infra *sh)
+void	get_hundred_cent(char **fifty_cent, t_infra *sh, int flag)
 {
 	char	*expandable;
 	char	*dol;
@@ -71,7 +71,8 @@ void	get_hundred_cent(char **fifty_cent, t_infra *sh)
 	dol = *fifty_cent;
 	while (sh->i < ft_strlen((*fifty_cent)))
 	{
-		seperate_quote((*fifty_cent)[sh->i], sh);
+		if(flag)
+			seperate_quote((*fifty_cent)[sh->i], sh);
 		if (!(*fifty_cent)[sh->i])
 			return ;
 		if ((*fifty_cent)[sh->i] == '$' && !sh->single)
