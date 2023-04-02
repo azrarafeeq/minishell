@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 15:35:24 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 21:21:01 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 	{
 		if (g_exit_stat == 1 || ft_strcmp(delimeter, line) == 0)
 			break ;
-		if (ft_strchr(line, HUNDRED_CENT))
+		if (ft_strchr(line, HUNDRED_CENT) && !shell->no_expand)
 			get_hundred_cent(&line, shell, 0);
 		ft_putstr_fd(line, fd);
 		free(line);
@@ -84,7 +84,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 	while (++k < cmds[i].red_len)
 	{
 		fd[1] = open_file(cmds[i].red[k], fd[0], shell, cmds);
-		if (fd[1] == -1 && cmds[i].red[k].flag != HERE_DOC)
+		if (fd[1] == -1)
 		{
 			fd_error(cmds[i].red[k].file, shell, cmds, i);
 			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0)

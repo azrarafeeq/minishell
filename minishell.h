@@ -81,6 +81,7 @@ typedef struct s_infra{
 	char	**env_arr;
 	int		**pfd;
 	int		i;
+	int no_expand;
 	int		len;
 	char	single;
 	char	paired;
