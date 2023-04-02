@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:55:35 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 16:09:37 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:53:55 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int	syntax_err(t_infra *shell)
 
 int	pipe_inbetween(char *line, int i, int j, int quote)
 {
-	i = 0;
-	j = 0;
-	quote = 0;
 	while (line[i])
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -56,6 +53,9 @@ int	check_pipes(char *line)
 	int	j;
 	int	quote;
 
+	i = 0;
+	j = 0;
+	quote = 0;
 	len = ft_strlen(line) - 1;
 	if (line[len] == '|' || line[0] == '|')
 		return (0);

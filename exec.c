@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 23:41:08 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 02:54:01 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	pipex(t_infra *sh, t_cmd *cmds)
 			free_char_array(sh->env_arr);
 		sh->env_arr = list_to_array(&sh->env_list);
 		fd[2] = process(cmds, fd[3], sh, fd);
-		if (heredoc_exist(sh, cmds, fd[3]))
+		if (heredoc_exist(cmds, fd[3]))
 			waitpid(fd[2], 0, 0);
 		if (fd[3] != 0 && sh->pipe_len > 0)
 			close_fds(sh->pfd[fd[3] - 1][0], sh->pfd[fd[3] - 1][1], -1, -1);
@@ -104,7 +104,10 @@ void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)
 			g_exit_stat = WEXITSTATUS(j);
 		if (WIFSIGNALED(j))
 		{
-			g_exit_stat = WTERMSIG(j);
+			if (WTERMSIG(j) == SIGINT)
+				;
+			else if (WTERMSIG(j) == SIGQUIT)
+				printf("Quit\n");
 			g_exit_stat += 128;
 		}
 	}

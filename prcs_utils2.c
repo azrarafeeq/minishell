@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prcs_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 16:04:57 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 19:21:31 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:55:53 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i)
+int	heredoc_exist(t_cmd *cmd, int i)
 {
 	int	j;
 

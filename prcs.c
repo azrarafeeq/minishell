@@ -6,11 +6,19 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 23:38:16 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 03:02:10 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	qhandler(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		(void)0;
+	}
+}
 
 int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 {
@@ -19,6 +27,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 		return (parent_process(cmd, i, shell));
 	else
 	{
+		signal(SIGQUIT, qhandler);
 		fd[2] = fork();
 		if (fd[2] == 0)
 		{
@@ -52,7 +61,7 @@ void	hd_handler(int sig)
 	}
 }
 
-void	ft_heredoc(t_red red, int in_fd, t_infra *shell, t_cmd *cmds)
+void	ft_heredoc(t_red red, int in_fd, t_infra *shell)
 {
 	int		fd;
 	char	*line;
@@ -83,7 +92,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 	fd[0] = dup(0);
 	while (++k < cmds[i].red_len)
 	{
-		fd[1] = open_file(cmds[i].red[k], fd[0], shell, cmds);
+		fd[1] = open_file(cmds[i].red[k], fd[0], shell);
 		if (fd[1] == -1)
 		{
 			fd_error(cmds[i].red[k], shell, cmds, i);

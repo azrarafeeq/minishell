@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 19:22:56 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:55:33 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_cd(char **str, t_env **env_list)
 {
-	DIR				*dir;
-
 	if (str[1] == NULL || str[1][0] == '\0')
 	{
 		ft_putstr_fd("cd: No directory specified\n", 2);

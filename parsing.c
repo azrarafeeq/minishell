@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 20:04:45 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 02:50:39 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	handler(int sig)
 	int	flag;
 
 	flag = (waitpid(-1, NULL, WNOHANG) == -1);
+	if (sig == SIGQUIT && flag)
+		printf("Quit\n");
 	if (flag && sig == SIGINT)
 	{
 		write(2, "\n", 1);
@@ -61,12 +63,10 @@ int	get_line(char **envp)
 	shell.trim_rd = NULL;
 	ft_envp(envp, &env_list);
 	shell.env_list = env_list;
-	// g_exit_stat = 0;
+	g_exit_stat = 0;
 	// print_prompt();
 	while (1)
 	{
-		signal(SIGINT, handler);
-		signal(SIGQUIT, SIG_IGN);
 		if (!at_exit(&shell))
 			exit(g_exit_stat);
 		if (infra(&shell, &cmds) == 1)
@@ -81,5 +81,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (0);
+		
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	get_line(envp);
 }
