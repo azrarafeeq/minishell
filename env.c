@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:30:38 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/29 16:26:59 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 15:58:48 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ t_env	*init_env_node(char *str)
 {
 	t_env	*env_node;
 	char	**split;
+	int		len;
 
 	env_node = malloc(sizeof(t_env));
 	split = ft_split(str, '=');
 	env_node->var = malloc(sizeof(char) * (ft_strlen(split[0]) + 1));
 	ft_strcpy(env_node->var, split[0]);
+	len = ft_strlen(str) - (ft_strlen(split[0]) + 1);
 	if (ft_strchr(str, '='))
 	{
 		if (!split[1])
@@ -95,10 +97,7 @@ t_env	*init_env_node(char *str)
 			env_node->value[0] = '\0';
 		}
 		else
-		{
-			env_node->value = malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
-			ft_strcpy(env_node->value, split[1]);
-		}
+			env_node->value = ft_substr(str, (ft_strlen(split[0]) + 1), len);
 	}
 	else
 		env_node->value = NULL;

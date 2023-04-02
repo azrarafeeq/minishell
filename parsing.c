@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 00:55:01 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 16:10:07 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	get_line(char **envp)
 		execute(&shell, cmds);
 		free_structs(cmds);
 	}
-	
 }
 
 int	main(int ac, char **av, char **envp)

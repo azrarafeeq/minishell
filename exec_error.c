@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:53:26 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 15:41:25 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	export_unset_error(char *str, int flag)
 	err = 0;
 	while (str[++i] && str[i] != '=')
 	{
-		if (str[i] == '-')
+		if (!ft_isdigit(str[i]) && !ft_isalpha(str[i]) && str[i] != '_')
 		{
 			err = 1;
 			break ;

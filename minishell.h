@@ -100,7 +100,7 @@ void	is_quote(char c, char *quote);
 int		right_quotes(char *str);
 void	clean_quotes(char *str);
 void	handler(int sig);
-void	print_prompt();
+void	print_prompt(void);
 char	**ft_split_quote(char const *s, char c);
 char	**ft_split_with_quotes(t_infra *shell, char c);
 void	seperate_quote(char cur, t_infra *sh);
@@ -179,6 +179,6 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds);
 void	free_structs(t_cmd *cmd);
 void	free_trim(char **trim);
 
-int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
+int		heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
 
 #endif
