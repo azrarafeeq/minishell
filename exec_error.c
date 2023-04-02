@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:42:06 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 15:41:25 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 21:37:36 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,15 @@ void	execve_error(t_infra *shell, t_cmd *cmd, int i)
 		free(cmd[i].p);
 }
 
-int	fd_error(char *file, t_infra *shell, t_cmd *cmds, int i)
+int	fd_error(t_red red, t_infra *shell, t_cmd *cmds, int i)
 {
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	if (red.flag == HERE_DOC)
+		ft_putstr_fd("You deleted the \"!a\" file!\n", 2);
+	else
+	{
+		ft_putstr_fd(red.file, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	g_exit_stat = 1;
 	ft_close_pipes(shell, i, cmds[i]);
 	return (0);

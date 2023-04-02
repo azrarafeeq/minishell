@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 21:21:01 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/02 21:34:09 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		fd[1] = open_file(cmds[i].red[k], fd[0], shell, cmds);
 		if (fd[1] == -1)
 		{
-			fd_error(cmds[i].red[k].file, shell, cmds, i);
+			fd_error(cmds[i].red[k], shell, cmds, i);
 			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0)
 				free(cmds[i].p);
 			close(fd[0]);
