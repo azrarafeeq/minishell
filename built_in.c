@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/01 20:35:52 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 19:22:56 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_export(t_env **env_list, char **str)
 	{
 		if (export_unset_error(str[i], 1) == 0)
 		{
-			if (var_exists(env_list, str[i]))
+			if (var_exist(env_list, str[i]))
 			{
 				if (ft_strchr(str[i], '='))
 					update_var(env_list, str[i]);

@@ -142,8 +142,9 @@ int		open_file(t_red red, int in_fd, t_infra *shell, t_cmd *cmds);
 int		ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
 void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds);
+int		heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
-int		var_exists(t_env **env_list, char *str);
+int		var_exist(t_env **env_list, char *str);
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	ft_close_pipes(t_infra *shell, int i, t_cmd cmd);
 
@@ -178,7 +179,5 @@ void	free_env_list(t_env **env_list);
 void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds);
 void	free_structs(t_cmd *cmd);
 void	free_trim(char **trim);
-
-int		heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
 
 #endif

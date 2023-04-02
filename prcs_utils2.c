@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 16:04:57 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 16:05:10 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 19:21:31 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,17 @@ int	heredoc_exist(t_infra *shell, t_cmd *cmd, int i)
 		j++;
 	}
 	return (0);
+}
+
+void	delete_node(t_env **env, t_env *temp, t_env *prev)
+{
+	if (temp == *env)
+		(*env) = (*env)->next;
+	else if (temp->next == NULL)
+		prev->next = NULL;
+	else
+		prev->next = temp->next;
+	free(temp->var);
+	free(temp->value);
+	free(temp);
 }
