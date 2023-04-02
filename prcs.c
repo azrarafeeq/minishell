@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 21:34:09 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:38:16 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	hd_handler(int sig)
 	}
 }
 
-void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
+void	ft_heredoc(t_red red, int in_fd, t_infra *shell, t_cmd *cmds)
 {
 	int		fd;
 	char	*line;
@@ -62,9 +62,9 @@ void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds)
 	line = get_next_line(in_fd);
 	while (line)
 	{
-		if (g_exit_stat == 1 || ft_strcmp(delimeter, line) == 0)
+		if (g_exit_stat == 1 || ft_strcmp(red.file, line) == 0)
 			break ;
-		if (ft_strchr(line, HUNDRED_CENT) && !shell->no_expand)
+		if (ft_strchr(line, HUNDRED_CENT) && red.no_expand != 1)
 			get_hundred_cent(&line, shell, 0);
 		ft_putstr_fd(line, fd);
 		free(line);

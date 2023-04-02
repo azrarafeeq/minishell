@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:46:54 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:51:09 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ void	ft_echo(char **str)
 	int		i;
 
 	i = 1;
-	if (str[1])
+	g_exit_stat = 0;
+	if (!str[1])
+		return (printf("\n"), (void)0);
+	while (str[i])
 	{
-		while (str[i])
-		{
-			if (ft_strcmp(str[i], "-n") == 0)
-				i++;
-			else
-				break ;
-		}
+		if (ft_strcmp(str[i], "-n") == 0)
+			i++;
+		else
+			break ;
 	}
 	while (str[i])
 	{
@@ -72,7 +72,6 @@ void	ft_echo(char **str)
 	if (str[1])
 		if (ft_strcmp(str[1], "-n") != 0)
 			printf("\n");
-	g_exit_stat = 0;
 }
 
 int	cmd_is_built_in(char *str)

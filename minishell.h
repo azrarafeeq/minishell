@@ -57,6 +57,7 @@ typedef struct s_env{
 typedef struct s_red{
 	int		flag;
 	char	*file;
+	int no_expand;
 }				t_red;
 
 typedef struct s_cmd{
@@ -142,7 +143,7 @@ int		parent_process(t_cmd *cmd, int i, t_infra *shell);
 int		open_file(t_red red, int in_fd, t_infra *shell, t_cmd *cmds);
 int		ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag);
 void	ft_pipe_dup2(t_infra *shell, t_cmd *cmds, int i);
-void	ft_heredoc(char *delimeter, int in_fd, t_infra *shell, t_cmd *cmds);
+void	ft_heredoc(t_red red, int in_fd, t_infra *shell, t_cmd *cmds);
 int		heredoc_exist(t_infra *shell, t_cmd *cmd, int i);
 int		file_rd_exist(t_cmd cmd, int flag1, int flag2);
 int		var_exist(t_env **env_list, char *str);

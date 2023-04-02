@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 16:04:55 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:28:57 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	open_file(t_red red, int in_fd, t_infra *shell, t_cmd *cmds)
 		fd = open(red.file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (red.flag == HERE_DOC)
 	{
-		ft_heredoc(red.file, in_fd, shell, cmds);
+		ft_heredoc(red, in_fd, shell, cmds);
 		fd = open("a!", O_RDONLY, 0777);
 	}
 	return (fd);

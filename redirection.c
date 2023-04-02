@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/29 15:44:04 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/02 23:42:32 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
 		if (cmds->tmp_cmd[*j][*x + 1] == '>')
 			cmds[*j].red[*y].flag = APPEND;
 		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
+		{
 			cmds[*j].red[*y].flag = HERE_DOC;
+			if(strrchr(cmds->tmp_cmd[*j], '\"'))
+				cmds[*j].red[*y].no_expand = 1;
+		}
 		*x += 2;
 	}
 	else if (cmds->tmp_cmd[*j][*x] == '>')
