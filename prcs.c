@@ -3,26 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 03:02:10 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:43:40 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	qhandler(int sig)
-{
-	if (sig == SIGQUIT)
-	{
-		(void)0;
-	}
-}
-
 int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 {
-	fd[2] = 0;
 	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
 		return (parent_process(cmd, i, shell));
 	else
@@ -50,17 +41,6 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 	return (fd[2]);
 }
 
-void	hd_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_exit_stat = 1;
-		write(2, "\nPress enter to exit\n", 21);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-}
-
 void	ft_heredoc(t_red red, int in_fd, t_infra *shell)
 {
 	int		fd;
@@ -81,6 +61,20 @@ void	ft_heredoc(t_red red, int in_fd, t_infra *shell)
 	}
 	free(line);
 	close(fd);
+}
+
+int	heredoc_exist(t_cmd *cmd, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < cmd[i].red_len)
+	{
+		if (cmd[i].red[j].flag == HERE_DOC)
+			return (1);
+		j++;
+	}
+	return (0);
 }
 
 int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)

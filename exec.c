@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 02:54:01 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:43:35 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_envp(char **envp, t_env **env_list)
 	i = 0;
 	if (!envp[0])
 	{
-		g_exit_stat  = 0;
+		g_exit_stat = 0;
 		ft_exit(g_exit_stat);
 	}
 	while (envp[i + 1])
@@ -29,6 +29,19 @@ void	ft_envp(char **envp, t_env **env_list)
 		envlst_addback(env_list, env_node);
 		i++;
 	}
+}
+
+void	delete_node(t_env **env, t_env *temp, t_env *prev)
+{
+	if (temp == *env)
+		(*env) = (*env)->next;
+	else if (temp->next == NULL)
+		prev->next = NULL;
+	else
+		prev->next = temp->next;
+	free(temp->var);
+	free(temp->value);
+	free(temp);
 }
 
 int	**alloc_pipe_fds(int pipe_amt)
@@ -73,6 +86,7 @@ int	pipex(t_infra *sh, t_cmd *cmds)
 	fd[3] = -1;
 	fd[0] = dup(0);
 	fd[1] = dup(1);
+	fd[2] = 0;
 	if (sh->pipe_len > 0)
 		pipe(sh->pfd[0]);
 	while (++fd[3] < (sh->pipe_len + 1))
@@ -91,24 +105,5 @@ int	pipex(t_infra *sh, t_cmd *cmds)
 	free_char_array(sh->env_arr);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
-	close_fds(fd[0], fd[1], -1, -1);
-	return (fd[2]);
-}
-
-void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)
-{
-	if (!(cmd_is_built_in(cmds[0].main) && shell->pipe_len == 0)
-		&& cmds[shell->pipe_len].cmd_len)
-	{
-		if (WIFEXITED(j))
-			g_exit_stat = WEXITSTATUS(j);
-		if (WIFSIGNALED(j))
-		{
-			if (WTERMSIG(j) == SIGINT)
-				;
-			else if (WTERMSIG(j) == SIGQUIT)
-				printf("Quit\n");
-			g_exit_stat += 128;
-		}
-	}
+	return (close_fds(fd[0], fd[1], -1, -1), fd[2]);
 }

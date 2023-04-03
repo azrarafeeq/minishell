@@ -162,6 +162,9 @@ void	ft_export(t_env **env_list, char **str);
 void	print_export(t_env **env_list);
 void	ft_exit(int g_exit_stat);
 void	ft_exit_cmd(char **str, t_infra *shell);
+
+void	hd_handler(int sig);
+void	qhandler(int sig);
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
 
 void	update_pwd(t_env **env_list);
