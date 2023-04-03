@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:58:27 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/23 19:44:41 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 00:07:53 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	ft_strcpy(char *dst, char *src)
 	int	i;
 
 	i = 0;
+	if(!src)
+	{
+		src = NULL;
+		return ;
+	}
 	while (src[i])
 	{
 		dst[i] = src[i];

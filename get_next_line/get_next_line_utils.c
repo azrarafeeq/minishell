@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:25:36 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/21 20:59:45 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 23:30:44 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	if (!s)
+	if (!s || !s[0])
 		return (0);
 	while (s[i] != '\0')
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/31 22:16:11 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 00:43:56 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	update_pwd(t_env **env_list)
 	char	buf[1024];
 	char	*cur_pwd;
 	t_env	*temp;
+	char	*pwd;
 
 	cur_pwd = NULL;
 	temp = *env_list;
@@ -24,17 +25,22 @@ void	update_pwd(t_env **env_list)
 	{
 		if (ft_strcmp(temp->var, "PWD") == 0)
 		{
-			cur_pwd = malloc(sizeof(char) * (ft_strlen(temp->value) + 1));
+			cur_pwd = ft_calloc(sizeof(char), (ft_strlen(temp->value) + 1));
 			ft_strcpy(cur_pwd, temp->value);
 			free(temp->value);
-			temp->value = malloc(sizeof(char)
-					* (ft_strlen(getcwd(buf, MAX_PATH)) + 1));
-			ft_strcpy(temp->value, getcwd(buf, MAX_PATH));
+			pwd = getcwd(buf, MAX_PATH);
+			if (pwd)
+			{
+				temp->value = malloc(sizeof(char) * (ft_strlen(pwd) + 1));
+				ft_strcpy(temp->value, pwd);
+			}
+			else
+				temp->value = NULL;
 			break ;
 		}
 		temp = temp->next;
 	}
-	if (cur_pwd)
+	if (cur_pwd != NULL || cur_pwd[0] != '\0')
 	{
 		update_oldpwd(env_list, cur_pwd);
 		free(cur_pwd);
