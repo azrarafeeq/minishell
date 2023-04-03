@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 17:15:09 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/04 02:22:46 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	at_exit(t_infra *shell)
 {
-	shell->rd = readline("\e[1;32mchill{😎}>\e[0m ");
+	shell->rd = readline("\e[1;32mminishell >\e[0m ");
 	if (!shell->rd)
 	{
 		if (shell->env_list)
@@ -48,7 +48,6 @@ int	get_line(char **envp)
 	ft_envp(envp, &env_list);
 	shell.env_list = env_list;
 	g_exit_stat = 0;
-	// print_prompt();
 	while (1)
 	{
 		if (!at_exit(&shell))

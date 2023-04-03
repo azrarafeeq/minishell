@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/04 01:02:14 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 02:57:50 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	cmd_is_built_in(char *str)
 {
 	if (!str)
 		return (0);
-	if (ft_strcmp(str, "cd") == 0)
+	if (ft_strcmp(str, "cd") == 0 || !ft_strcmp(str, "/usr/bin/cd"))
 		return (1);
 	if (ft_strcmp(str, "export") == 0)
 		return (1);
@@ -92,11 +92,11 @@ int	cmd_is_built_in(char *str)
 		return (1);
 	if (ft_strcmp(str, "exit") == 0)
 		return (1);
-	if (ft_strcmp(str, "env") == 0)
+	if (ft_strcmp(str, "env") == 0 || !ft_strcmp(str, "/bin/env"))
 		return (1);
-	if (ft_strcmp(str, "echo") == 0)
+	if (ft_strcmp(str, "echo") == 0 || !ft_strcmp(str, "/bin/echo"))
 		return (1);
-	if (ft_strcmp(str, "pwd") == 0)
+	if (ft_strcmp(str, "pwd") == 0 || !ft_strcmp(str, "/bin/pwd"))
 		return (1);
 	return (0);
 }
@@ -104,7 +104,7 @@ int	cmd_is_built_in(char *str)
 void	ft_built_in(t_cmd cmd, t_infra *shell, t_cmd *cmds)
 {
 	g_exit_stat = 0;
-	if (ft_strcmp(cmd.main, "cd") == 0)
+	if (ft_strcmp(cmd.main, "cd") == 0 || !ft_strcmp(cmd.main, "/usr/bin/cd"))
 		ft_cd(cmd.cmd, &shell->env_list);
 	else if (ft_strcmp(cmd.main, "export") == 0)
 		ft_export(&shell->env_list, cmd.cmd);
@@ -112,10 +112,10 @@ void	ft_built_in(t_cmd cmd, t_infra *shell, t_cmd *cmds)
 		ft_unset(&shell->env_list, cmd.cmd);
 	else if (ft_strcmp(cmd.main, "exit") == 0)
 		ft_exit_cmd(cmd.cmd, shell, cmds);
-	else if (ft_strcmp(cmd.main, "env") == 0)
+	else if (!ft_strcmp(cmd.main, "env") || !ft_strcmp(cmd.main, "/bin/env"))
 		ft_env(&shell->env_list);
-	else if (ft_strcmp(cmd.main, "echo") == 0)
+	else if (!ft_strcmp(cmd.main, "echo") || !ft_strcmp(cmd.main, "/bin/echo"))
 		ft_echo(cmd.cmd);
-	else if (ft_strcmp(cmd.main, "pwd") == 0)
+	else if (!ft_strcmp(cmd.main, "pwd") || !ft_strcmp(cmd.main, "/bin/pwd"))
 		ft_pwd();
 }
