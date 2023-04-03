@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define MAX_PATH 1024
-# define HUNDRED_CENT '$'
+# define DOL '$'
 # define SYN_ERR "syntax error near unexpected token\n"
 
 # include <stdio.h>
@@ -64,7 +64,7 @@ typedef struct s_cmd{
 	int		cmd_id;
 	int		start;
 	char	*main;
-	char	**tmp_cmd;
+	char	**t_c;
 	char	**cmd;
 	char	*p;
 	int		red_len;
@@ -79,7 +79,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**env_arr;
+	char	**env_a;
 	int		**pfd;
 	int		i;
 	int		no_expand;
@@ -111,13 +111,11 @@ void	fill_spaces(t_in *in, char *input, int flag);
 char	*epur_str(char *av, t_in *in);
 char	*modify_cmd(char *dol, int start, int len, char *extended);
 void	get_cmd(char *s, unsigned int start, size_t len);
-int		expande_it(char **dol, char **expandable, t_infra *sh);
-void	update_cmd(char **dol, char *expanded, t_infra *sh);
 int		red_count(char *str);
 int		check_redirect(char *str);
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y);
 void	infra_shell(t_infra *shell, t_cmd **tmp);
-void	get_hundred_cent(char **fifty_cent, t_infra *sh, int flag);
+void	get_expanded(char **fifty_cent, t_infra *sh, int flag);
 int		check_pipes(char *line);
 int		**alloc_pipe_fds(int pipe_amt);
 
@@ -166,7 +164,7 @@ void	ft_exit_cmd(char **str, t_infra *shell, t_cmd *cmds);
 void	hd_handler(int sig);
 void	qhandler(int sig);
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
-
+void	handler(int sig);
 void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);

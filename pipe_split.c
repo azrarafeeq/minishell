@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:06:15 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/03 13:33:40 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:47:02 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,12 @@ char	**ft_split_with_quotes(t_infra *shell, char c)
 	shell->pipe_len = count_word(shell->trim_rd, c);
 	split = ft_split_quote(shell->trim_rd, c);
 	spaces = malloc(sizeof(*split) * (shell->pipe_len + 1));
-	h = 0;
 	h = -1;
 	while (split[++h])
 	{
-		if (ft_strchr(split[h], HUNDRED_CENT) && \
+		if (ft_strchr(split[h], DOL) && \
 			ft_strncmp((char *)ft_strchr(split[h], '<'), "<<", 2) != 0)
-			get_hundred_cent(&split[h], shell, 1);
+			get_expanded(&split[h], shell, 1);
 		spaces[h] = epur_str(replace_with_space(split[h]), &in);
 	}
 	spaces[h] = NULL;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 17:34:15 by arafeeq          ###   ########.fr       */
+/*   Created: 2023/04/03 18:01:59 by arafeeq           #+#    #+#             */
+/*   Updated: 2023/04/03 18:02:02 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	execute(t_infra *shell, t_cmd *cmds)
 	j = 0;
 	shell->pipe_len -= 1;
 	shell->pfd = alloc_pipe_fds(shell->pipe_len);
-	shell->env_arr = NULL;
+	shell->env_a = NULL;
 	pid = pipex(shell, cmds);
 	free_int_array(shell->pfd, shell->pipe_len);
 	waitpid(pid, &j, 0);
@@ -95,16 +95,16 @@ int	pipex(t_infra *sh, t_cmd *cmds)
 	{
 		if ((fd[3] + 1) < sh->pipe_len)
 			pipe(sh->pfd[fd[3] + 1]);
-		if (sh->env_arr)
-			free_char_array(sh->env_arr);
-		sh->env_arr = list_to_array(&sh->env_list);
+		if (sh->env_a)
+			free_char_array(sh->env_a);
+		sh->env_a = list_to_array(&sh->env_list);
 		fd[2] = process(cmds, fd[3], sh, fd);
 		if (heredoc_exist(cmds, fd[3]))
 			waitpid(fd[2], 0, 0);
 		if (fd[3] != 0 && sh->pipe_len > 0)
 			close_fds(sh->pfd[fd[3] - 1][0], sh->pfd[fd[3] - 1][1], -1, -1);
 	}
-	free_char_array(sh->env_arr);
+	free_char_array(sh->env_a);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	return (close_fds(fd[0], fd[1], -1, -1), fd[2]);

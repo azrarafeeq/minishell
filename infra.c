@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 20:21:21 by ahassan           #+#    #+#             */
-/*   Updated: 2023/03/30 21:24:16 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:53:36 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	infra_shell(t_infra *shell, t_cmd **tmp)
 	*tmp = malloc(sizeof(t_cmd) * (shell->pipe_len));
 	cmds = *tmp;
 	cmds->start = 0;
-	cmds->tmp_cmd = shell->cmds;
+	cmds->t_c = shell->cmds;
 	while (++j < shell->pipe_len)
 	{		
 		cmds[j].red_len = red_count(shell->cmds[j]);

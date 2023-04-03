@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:36:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:37:33 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:10:38 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)
 			if (WTERMSIG(j) == SIGINT)
 				;
 			else if (WTERMSIG(j) == SIGQUIT)
-				printf("Quit\n");
+				write(2, "Quit\n", 5);
 			g_exit_stat += 128;
 		}
 	}
@@ -45,6 +45,19 @@ void	qhandler(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		(void)0;
+	}
+}
+
+void	handler(int sig)
+{
+	int	flag;
+
+	flag = (waitpid(-1, NULL, WNOHANG) == -1);
+	if (flag && sig == SIGINT)
+	{
+		write(2, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
