@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prcs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 19:52:42 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 23:55:09 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:40:38 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int	parent_process(t_cmd *cmd, int i, t_infra *shell)
 {
 	if (ft_dup2(shell, cmd, i, 1))
 		return (0);
-	ft_built_in(cmd[i], shell);
+	ft_built_in(cmd[i], shell, cmd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:43:35 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:34:15 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	**alloc_pipe_fds(int pipe_amt)
 
 	i = 0;
 	p_fd = malloc(sizeof(int *) * pipe_amt);
+	if (!p_fd)
+		ft_putstr_fd("Error in allocating pipes", 2);
 	while (i < pipe_amt && pipe_amt <= INT_MAX)
 	{
 		p_fd[i] = malloc(sizeof(int) * 2);

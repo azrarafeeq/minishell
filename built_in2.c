@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/02 23:51:09 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:42:52 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit_cmd(char **str, t_infra *shell)
+void	ft_exit_cmd(char **str, t_infra *shell, t_cmd *cmds)
 {
 	int			j;
 
@@ -36,6 +36,7 @@ void	ft_exit_cmd(char **str, t_infra *shell)
 			return (exit_error(str[1], 2));
 		g_exit_stat = (unsigned char)ft_atoi(str[1]);
 	}
+	free_shell_cmds_in_child(shell, cmds);
 	ft_exit(g_exit_stat);
 }
 
@@ -95,7 +96,7 @@ int	cmd_is_built_in(char *str)
 	return (0);
 }
 
-void	ft_built_in(t_cmd cmd, t_infra *shell)
+void	ft_built_in(t_cmd cmd, t_infra *shell, t_cmd *cmds)
 {
 	g_exit_stat = 0;
 	if (ft_strcmp(cmd.main, "cd") == 0)
@@ -105,7 +106,7 @@ void	ft_built_in(t_cmd cmd, t_infra *shell)
 	else if (ft_strcmp(cmd.main, "unset") == 0)
 		ft_unset(&shell->env_list, cmd.cmd);
 	else if (ft_strcmp(cmd.main, "exit") == 0)
-		ft_exit_cmd(cmd.cmd, shell);
+		ft_exit_cmd(cmd.cmd, shell, cmds);
 	else if (ft_strcmp(cmd.main, "env") == 0)
 		ft_env(&shell->env_list);
 	else if (ft_strcmp(cmd.main, "echo") == 0)

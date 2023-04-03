@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:52:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/03/24 14:06:30 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:54:07 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**path_array(char *path)
 
 	i = 0;
 	j = 0;
-	if (path == NULL)
+	if (path == NULL || path[0] == '\0')
 		return (NULL);
 	p_count = paths_count(path);
 	path_array = (char **)malloc(sizeof(char *) * (p_count + 1));

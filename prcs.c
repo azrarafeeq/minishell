@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:43:40 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:48:34 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
 			{
 				mt_arg_error(shell, cmd, i);
 				if (cmd_is_built_in(cmd[i].main))
-					ft_built_in(cmd[i], shell);
+					ft_built_in(cmd[i], shell, cmd);
 				else if (cmd[i].p == NULL
 					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
 					execve_error(shell, cmd, i);
@@ -90,7 +90,7 @@ int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 		if (fd[1] == -1)
 		{
 			fd_error(cmds[i].red[k], shell, cmds, i);
-			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0)
+			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0 && !cmd_is_built_in(cmds[i].main))
 				free(cmds[i].p);
 			close(fd[0]);
 			if (flag == 2)
