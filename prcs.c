@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 18:03:23 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 22:11:19 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,27 @@ int	heredoc_exist(t_cmd *cmd, int i)
 
 int	ft_dup2(t_infra *shell, t_cmd *cmds, int i, int flag)
 {
-	int	k;
-	int	fd[2];
+	int	fd[3];
 
-	k = -1;
+	fd[2] = -1;
 	fd[0] = dup(0);
-	while (++k < cmds[i].red_len)
+	while (++fd[2] < cmds[i].red_len)
 	{
-		fd[1] = open_file(cmds[i].red[k], fd[0], shell);
+		fd[1] = open_file(cmds[i].red[fd[2]], fd[0], shell);
 		if (fd[1] == -1)
 		{
-			fd_error(cmds[i].red[k], shell, cmds, i);
-			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0 && !cmd_is_built_in(cmds[i].main))
+			fd_error(cmds[i].red[fd[2]], shell, cmds, i);
+			if (cmds[i].cmd_len > 0 && ft_strchr(cmds[i].main, '/') == 0
+				&& !cmd_is_built_in(cmds[i].main))
 				free(cmds[i].p);
 			close(fd[0]);
 			if (flag == 2)
 				free_shell_cmds_in_child(shell, cmds);
 			return (1);
 		}
-		if (cmds[i].red[k].flag == IN_FILE || cmds[i].red[k].flag == HERE_DOC)
+		if (cmds[i].red[fd[2]].flag == 0 || cmds[i].red[fd[2]].flag == 3)
 			dup2(fd[1], STDIN_FILENO);
-		if (cmds[i].red[k].flag == TRUNCATE || cmds[i].red[k].flag == APPEND)
+		if (cmds[i].red[fd[2]].flag == 1 || cmds[i].red[fd[2]].flag == 2)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
