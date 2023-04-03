@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/02 23:42:32 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 04:39:21 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
 		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
 		{
 			cmds[*j].red[*y].flag = HERE_DOC;
-			if(strrchr(cmds->tmp_cmd[*j], '\"'))
+			if(strrchr(cmds->tmp_cmd[*j], '\"') || strrchr(cmds->tmp_cmd[*j], '\''))
 				cmds[*j].red[*y].no_expand = 1;
 		}
 		*x += 2;
