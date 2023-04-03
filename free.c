@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:08 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/04 00:30:37 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/04 01:04:11 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_env_list(t_env **env_list)
 		temp = *env_list;
 		*env_list = (*env_list)->next;
 		free(temp->var);
-		if(temp->value)
+		if (temp->value)
 			free(temp->value);
 		free(temp);
 	}

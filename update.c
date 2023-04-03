@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/04 00:43:56 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/04 01:08:23 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	update_pwd(t_env **env_list)
 			free(temp->value);
 			pwd = getcwd(buf, MAX_PATH);
 			if (pwd)
-			{
-				temp->value = malloc(sizeof(char) * (ft_strlen(pwd) + 1));
-				ft_strcpy(temp->value, pwd);
-			}
+				temp->value = ft_strdup(pwd);
 			else
 				temp->value = NULL;
 			break ;

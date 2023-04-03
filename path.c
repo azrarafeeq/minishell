@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:52:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 18:21:54 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 00:59:17 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*append_path_to_array(char *path, int *i)
 		x++;
 		count++;
 	}
-	str = (char *)malloc(sizeof(char) * (count + 1));
+	str = ft_calloc(sizeof(char), (count + 1));
 	x = 0;
 	while (path[*i] != ':' && path[*i])
 	{

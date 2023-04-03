@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:21:30 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 22:47:11 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/04 01:02:14 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	ft_exit_cmd(char **str, t_infra *shell, t_cmd *cmds)
 void	ft_pwd(void)
 {
 	char	buffer[1024];
-	char *pwd;
-	
+	char	*pwd;
+
 	pwd = getcwd(buffer, MAX_PATH);
-	if(!pwd)
+	if (!pwd)
 		printf("%s\n", "No such file or directory");
-	else	
+	else
 		printf("%s\n", getcwd(buffer, MAX_PATH));
 	g_exit_stat = 0;
 }
