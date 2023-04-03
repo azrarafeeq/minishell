@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:59:31 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/02 21:20:12 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 06:15:22 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int	is_alpha_num(char *dol, t_infra *sh)
 void	get_hundred_cent(char **fifty_cent, t_infra *sh, int flag)
 {
 	char	*expandable;
-	char	*dol;
 
 	sh->len = 0;
 	sh->i = 0;
-	dol = *fifty_cent;
 	while (sh->i < ft_strlen((*fifty_cent)))
 	{
 		if (flag)

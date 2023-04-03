@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/03 04:39:21 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 06:15:05 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	check_redirect(char *str)
 void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
 {
 	cmds->start = *x - 1;
+	cmds[*j].red[*y].no_expand = 0;
 	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
 		|| cmds->tmp_cmd[*j][*x + 1] == '<')
 	{
