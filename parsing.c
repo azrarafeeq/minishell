@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:30:29 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:04:05 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	handler(int sig)
-{
-	int	flag;
-
-	flag = (waitpid(-1, NULL, WNOHANG) == -1);
-	if (sig == SIGQUIT && flag)
-		printf("Quit\n");
-	if (flag && sig == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
 
 int	at_exit(t_infra *shell)
 {

@@ -3,41 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   prcs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:43:40 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:03:35 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	process(t_cmd *cmd, int i, t_infra *shell, int *fd)
+int	process(t_cmd *c, int i, t_infra *s, int *fd)
 {
-	if (cmd_is_built_in(cmd[0].main) && shell->pipe_len == 0)
-		return (parent_process(cmd, i, shell));
+	if (cmd_is_built_in(c[0].main) && s->pipe_len == 0)
+		return (parent_process(c, i, s));
 	else
 	{
-		signal(SIGQUIT, qhandler);
 		fd[2] = fork();
 		if (fd[2] == 0)
 		{
+			signal(SIGQUIT, qhandler);
 			close_fds(fd[0], fd[1], -1, -1);
-			ft_pipe_dup2(shell, cmd, i);
-			if (cmd[i].cmd_len > 0)
+			ft_pipe_dup2(s, c, i);
+			if (c[i].cmd_len > 0)
 			{
-				mt_arg_error(shell, cmd, i);
-				if (cmd_is_built_in(cmd[i].main))
-					ft_built_in(cmd[i], shell);
-				else if (cmd[i].p == NULL
-					|| execve(cmd[i].p, cmd[i].cmd, shell->env_arr) == -1)
-					execve_error(shell, cmd, i);
+				mt_arg_error(s, c, i);
+				if (cmd_is_built_in(c[i].main))
+					ft_built_in(c[i], s);
+				else if (!(c[i].p) || execve(c[i].p, c[i].cmd, s->env_a) == -1)
+					execve_error(s, c, i);
 			}
-			free_shell_cmds_in_child(shell, cmd);
+			free_shell_cmds_in_child(s, c);
 		}
 	}
 	if (i != 0)
-		close_fds(shell->pfd[i - 1][0], shell->pfd[i - 1][1], -1, -1);
+		close_fds(s->pfd[i - 1][0], s->pfd[i - 1][1], -1, -1);
 	return (fd[2]);
 }
 

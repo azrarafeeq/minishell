@@ -79,7 +79,7 @@ typedef struct s_infra{
 	char	**cmds;
 	t_env	*env_list;
 	int		pipe_len;
-	char	**env_arr;
+	char	**env_a;
 	int		**pfd;
 	int		i;
 	int		no_expand;
@@ -166,7 +166,7 @@ void	ft_exit_cmd(char **str, t_infra *shell);
 void	hd_handler(int sig);
 void	qhandler(int sig);
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
-
+void	handler(int sig);
 void	update_pwd(t_env **env_list);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);

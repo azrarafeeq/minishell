@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:08 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 13:27:39 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:03:27 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	free_shell_cmds_in_child(t_infra *shell, t_cmd *cmds)
 	if (cmds)
 		free(cmds);
 	free(shell->rd);
-	free_char_array(shell->env_arr);
+	free_char_array(shell->env_a);
 	free_env_list(&shell->env_list);
 	if (shell->pfd)
 		free_int_array(shell->pfd, shell->pipe_len);
