@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:46:07 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 17:49:52 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 01:52:33 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	ft_cd(char **str, t_env **env_list)
 {
+	char	*cur_pwd;
+	char	*pwd;
+
+	cur_pwd = NULL;
+	pwd = NULL;
 	if (str[1] == NULL || str[1][0] == '\0')
 	{
 		ft_putstr_fd("cd: No directory specified\n", 2);
@@ -28,7 +33,7 @@ void	ft_cd(char **str, t_env **env_list)
 		g_exit_stat = 1;
 		return ;
 	}
-	update_pwd(env_list);
+	update_pwd(env_list, cur_pwd, pwd);
 }
 
 void	ft_env(t_env **env_list)

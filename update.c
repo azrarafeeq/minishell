@@ -6,20 +6,17 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/04 01:08:23 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/04 01:52:45 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_pwd(t_env **env_list)
+void	update_pwd(t_env **env_list, char *cur_pwd, char *pwd)
 {
 	char	buf[1024];
-	char	*cur_pwd;
 	t_env	*temp;
-	char	*pwd;
 
-	cur_pwd = NULL;
 	temp = *env_list;
 	while (temp)
 	{

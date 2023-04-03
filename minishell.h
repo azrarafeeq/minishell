@@ -165,7 +165,7 @@ void	hd_handler(int sig);
 void	qhandler(int sig);
 void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell);
 void	handler(int sig);
-void	update_pwd(t_env **env_list);
+void	update_pwd(t_env **env_list, char *cur_pwd, char *pwd);
 void	update_oldpwd(t_env **env_list, char *cur_pwd);
 void	update_var(t_env **env_list, char *str);
 
