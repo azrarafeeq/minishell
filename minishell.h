@@ -57,7 +57,7 @@ typedef struct s_env{
 typedef struct s_red{
 	int		flag;
 	char	*file;
-	int no_expand;
+	int		no_expand;
 }				t_red;
 
 typedef struct s_cmd{
@@ -82,7 +82,7 @@ typedef struct s_infra{
 	char	**env_arr;
 	int		**pfd;
 	int		i;
-	int no_expand;
+	int		no_expand;
 	int		len;
 	char	single;
 	char	paired;
