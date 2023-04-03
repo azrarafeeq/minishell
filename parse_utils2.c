@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 20:57:10 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/03 16:06:25 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:49:25 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,4 @@ void	fill_spaces(t_in *in, char *input, int flag)
 		in->out[in->j++] = ' ';
 		in->out[in->j++] = ' ';
 	}
-}
-
-int	expande_it(char **dol, char **expandable, t_infra *sh)
-{
-	char	*expanded;
-
-	expanded = NULL;
-	if (*expandable)
-	{
-		expanded = ft_getenv(&sh->env_list, *expandable);
-		if (expanded)
-			update_cmd(dol, expanded, sh);
-		else
-		{
-			*dol = modify_cmd(*dol, sh->i - sh->len - 1, sh->len + 1, "");
-			g_exit_stat = 0;
-			sh->i -= sh->len + 1;
-		}
-		free(*expandable);
-		return (1);
-	}
-	return (0);
 }

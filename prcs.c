@@ -6,11 +6,12 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 16:03:35 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:52:19 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	process(t_cmd *c, int i, t_infra *s, int *fd)
 {
 	if (cmd_is_built_in(c[0].main) && s->pipe_len == 0)
@@ -51,8 +52,8 @@ void	ft_heredoc(t_red red, int in_fd, t_infra *shell)
 	{
 		if (g_exit_stat == 1 || ft_strcmp(red.file, line) == 0)
 			break ;
-		if (ft_strchr(line, HUNDRED_CENT) && red.no_expand != 1)
-			get_hundred_cent(&line, shell, 0);
+		if (ft_strchr(line, DOL) && red.no_expand != 1)
+			get_expanded(&line, shell, 0);
 		ft_putstr_fd(line, fd);
 		free(line);
 		line = get_next_line(in_fd);

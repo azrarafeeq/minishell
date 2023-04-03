@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:07:57 by ahassan           #+#    #+#             */
-/*   Updated: 2023/04/03 13:28:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:51:55 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,25 +85,25 @@ void	get_flags(t_cmd *cmds, int *j, int *x, int *y)
 {
 	cmds->start = *x - 1;
 	cmds[*j].red[*y].no_expand = 0;
-	if (cmds->tmp_cmd[*j][*x + 1] == '>' \
-		|| cmds->tmp_cmd[*j][*x + 1] == '<')
+	if (cmds->t_c[*j][*x + 1] == '>' \
+		|| cmds->t_c[*j][*x + 1] == '<')
 	{
-		if (cmds->tmp_cmd[*j][*x + 1] == '>')
+		if (cmds->t_c[*j][*x + 1] == '>')
 			cmds[*j].red[*y].flag = APPEND;
-		else if (cmds->tmp_cmd[*j][*x + 1] == '<')
+		else if (cmds->t_c[*j][*x + 1] == '<')
 		{
 			cmds[*j].red[*y].flag = HERE_DOC;
-			if (strrchr(cmds->tmp_cmd[*j], '\"') || strrchr(cmds->tmp_cmd[*j], '\''))
+			if (strrchr(cmds->t_c[*j], '\"') || strrchr(cmds->t_c[*j], '\''))
 				cmds[*j].red[*y].no_expand = 1;
 		}
 		*x += 2;
 	}
-	else if (cmds->tmp_cmd[*j][*x] == '>')
+	else if (cmds->t_c[*j][*x] == '>')
 	{
 		cmds[*j].red[*y].flag = TRUNCATE;
 		(*x)++;
 	}
-	else if (cmds->tmp_cmd[*j][*x] == '<')
+	else if (cmds->t_c[*j][*x] == '<')
 	{
 		cmds[*j].red[*y].flag = IN_FILE;
 		(*x)++;

@@ -6,7 +6,7 @@
 /*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:36:18 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 15:53:12 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:10:38 by ahassan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	waitpid_signal(int j, t_cmd *cmds, t_infra *shell)
 			if (WTERMSIG(j) == SIGINT)
 				;
 			else if (WTERMSIG(j) == SIGQUIT)
-				write(2, "\n", 1);
+				write(2, "Quit\n", 5);
 			g_exit_stat += 128;
 		}
 	}
