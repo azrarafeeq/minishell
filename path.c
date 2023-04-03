@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:52:09 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 17:54:07 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/04/03 18:21:54 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	paths_count(char *path)
 
 	i = 0;
 	path_count = 0;
-	while (path[i] != '/')
+	while (path[i] && path[i] != '/')
 		i++;
 	while (path[i])
 	{
@@ -90,7 +90,7 @@ char	**path_array(char *path)
 		return (NULL);
 	p_count = paths_count(path);
 	path_array = (char **)malloc(sizeof(char *) * (p_count + 1));
-	while (path[i] != '/')
+	while (path[i] && path[i] != '/')
 		i++;
 	while (path[i] && j < p_count)
 	{
