@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahassan <ahassan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 18:01:59 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 23:29:21 by ahassan          ###   ########.fr       */
+/*   Updated: 2023/04/04 19:39:39 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_envp(char **envp, t_env **env_list)
 	t_env	*env_node;
 
 	i = 0;
-	if (!envp[0])
+	if (!envp || !envp[0])
 	{
 		g_exit_stat = 0;
-		ft_exit(g_exit_stat);
+		return ;
 	}
 	while (envp[i + 1])
 	{
