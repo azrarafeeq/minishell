@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:58:47 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/04 01:52:45 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:26:21 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	update_pwd(t_env **env_list, char *cur_pwd, char *pwd)
 	t_env	*temp;
 
 	temp = *env_list;
+	cur_pwd = NULL;
 	while (temp)
 	{
 		if (ft_strcmp(temp->var, "PWD") == 0)
@@ -34,7 +35,7 @@ void	update_pwd(t_env **env_list, char *cur_pwd, char *pwd)
 		}
 		temp = temp->next;
 	}
-	if (cur_pwd != NULL || cur_pwd[0] != '\0')
+	if (cur_pwd != NULL && cur_pwd[0] != '\0')
 	{
 		update_oldpwd(env_list, cur_pwd);
 		free(cur_pwd);
