@@ -6,7 +6,7 @@
 /*   By: arafeeq <arafeeq@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:31 by arafeeq           #+#    #+#             */
-/*   Updated: 2023/04/03 22:11:19 by arafeeq          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:11:05 by arafeeq          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_heredoc(t_red red, int in_fd, t_infra *shell)
 	int		fd;
 	char	*line;
 
+	g_exit_stat = 0;
 	signal(SIGINT, hd_handler);
 	fd = open("a!", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(in_fd);
